@@ -17,7 +17,7 @@
 
         <Row>
           <div class="login-btn" type="primary" size="large" :loading="loading" @click="submitLogin" long>
-            <span v-if="!loading">登录</span>
+            <span v-if="!loading">冲呀</span>
             <span v-else>登录中</span>
           </div>
         </Row>
@@ -141,7 +141,7 @@ export default {
 
 .login {
   height: 100%;
-  background: url("../assets/background.png") no-repeat;
+  background: url("../assets/whiteWall.png") no-repeat;
   background-size: 100%;
   background-position-y: bottom;
   background-color: #fff;

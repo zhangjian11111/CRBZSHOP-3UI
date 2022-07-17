@@ -135,7 +135,7 @@ export default {
 <style lang="scss" scoped>
 .login {
   height: 100%;
-  background: url("../assets/background.png") no-repeat;
+  background: url("../assets/chaiquanDog.png") no-repeat;
   background-color: #f0f2f5;
   display: flex;
   background-size: cover;
