@@ -12,10 +12,10 @@ var BASE = {
     // buyer: "http://127.0.0.1:9111",
     // seller: "http://127.0.0.1:9111",
     // manager: "http://127.0.0.1:9111"
-    common: "http://192.168.2.192:9111",
-    buyer: "http://192.168.2.192:9111",
-    seller: "http://192.168.2.192:9111",
-    manager: "http://192.168.2.192:9111"
+    common: "http://192.168.2.194:9111",
+    buyer: "http://192.168.2.194:9111",
+    seller: "http://192.168.2.194:9111",
+    manager: "http://192.168.2.194:9111"
   },
   API_PROD: {
     common: "https://yqswgjz.mynatapp.cc",
