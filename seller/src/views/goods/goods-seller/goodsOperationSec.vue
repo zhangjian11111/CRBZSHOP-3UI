@@ -12,8 +12,8 @@
           <div class="form-item-view">
             <FormItem label="商品分类">
               <span class="goods-category-name">{{
-                this.baseInfoForm.categoryName[0]
-              }}</span>
+                  this.baseInfoForm.categoryName[0]
+                }}</span>
               <span> &gt; {{ this.baseInfoForm.categoryName[1] }}</span>
               <span> &gt; {{ this.baseInfoForm.categoryName[2] }}</span>
             </FormItem>
@@ -67,14 +67,12 @@
               prop="goodsUnit"
             >
               <Select v-model="baseInfoForm.goodsUnit" style="width: 100px">
-                <Scroll :on-reach-bottom="handleReachBottom">
-                  <Option
-                    v-for="(item, index) in goodsUnitList"
-                    :key="index"
-                    :value="item"
-                    >{{ item }}
-                  </Option>
-                </Scroll>
+                <Option
+                  v-for="(item, index) in goodsUnitList"
+                  :key="index"
+                  :value="item"
+                >{{ item }}
+                </Option>
               </Select>
             </FormItem>
             <FormItem
@@ -126,8 +124,8 @@
                           @on-blur="checkWholesaleNum(index)"
                         >
                           <span slot="append">{{
-                            baseInfoForm.goodsUnit || ""
-                          }}</span>
+                              baseInfoForm.goodsUnit || ""
+                            }}</span>
                         </Input>
                       </div>
                     </template>
@@ -155,7 +153,7 @@
                           style="margin-left: 5px"
                           v-if="index > 0"
                           @click="handleDeleteWholesaleData(index)"
-                          >删除</Button
+                        >删除</Button
                         >
                       </div>
                     </template>
@@ -318,7 +316,7 @@
                           </div>
                           <div>
                             <Button @click="addSpec($index, item)"
-                              >添加规格值</Button
+                            >添加规格值</Button
                             >
                           </div>
                         </Card>
@@ -329,7 +327,7 @@
                       type="primary"
                       size="small"
                       @click="addSkuItem"
-                      >添加规格项</Button
+                    >添加规格项</Button
                     >
                     &nbsp;
                     <Button
@@ -337,7 +335,7 @@
                       type="warning"
                       size="small"
                       @click="handleClearSku"
-                      >清空规格项</Button
+                    >清空规格项</Button
                     >
                   </div>
                 </Panel>
@@ -386,8 +384,8 @@
                             @on-change="updateSkuTable(row, 'quantity')"
                           >
                             <span slot="append">{{
-                              baseInfoForm.goodsUnit || ""
-                            }}</span>
+                                baseInfoForm.goodsUnit || ""
+                              }}</span>
                           </Input>
                         </template>
                         <template slot-scope="{ row }" slot="cost">
@@ -533,7 +531,7 @@
             <FormItem
               style="width: 100%"
               class="form-item-view-el"
-              label="商品描述"
+              label="PC商品描述"
               prop="intro"
             >
               <editor
@@ -542,7 +540,13 @@
                 v-model="baseInfoForm.intro"
                 :init="{ ...initEditor, height: '800px' }"
               ></editor>
+              <div class="promise-intro-btn">
+                <Button type="primary" @click="promiseIntroEditor"
+                >将PC商品描述同步到移动端描述</Button
+                >
+              </div>
             </FormItem>
+
             <FormItem
               style="width: 100%"
               class="form-item-view-el"
@@ -570,7 +574,7 @@
                     v-for="item in logisticsTemplate"
                     :value="item.id"
                     :key="item.id"
-                    >{{ item.name }}
+                  >{{ item.name }}
                   </Option>
                 </Select>
               </FormItem>
@@ -682,7 +686,7 @@
           type="primary"
           @click="pre"
           v-if="!$route.query.id && !$route.query.draftId"
-          >上一步
+        >上一步
         </Button>
         <Button type="primary" @click="save" :loading="submitLoading">
           {{ this.$route.query.id ? "保存" : "保存商品" }}
@@ -860,7 +864,7 @@ export default {
       },
       params: {
         pageNumber: 1,
-        pageSize: 10,
+        pageSize: 1000,
       },
       skuInfoRules: {},
       /** 品牌列表 */
@@ -913,7 +917,7 @@ export default {
       ) {
         this.baseInfoForm.goodsParamsDTOList[groupIndex].goodsParamsItemDTOList[
           paramsIndex
-        ] = {
+          ] = {
           paramName: "",
           paramValue: "",
           isIndex: "",
@@ -924,7 +928,7 @@ export default {
       }
       this.baseInfoForm.goodsParamsDTOList[groupIndex].goodsParamsItemDTOList[
         paramsIndex
-      ] = {
+        ] = {
         paramName: params.paramName,
         paramValue: value,
         isIndex: params.isIndex,
@@ -1075,10 +1079,10 @@ export default {
     },
     // 图片上传前钩子
     handleBeforeUploadGoodsPicture(file) {
-      const check = this.baseInfoForm.goodsGalleryFiles.length < 15;
+      const check = this.baseInfoForm.goodsGalleryFiles.length < 5;
       if (!check) {
         this.$Notice.warning({
-          title: "图片数量不能大于十五张",
+          title: "图片数量不能大于五张",
         });
         return false;
       }
@@ -1102,15 +1106,7 @@ export default {
         }
       );
     },
-    // 页面触底
-    handleReachBottom() {
-      setTimeout(() => {
-        if (this.params.pageNumber * this.params.pageSize <= this.total) {
-          this.params.pageNumber++;
-          this.GET_GoodsUnit();
-        }
-      }, 1000);
-    },
+
     // 获取商品单位
     GET_GoodsUnit() {
       API_GOODS.getGoodsUnitList(this.params).then((res) => {
@@ -1252,6 +1248,10 @@ export default {
       this.skuInfo = skusInfo;
       this.renderTableData(skus);
       this.skuTableData = skus;
+    },
+    // 将pc商品描述同步给移动端
+    promiseIntroEditor() {
+      this.baseInfoForm.mobileIntro = this.baseInfoForm.intro;
     },
 
     /** 根据当前分类id查询商品应包含的参数 */
@@ -1415,15 +1415,15 @@ export default {
       // 有成本价和价格的情况
       this.baseInfoForm.salesModel !== "WHOLESALE"
         ? pushData.push(
-            {
-              title: "成本价",
-              slot: "cost",
-            },
-            {
-              title: "价格",
-              slot: "price",
-            }
-          )
+        {
+          title: "成本价",
+          slot: "cost",
+        },
+        {
+          title: "价格",
+          slot: "price",
+        }
+        )
         : "";
 
       if (this.baseInfoForm.salesModel === "WHOLESALE" && this.wholesaleData) {
@@ -1439,9 +1439,9 @@ export default {
       this.baseInfoForm.goodsType != "VIRTUAL_GOODS" &&
       this.baseInfoForm.salesModel !== "WHOLESALE"
         ? pushData.push({
-            title: "重量",
-            slot: "weight",
-          })
+          title: "重量",
+          slot: "weight",
+        })
         : "";
 
       pushData.push(
