@@ -20,7 +20,7 @@
                 <div class="item">
                   <Input disabled v-model="shopForm.memberName" />
                   <Button @click="selectMember()" v-if="!$route.query.shopId"
-                    >选择会员</Button
+                  >选择会员</Button
                   >
                 </div>
               </FormItem>
@@ -45,10 +45,10 @@
                   type="info"
                   v-if="!shopForm.storeCenter"
                   @click="$refs.liliMap.showMap = true"
-                  >点击获取店铺定位</Button
+                >点击获取店铺定位</Button
                 >
                 <Button type="success" v-else @click="$refs.liliMap.showMap = true"
-                  >已定位</Button
+                >已定位</Button
                 >
               </FormItem>
 
@@ -78,7 +78,7 @@
                 />
                 <div>
                   <Button @click="handleCLickImg('storeLogo')" type="primary"
-                    >选择图片</Button
+                  >选择图片</Button
                   >
                 </div>
               </FormItem>
@@ -272,7 +272,7 @@
                 />
                 <div>
                   <Button @click="handleCLickImg('licencePhoto')" type="primary"
-                    >选择图片</Button
+                  >选择图片</Button
                   >
                 </div>
               </FormItem>
@@ -288,33 +288,33 @@
                   :indeterminate="indeterminate"
                   :value="checkAll"
                   @click.prevent.native="handleCheckAll"
-                  >全选
+                >全选
                 </Checkbox>
               </div>
               <CheckboxGroup v-model="checkAllGroup" @on-change="checkAllGroupChange">
                 <Checkbox v-for="(item, i) in categories" :key="i + 1" :label="item.id"
-                  >{{ item.name }}
+                >{{ item.name }}
                 </Checkbox>
               </CheckboxGroup>
             </FormItem>
           </TabPane>
 
           <!-- <TabPane label="配送信息" class="tab" name="send"> -->
-            <!-- 遮罩层  -->
-            <!-- <FormItem label="达达编码" prop="ddCode">
-              <Input
-                v-model="shopForm.ddCode"
-                maxlength="20"
-                clearable
-                style="width: 200px"
-              />
-            </FormItem> -->
+          <!-- 遮罩层  -->
+          <!-- <FormItem label="达达编码" prop="ddCode">
+            <Input
+              v-model="shopForm.ddCode"
+              maxlength="20"
+              clearable
+              style="width: 200px"
+            />
+          </FormItem> -->
           <!-- </TabPane> -->
 
           <TabPane label="结算信息" class="tab" name="settlement">
             <Alert type="error"
-              >已添加<span class="theme_color">{{ settlementCycle.length }}</span
-              >个结算日，最多可添加5个结算日，当月不包含所设日期时，将会顺延到下一个结算日</Alert
+            >已添加<span class="theme_color">{{ settlementCycle.length }}</span
+            >个结算日，最多可添加5个结算日，当月不包含所设日期时，将会顺延到下一个结算日</Alert
             >
             <FormItem label="结算日期">
               <Tag
@@ -324,7 +324,7 @@
                 closable
                 style="marrgin-left: 10px"
                 @on-close="removesettlementCycle"
-                >{{ item }}
+              >{{ item }}
               </Tag>
               <InputNumber
                 size="small"
@@ -339,7 +339,7 @@
                 size="small"
                 v-if="addSettlementBtn && settlementCycle.length < 5"
                 style="margin-left: 8px"
-                >添加结算日期
+              >添加结算日期
               </Button>
               <Button
                 v-if="addSettlementConfirmBtn"
@@ -347,7 +347,7 @@
                 @click="addsettlementCycleConfirm"
                 size="small"
                 style="margin-left: 8px"
-                >确认
+              >确认
               </Button>
             </FormItem>
           </TabPane>
@@ -359,14 +359,14 @@
           v-show="tabNameList.indexOf(tabName) > 0"
           class="mr_10"
           @click="prev"
-          >上一步</Button
+        >上一步</Button
         >
-        <Button type="primary" v-show="tabNameList.indexOf(tabName) < 4" @click="next"
-          >下一步</Button
+        <Button type="primary" v-show="tabNameList.indexOf(tabName) < tabNameList.length - 1" @click="next"
+        >下一步</Button
         >
         <Button
           type="primary"
-          v-show="tabNameList.indexOf(tabName) === 4"
+          v-show="tabNameList.indexOf(tabName) === tabNameList.length - 1"
           @click="save"
           v-if="!isRead"
         >
@@ -398,10 +398,10 @@
       </div>
       <div slot="footer">
         <Button type="error" :loading="auditModalLoading" @click="audit('REFUSED')"
-          >驳回</Button
+        >驳回</Button
         >
         <Button type="info" :loading="auditModalLoading" @click="audit('PASS')"
-          >通过</Button
+        >通过</Button
         >
       </div>
     </Modal>
@@ -413,9 +413,9 @@ import memberLayout from "@/views/member/list/index";
 import ossManage from "@/views/sys/oss-manage/ossManage";
 import { getCategoryTree } from "@/api/goods";
 import { shopDetail, shopAdd, shopEdit, getShopByMemberId, shopAudit } from "@/api/shops";
-import uploadPicInput from "@/views/my-components/lili/upload-pic-input";
-import region from "@/views/lili-components/region";
-import liliMap from "@/views/my-components/map/index";
+import uploadPicInput from "@/components/lili/upload-pic-input";
+import region from "@/components/region";
+import liliMap from "@/components/map/index";
 
 export default {
   name: "shop-operation",
