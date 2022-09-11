@@ -74,7 +74,7 @@
           class="search-btn"
           type="primary"
           icon="ios-search"
-          >搜索</Button
+        >搜索</Button
         >
       </Form>
       <Table
@@ -150,7 +150,7 @@
       <div slot="footer">
         <Button type="text" @click="modalVisible = false">取消</Button>
         <Button type="primary" :loading="submitLoading" @click="lower"
-          >提交</Button
+        >提交</Button
         >
       </div>
     </Modal>
@@ -386,8 +386,10 @@ export default {
     // 编辑
     edit(v) {
       this.id = v.id;
-      if (v.underMessage != "{}") {
+      if (v.underMessage) {
         this.underForm.reason = v.underMessage;
+      } else {
+        this.underForm.reason = "";
       }
       this.modalVisible = true;
     },

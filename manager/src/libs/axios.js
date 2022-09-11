@@ -119,7 +119,6 @@ service.interceptors.response.use(
         }
       } else {
         // 其他错误处理
-        console.log(error.response.data);
         Message.error(error.response.data.message);
       }
     }
@@ -193,19 +192,19 @@ export const postRequest = (url, params, headers) => {
     transformRequest: headers
       ? undefined
       : [
-          function(data) {
-            let ret = "";
-            for (let it in data) {
-              ret +=
-                encodeURIComponent(it) +
-                "=" +
-                encodeURIComponent(data[it]) +
-                "&";
-            }
-            ret = ret.substring(0, ret.length - 1);
-            return ret;
+        function(data) {
+          let ret = "";
+          for (let it in data) {
+            ret +=
+              encodeURIComponent(it) +
+              "=" +
+              encodeURIComponent(data[it]) +
+              "&";
           }
-        ],
+          ret = ret.substring(0, ret.length - 1);
+          return ret;
+        }
+      ],
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       accessToken: accessToken,
@@ -251,19 +250,19 @@ export const putRequest = (url, params, headers) => {
     transformRequest: headers
       ? undefined
       : [
-          function(data) {
-            let ret = "";
-            for (let it in data) {
-              ret +=
-                encodeURIComponent(it) +
-                "=" +
-                encodeURIComponent(data[it]) +
-                "&";
-            }
-            ret = ret.substring(0, ret.length - 1);
-            return ret;
+        function(data) {
+          let ret = "";
+          for (let it in data) {
+            ret +=
+              encodeURIComponent(it) +
+              "=" +
+              encodeURIComponent(data[it]) +
+              "&";
           }
-        ],
+          ret = ret.substring(0, ret.length - 1);
+          return ret;
+        }
+      ],
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       accessToken: accessToken,
