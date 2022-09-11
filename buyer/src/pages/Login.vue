@@ -13,7 +13,7 @@
       <Carousel loop :autoplay-speed="5000" class="login-carousel" arrow="never">
         <CarouselItem>
           <div class="demo-carousel" @click='$refs.verify.show = false'>
-            <img src="https://wanmi-b2b.oss-cn-shanghai.aliyuncs.com/201811141632252680" />
+            <img src="https://lili-system.oss-cn-beijing.aliyuncs.com/background.jpg" />
           </div>
         </CarouselItem>
       </Carousel>
@@ -28,7 +28,7 @@
         </div>
         <!-- 账号密码登录 -->
         <Form ref="formInline" :model="formData" :rules="ruleInline" v-show="type === true"
-          @click.self='$refs.verify.show = false'>
+              @click.self='$refs.verify.show = false'>
           <FormItem prop="username">
             <i-input type="text" v-model="formData.username" clearable placeholder="用户名">
               <Icon type="md-person" slot="prepend"></Icon>
@@ -45,7 +45,7 @@
         </Form>
         <!-- 验证码登录 -->
         <Form ref="formSms" :model="formSms" :rules="ruleInline" v-show="type === false"
-          @click.self='$refs.verify.show = false'>
+              @click.self='$refs.verify.show = false'>
           <FormItem prop="mobile">
             <i-input type="text" v-model="formSms.mobile" clearable placeholder="手机号">
               <Icon type="md-lock" slot="prepend"></Icon>
@@ -59,7 +59,7 @@
           </FormItem>
           <FormItem>
             <Button @click.stop="verifyBtnClick" long
-              :type="verifyStatus?'success':'default'">{{verifyStatus?'验证通过':'点击完成安全验证'}}</Button>
+                    :type="verifyStatus?'success':'default'">{{verifyStatus?'验证通过':'点击完成安全验证'}}</Button>
           </FormItem>
           <FormItem>
             <Button type="error" @click="handleSubmit('formSms')" long>登录</Button>
@@ -70,13 +70,13 @@
         </div>
         <div class="other-login">
           <svg t="1631154795933" class="icon" @click="handleWebLogin('QQ')" viewBox="0 0 1024 1024" version="1.1"
-            xmlns="http://www.w3.org/2000/svg" p-id="4969" width="32" height="32">
+               xmlns="http://www.w3.org/2000/svg" p-id="4969" width="32" height="32">
             <path
               d="M824.8 613.2c-16-51.4-34.4-94.6-62.7-165.3C766.5 262.2 689.3 112 511.5 112 331.7 112 256.2 265.2 261 447.9c-28.4 70.8-46.7 113.7-62.7 165.3-34 109.5-23 154.8-14.6 155.8 18 2.2 70.1-82.4 70.1-82.4 0 49 25.2 112.9 79.8 159-26.4 8.1-85.7 29.9-71.6 53.8 11.4 19.3 196.2 12.3 249.5 6.3 53.3 6 238.1 13 249.5-6.3 14.1-23.8-45.3-45.7-71.6-53.8 54.6-46.2 79.8-110.1 79.8-159 0 0 52.1 84.6 70.1 82.4 8.5-1.1 19.5-46.4-14.5-155.8z"
               p-id="4970" fill="#1296db"></path>
           </svg>
           <svg t="1631154766336" class="icon" @click="handleWebLogin('WECHAT_PC')" viewBox="0 0 1024 1024" version="1.1"
-            xmlns="http://www.w3.org/2000/svg" p-id="3844" width="32" height="32">
+               xmlns="http://www.w3.org/2000/svg" p-id="3844" width="32" height="32">
             <path
               d="M683.058 364.695c11 0 22 1.016 32.943 1.976C686.564 230.064 538.896 128 370.681 128c-188.104 0.66-342.237 127.793-342.237 289.226 0 93.068 51.379 169.827 136.725 229.256L130.72 748.43l119.796-59.368c42.918 8.395 77.37 16.79 119.742 16.79 11 0 21.46-0.48 31.914-1.442a259.168 259.168 0 0 1-10.455-71.358c0.485-148.002 128.744-268.297 291.403-268.297l-0.06-0.06z m-184.113-91.992c25.99 0 42.913 16.79 42.913 42.575 0 25.188-16.923 42.579-42.913 42.579-25.45 0-51.38-16.85-51.38-42.58 0-25.784 25.93-42.574 51.38-42.574z m-239.544 85.154c-25.384 0-51.374-16.85-51.374-42.58 0-25.784 25.99-42.574 51.374-42.574 25.45 0 42.918 16.79 42.918 42.575 0 25.188-16.924 42.579-42.918 42.579z m736.155 271.655c0-135.647-136.725-246.527-290.983-246.527-162.655 0-290.918 110.88-290.918 246.527 0 136.128 128.263 246.587 290.918 246.587 33.972 0 68.423-8.395 102.818-16.85l93.809 50.973-25.93-84.677c68.907-51.93 120.286-119.815 120.286-196.033z m-385.275-42.58c-16.923 0-34.452-16.79-34.452-34.179 0-16.79 17.529-34.18 34.452-34.18 25.99 0 42.918 16.85 42.918 34.18 0 17.39-16.928 34.18-42.918 34.18z m188.165 0c-16.984 0-33.972-16.79-33.972-34.179 0-16.79 16.927-34.18 33.972-34.18 25.93 0 42.913 16.85 42.913 34.18 0 17.39-16.983 34.18-42.913 34.18z"
               fill="#09BB07" p-id="3845"></path>
@@ -96,7 +96,7 @@
       <Row type="flex" justify="center" class="copyright">
         Copyright © {{year}} - Present
         <a href="https://pickmall.cn" target="_blank" style="margin: 0 5px">{{config.title}}</a>
-        版权所有 
+        版权所有
       </Row>
     </div>
   </div>
