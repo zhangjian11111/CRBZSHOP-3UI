@@ -39,8 +39,12 @@
             style="width: 200px"
           ></DatePicker>
         </Form-item>
-        <Button @click="handleSearch" type="primary" icon="ios-search" class="search-btn"
-          >搜索</Button
+        <Button
+          @click="handleSearch"
+          type="primary"
+          icon="ios-search"
+          class="search-btn"
+        >搜索</Button
         >
       </Form>
       <Row class="operation padding-row" v-if="getType !== 'ACTIVITY'">
@@ -59,30 +63,40 @@
       >
         <template slot-scope="{ row }" slot="action">
           <Button
-            v-if="row.promotionStatus === 'CLOSE' || row.promotionStatus === 'NEW'"
+            v-if="
+              row.promotionStatus === 'CLOSE' || row.promotionStatus === 'NEW'
+            "
             type="info"
             size="small"
             @click="see(row)"
-            >编辑
+          >编辑
           </Button>
-          <Button v-else type="default" size="small" @click="see(row, 'onlyView')"
-            >查看
+          <Button
+            v-else
+            type="default"
+            size="small"
+            @click="see(row, 'onlyView')"
+          >查看
           </Button>
           <Button
             class="ml_5"
-            v-if="row.promotionStatus === 'START' || row.promotionStatus === 'NEW'"
+            v-if="
+              row.promotionStatus === 'START' || row.promotionStatus === 'NEW'
+            "
             type="error"
             size="small"
             @click="close(row)"
-            >关闭
+          >关闭
           </Button>
           <Button
             class="ml_5"
-            v-if="row.promotionStatus === 'CLOSE' || row.promotionStatus === 'END'"
+            v-if="
+              row.promotionStatus === 'CLOSE' || row.promotionStatus === 'END'
+            "
             type="error"
             size="small"
             @click="remove(row)"
-            >删除
+          >删除
           </Button>
         </template>
       </Table>
@@ -109,7 +123,10 @@ import {
   updatePlatformCouponStatus,
   deletePlatformCoupon,
 } from "@/api/promotion";
-import { promotionsStatusRender, promotionsScopeTypeRender } from "@/utils/promotions";
+import {
+  promotionsStatusRender,
+  promotionsScopeTypeRender,
+} from "@/utils/promotions";
 
 export default {
   name: "coupon",
@@ -152,7 +169,10 @@ export default {
           width: 100,
           render: (h, params) => {
             if (params.row.price) {
-              return h("div", this.$options.filters.unitPrice(params.row.price, "￥"));
+              return h(
+                "div",
+                this.$options.filters.unitPrice(params.row.price, "￥")
+              );
             } else {
               return h("div", params.row.couponDiscount + "折");
             }
@@ -167,9 +187,17 @@ export default {
             return h(
               "div",
               params.row.receivedNum +
-                "/" +
-                (params.row.publishNum === 0 ? "不限制" : params.row.publishNum)
+              "/" +
+              (params.row.publishNum === 0 ? "不限制" : params.row.publishNum)
             );
+          },
+        },
+
+        {
+          title: "已被使用的数量/已领取数量",
+          key: "publishNum",
+          render: (h, params) => {
+            return h("div", params.row.usedNum + "/" + params.row.receivedNum);
           },
         },
         {
@@ -207,7 +235,8 @@ export default {
             } else if (params?.row?.startTime && params?.row?.endTime) {
               return h("div", {
                 domProps: {
-                  innerHTML: params.row.startTime + "<br/>" + params.row.endTime,
+                  innerHTML:
+                    params.row.startTime + "<br/>" + params.row.endTime,
                 },
               });
             }
@@ -349,7 +378,7 @@ export default {
       getPlatformCouponList(this.searchForm).then((res) => {
         this.loading = false;
         if (res.success) {
-          console.log(res)
+          console.log(res);
           this.data = res.result.records;
           this.total = res.result.total;
         }

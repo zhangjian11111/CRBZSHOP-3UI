@@ -45,7 +45,7 @@
             type="primary"
             class="search-btn"
             icon="ios-search"
-            >搜索</Button
+          >搜索</Button
           >
           <Button @click="handleReset" class="search-btn">重置</Button>
         </Form>
@@ -65,22 +65,26 @@
       >
         <template slot-scope="{ row }" slot="action">
           <Button
-            v-if="row.promotionStatus === 'NEW' || row.promotionStatus === 'CLOSE'"
+            v-if="
+              row.promotionStatus === 'NEW' || row.promotionStatus === 'CLOSE'
+            "
             type="info"
             size="small"
             @click="see(row)"
-            >编辑</Button
+          >编辑</Button
           >
           <Button v-else type="default" size="small" @click="see(row, 'only')"
-            >查看</Button
+          >查看</Button
           >
           <Button
-            v-if="row.promotionStatus === 'START' || row.promotionStatus === 'NEW'"
+            v-if="
+              row.promotionStatus === 'START' || row.promotionStatus === 'NEW'
+            "
             type="error"
             size="small"
             :style="{ marginLeft: '5px' }"
             @click="remove(row)"
-            >关闭</Button
+          >关闭</Button
           >
         </template>
       </Table>
@@ -104,7 +108,10 @@
 
 <script>
 import { getShopCouponList, updateCouponStatus } from "@/api/promotion";
-import { promotionsStatusRender, promotionsScopeTypeRender } from "@/utils/promotions";
+import {
+  promotionsStatusRender,
+  promotionsScopeTypeRender,
+} from "@/utils/promotions";
 
 export default {
   name: "coupon",
@@ -162,9 +169,16 @@ export default {
             return h(
               "div",
               params.row.receivedNum +
-                "/" +
-                (params.row.publishNum === 0 ? "不限制" : params.row.publishNum)
+              "/" +
+              (params.row.publishNum === 0 ? "不限制" : params.row.publishNum)
             );
+          },
+        },
+        {
+          title: "已被使用的数量/已领取数量",
+          key: "publishNum",
+          render: (h, params) => {
+            return h("div", params.row.usedNum + "/" + params.row.receivedNum);
           },
         },
         {
@@ -200,7 +214,8 @@ export default {
             } else if (params?.row?.startTime && params?.row?.endTime) {
               return h("div", {
                 domProps: {
-                  innerHTML: params.row.startTime + "<br/>" + params.row.endTime,
+                  innerHTML:
+                    params.row.startTime + "<br/>" + params.row.endTime,
                 },
               });
             }

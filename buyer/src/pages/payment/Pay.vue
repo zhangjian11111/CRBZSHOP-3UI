@@ -44,7 +44,7 @@
               <span>{{ item.name }}</span>
               <Tag class="ml_10" v-if="item.isDefault" color="red">默认</Tag>
               <Tag class="ml_10" v-if="item.alias" color="warning"
-                >{{ item.alias }}
+              >{{ item.alias }}
               </Tag>
             </div>
             <div>{{ item.mobile }}</div>
@@ -57,7 +57,7 @@
                 class="ml_10"
                 v-if="!item.isDefault"
                 @click.stop="delAddress(item)"
-                >删除</span
+              >删除</span
               >
             </div>
             <div class="corner-icon" v-show="selectedAddress.id === item.id">
@@ -96,8 +96,8 @@
             <div class="shop-name">
               <span>
                 <span class="hover-color" @click="goShopPage(shop.storeId)">{{
-                  shop.storeName
-                }}</span
+                    shop.storeName
+                  }}</span
                 >&nbsp;&nbsp;
               </span>
             </div>
@@ -115,17 +115,17 @@
                 >
                   <img :src="goods.goodsSku.thumbnail" alt="" />
                   <span style="vertical-align: top">{{
-                    goods.goodsSku.goodsName
-                  }}</span>
+                      goods.goodsSku.goodsName
+                    }}</span>
                 </span>
                 <span class="goods-price">{{
-                  goods.purchasePrice | unitPrice("￥")
-                }}</span>
+                    goods.purchasePrice | unitPrice("￥")
+                  }}</span>
                 <span>x{{ goods.num }}</span>
                 <span>{{ goods.goodsSku.quantity > 0 ? "有货" : "无货" }}</span>
                 <span class="goods-price">{{
-                  goods.subTotal | unitPrice("￥")
-                }}</span>
+                    goods.subTotal | unitPrice("￥")
+                  }}</span>
               </div>
             </div>
             <div class="order-mark">
@@ -137,7 +137,7 @@
                 placeholder="订单备注"
               />
               <span style="font-size: 12px; color: #999"
-                >提示：请勿填写有关支付、收货、发票方面的信息</span
+              >提示：请勿填写有关支付、收货、发票方面的信息</span
               >
             </div>
           </div>
@@ -147,7 +147,7 @@
       <div class="invoice">
         <div class="card-head mt_20 mb_20">
           <span class="relative"
-            >发票信息<span class="inv-tips">
+          >发票信息<span class="inv-tips">
               <Icon
                 type="ios-alert-outline"
               />开企业抬头发票须填写纳税人识别号，以免影响报销
@@ -177,18 +177,18 @@
                 <span
                   v-if="item.couponType === 'PRICE'"
                   class="fontsize_12 global_color"
-                  >￥<span class="price">{{
+                >￥<span class="price">{{
                     item.price | unitPrice
                   }}</span></span
                 >
                 <span
                   v-if="item.couponType === 'DISCOUNT'"
                   class="fontsize_12 global_color"
-                  ><span class="price">{{ item.discount }}</span
-                  >折</span
+                ><span class="price">{{ item.discount }}</span
+                >折</span
                 >
                 <span class="describe"
-                  >满{{ item.consumeThreshold }}元可用</span
+                >满{{ item.consumeThreshold }}元可用</span
                 >
               </div>
               <p>使用范围：{{ useScope(item.scopeType) }}</p>
@@ -206,7 +206,7 @@
               class="c-right"
               v-if="usedCouponId.includes(item.id)"
               @click="useCoupon(item.id, false)"
-              >放弃优惠</a
+            >放弃优惠</a
             >
             <i class="circle-top"></i>
             <i class="circle-bottom"></i>
@@ -346,6 +346,16 @@ export default {
               !res.result.checkedSkuList ||
               res.result.checkedSkuList.length === 0
             ) {
+              if (res.result.skuList && res.result.skuList[0]) {
+                this.$Modal.warning({
+                  title: "购物车存在无效商品！",
+                  content:
+                    "[" +
+                    res.result.skuList[0].goodsSku.goodsName +
+                    "]" +
+                    res.result.skuList[0].errorMessage,
+                });
+              }
               this.$router.push({
                 path: "/cart",
                 replace: true,
