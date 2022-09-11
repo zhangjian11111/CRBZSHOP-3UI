@@ -17,7 +17,7 @@
       }"
     >
       <li class="hz-u-index" :title="`热区${index + 1}`">{{ index + 1 }}</li>
-      
+
       <li
         title="删除该热区"
         v-show="!hideZone"
@@ -50,7 +50,7 @@
       <li class="hz-u-square hz-u-square-bc" data-pointer="dealBC"></li>
       <li class="hz-u-square hz-u-square-br" data-pointer="dealBR"></li>
     </ul>
-   
+
     <Modal
       v-model="showModal"
       title="编辑热区"
@@ -77,7 +77,7 @@
           <FormItem label="跳转链接：">
             <Input type="textarea" v-if="zoneForm.type === 'other' && zoneForm.title === '外部链接'" v-model="zoneForm.link" ></Input>
             <Button size="small" type="primary" @click="handleSelectLink"
-              >选择链接</Button
+            >选择链接</Button
             >
           </FormItem>
         </Form>
@@ -137,8 +137,10 @@ export default {
       this.zoneWidth = this.getZoneStyle(val.widthPer);
       this.zoneHeight = this.getZoneStyle(val.heightPer);
       this.tooSmall = val.widthPer < 0.01 && val.heightPer < 0.01;
-      this.zoneForm.link = val.link;
-      this.settingZone(val);
+      this.zoneForm = {
+        ...val,
+        ...this.zoneForm,
+      };
     },
     handlehideZone(isHide = true) {
       if (this.hideZone === isHide) {
@@ -159,6 +161,7 @@ export default {
     showModalFn(index) {
       this.showModal = true;
       this.currentIndex = index;
+      console.log(this.zoneForm);
     },
     // 选择图片
     handleSelectImg() {
@@ -179,11 +182,7 @@ export default {
     // 已选链接
     selectedLink(val) {
       this.zoneForm.link = this.$options.filters.formatLinkType(val);
-      this.settingZone(val);
-      this.changeInfo(this.zoneForm);
-    },
-    settingZone(val) {
-      this.zoneForm.type = val.___type || val.type;
+      this.zoneForm.type = val.___type;
       this.zoneForm.title = val.title;
       switch (val.___type) {
         case "goods":
@@ -212,6 +211,7 @@ export default {
         default:
           break;
       }
+      this.changeInfo(this.zoneForm);
     },
     saveZone() {},
     cancelZone() {

@@ -91,53 +91,18 @@ export default {
     this.zones = this.zonesInit.concat();
   },
   methods: {
-    async addHotzone() {
+    addHotzone() {
       let perInfo = {
         topPer: 0.15,
-        leftPer: 0.3,
+        leftPer: 0.4,
         widthPer: 0.2,
-        heightPer: 0.2,
+        heightPer: 0.05,
         img: "",
         link: "",
         type: "",
         title: "",
       };
-      let images = await this.getImageSize(this.image);
-      if (images) {
-        if (images.height >= 1000) {
-          perInfo.heightPer = this.convertNumberToDecimal(images.height) / (images.height / 1000);
-        } else {
-          perInfo.heightPer = this.convertNumberToDecimal(images.height);
-        }
-        perInfo.widthPer = this.convertNumberToDecimal(images.width) / 2;
-      }
       this.addItem(perInfo);
-    },
-    convertNumberToDecimal(num) {
-      if (num >= 10000) {
-        return num / 100000;
-      } else if (num >= 1000) {
-        return num / 10000;
-      } else if (num >= 100) {
-        return num / 1000;
-      } else if (num >= 10) {
-        return num / 100;
-      }
-    },
-    getImageSize(url) {
-      return new Promise(function (resolve, reject) {
-        let image = new Image();
-        image.onload = function () {
-          resolve({
-            width: image.width,
-            height: image.height,
-          });
-        };
-        image.onerror = function () {
-          reject(new Error("error"));
-        };
-        image.src = url;
-      });
     },
     editZone(index) {
       this.$refs[`zone${index}`][0].showModalFn(index);
@@ -146,8 +111,8 @@ export default {
       this.$refs[`zone${index}`][0].delItem(index);
     },
     showZoneText(zone) {
-      switch (zone.type) {
-        case "goods":
+      switch(zone.type) {
+        case 'goods':
           return `商品：${zone.goodsName}`;
         case "category":
           return `分类：${zone.name}`;
@@ -160,7 +125,7 @@ export default {
         case "other":
           return `${zone.title}`;
         default:
-          return "请选择跳转链接";
+          return '请选择跳转链接';
       }
     },
     changeInfo(res) {
@@ -169,7 +134,6 @@ export default {
       // 改变热区并发送change通知
       Object.assign(this.zones[index], info);
       this.hasChange("changeInfo");
-      this.$forceUpdate();
     },
     addItem(setting) {
       this.zones.push(setting);
