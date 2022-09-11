@@ -111,7 +111,7 @@ export default {
       this.spinShow = true;
       tracksList(this.params).then((res) => {
         this.spinShow = false;
-        if (res.success && res.result) {
+        if (res.success && res.result.records.length) {
           this.list = res.result.records;
         } else {
           this.list = [];
