@@ -94,7 +94,7 @@
             <span class="label">退货地址：</span>
             <span class="info">
                {{storeInfo.salesConsigneeName !== 'null' ? storeInfo.salesConsigneeName : '' || storeInfo.salesConsigneeMobile !=='null' ?storeInfo.salesConsigneeMobile:''|| storeInfo.salesConsigneeAddressPath !=='null'?storeInfo.salesConsigneeAddressPath:'' || storeInfo.salesConsigneeDetail !=='null'?storeInfo.salesConsigneeDetail:'' ?storeInfo.salesConsigneeName + storeInfo.salesConsigneeMobile +' '+ storeInfo.salesConsigneeAddressPath + storeInfo.salesConsigneeDetail:'暂未完善'}}
-               
+
             </span>
           </p>
           <p class="item">
@@ -133,7 +133,7 @@
             </span>
           </p>
           <p class="item">
-            
+
             <span class="label">营业执照号：</span>
             <span class="info">{{storeInfo.licenseNum}}</span>
           </p>
@@ -176,7 +176,7 @@
                 >{{ item }}
                 </Tag>
               </template>
-               
+
             </span>
           </p>
         </div>
@@ -530,7 +530,7 @@
 </template>
 
 <script>
-  import region from "@/views/lili-components/region";
+  import region from "@/components/region";
   import ossManage from "@/views/sys/oss-manage/ossManage";
   import * as RegExp from '@/libs/RegExp.js';
   import {getCategoryTree} from "@/api/goods";

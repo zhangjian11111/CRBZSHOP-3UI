@@ -493,7 +493,7 @@
           </Row>
         </div>
       </div>
-      
+
       <div slot="footer" style="text-align: right">
         <Button @click="printModal = false">关闭</Button>
         <Button type="primary" v-print="printInfoObj">打印发货单</Button>
@@ -505,7 +505,7 @@
 <script>
 import * as API_Order from "@/api/order";
 import * as RegExp from "@/libs/RegExp.js";
-import region from "@/views/lili-components/region";
+import region from "@/components/region";
 import vueQr from "vue-qr";
 export default {
   name: "orderList",
