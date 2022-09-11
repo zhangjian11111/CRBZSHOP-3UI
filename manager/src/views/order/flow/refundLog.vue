@@ -21,7 +21,7 @@
       <Table :loading="loading" border :columns="columns" :data="data" ref="table" class="mt_10"></Table>
       <Row type="flex" justify="end" class="mt_10">
         <Page :current="searchForm.pageNumber" :total="total" :page-size="searchForm.pageSize" @on-change="changePage" @on-page-size-change="changePageSize" :page-size-opts="[10, 20, 50]" size="small"
-          show-total show-elevator show-sizer></Page>
+              show-total show-elevator show-sizer></Page>
       </Row>
     </Card>
   </div>
@@ -94,7 +94,7 @@ export default {
           title: "退款状态",
           key: "isRefund",
           fixed: "right",
-          width: 95,
+          width: 120,
           render: (h, params) => {
             if (params.row.isRefund == "1") {
               return h("div", [
@@ -102,7 +102,11 @@ export default {
               ]);
             } else {
               return h("div", [
-                h("Tag", { props: { color: "orange" } }, "未退款"),
+                h("span", [
+                  h("Tag", { props: { color: "orange" } }, "未退款"),
+                  h("span", params.row.errorMessage || ''),
+                ]),
+                // h("Tag", { props: { color: "orange" } }, "未退款"),
               ]);
             }
           },
@@ -115,7 +119,7 @@ export default {
   methods: {
     // 初始化数据
     init() {
-      this.getDataList();  
+      this.getDataList();
     },
     // 分页 改变页码
     changePage(v) {
