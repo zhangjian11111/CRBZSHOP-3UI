@@ -188,7 +188,7 @@ import * as API_Shop from "@/api/shops";
 import { validateMobile } from "@/libs/validate";
 import uploadPicThumb from "@/views/my-components/lili/upload-pic-thumb";
 import liliMap from "@/views/my-components/map/index";
-import regionMap from "@/components/region";
+import regionMap from "@/views/lili-components/region";
 import * as RegExp from "@/libs/RegExp.js";
 import Cookies from "js-cookie";
 

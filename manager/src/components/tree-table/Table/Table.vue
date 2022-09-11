@@ -393,4 +393,4 @@ export default {
 };
 </script>
 
-<style lang="less" src="Table.less"></style>
+<style lang="less" src="./Table.less"></style>
