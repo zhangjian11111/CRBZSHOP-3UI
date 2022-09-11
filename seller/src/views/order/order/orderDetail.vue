@@ -6,27 +6,27 @@
           v-if="allowOperation.editPrice"
           @click="modifyPrice"
           type="primary"
-          >调整价格</Button
+        >调整价格</Button
         >
         <Button
           v-if="allowOperation.editConsignee"
           @click="editAddress"
           type="primary"
-          >修改收货地址</Button
+        >修改收货地址</Button
         >
         <Button
           v-if="allowOperation.showLogistics"
           @click="logistics"
           type="primary"
-          >查看物流</Button
+        >查看物流</Button
         >
         <Button @click="orderLogModal = true" type="primary">订单日志</Button>
         <Button @click="printOrder" type="primary" ghost style="float:right;">打印发货单</Button>
         <Button v-if="allowOperation.take" @click="orderTake" type="primary"
-          >订单核销</Button
+        >订单核销</Button
         >
         <Button v-if="allowOperation.ship" @click="orderDeliver" type="primary"
-          >发货</Button
+        >发货</Button
         >
       </div>
     </Card>
@@ -172,8 +172,8 @@
             <div style="margin-left: 13px">
               <div class="div-zoom">
                 <a @click="linkTo(row.goodsId, row.skuId)">{{
-                  row.goodsName
-                }}</a>
+                    row.goodsName
+                  }}</a>
               </div>
               <span v-for="(item, key) in JSON.parse(row.specs)" :key="key">
                 <span
@@ -215,8 +215,8 @@
           <li>
             <span class="label">商品总额：</span>
             <span class="txt">{{
-              orderInfo.order.priceDetailDTO.goodsPrice | unitPrice("￥")
-            }}</span>
+                orderInfo.order.priceDetailDTO.goodsPrice | unitPrice("￥")
+              }}</span>
           </li>
           <li v-if="orderInfo.order.priceDetailDTO.discountPrice && orderInfo.order.priceDetailDTO.discountPrice > 0">
             <span class="label">优惠金额：</span>
@@ -230,24 +230,24 @@
           <li>
             <span class="label">运费：</span>
             <span class="txt">{{
-              orderInfo.order.freightPrice | unitPrice("￥")
-            }}</span>
+                orderInfo.order.freightPrice | unitPrice("￥")
+              }}</span>
           </li>
           <li v-if="orderInfo.order.priceDetailDTO.updatePrice">
-              <span class="label">修改金额：</span>
-              <span class="txt theme_color">¥{{ orderInfo.order.priceDetailDTO.updatePrice | unitPrice }}</span>
-            </li>
+            <span class="label">修改金额：</span>
+            <span class="txt theme_color">¥{{ orderInfo.order.priceDetailDTO.updatePrice | unitPrice }}</span>
+          </li>
           <li v-if="orderInfo.order.priceDetailDTO.payPoint != 0">
             <span class="label">使用积分：</span>
             <span class="txt">{{
-              orderInfo.order.priceDetailDTO.payPoint
-            }}</span>
+                orderInfo.order.priceDetailDTO.payPoint
+              }}</span>
           </li>
 
           <li>
             <span class="label">应付金额：</span>
             <span class="txt flowPrice"
-              >¥{{ orderInfo.order.flowPrice | unitPrice }}</span
+            >¥{{ orderInfo.order.flowPrice | unitPrice }}</span
             >
           </li>
         </ul>
@@ -273,7 +273,7 @@
               size="large"
               :min="0.01"
               :max="99999"
-              ><span slot="append">元</span></InputNumber
+            ><span slot="append">元</span></InputNumber
             >
           </FormItem>
         </Form>
@@ -325,7 +325,7 @@
               :loading="submitLoading"
               type="primary"
               style="margin-left: 8px"
-              >修改
+            >修改
             </Button>
             <region
               style="width: 400px"
@@ -409,14 +409,14 @@
         <dl>
           <dt>物流公司：</dt>
           <dd>
-            <div class="text-box">{{ logisticsInfo.shipper }}</div>
+            <div class="text-box">{{ logisticsInfo.shipper || orderInfo.order.logisticsName }}</div>
           </dd>
         </dl>
         <dl>
           <dt>快递单号：</dt>
           <dd>
             <div nctype="ordersSn" class="text-box">
-              {{ logisticsInfo.logisticCode }}
+              {{ logisticsInfo.logisticCode || orderInfo.order.logisticsNo }}
             </div>
           </dd>
         </dl>
@@ -457,7 +457,7 @@
                 v-for="(item, i) in checkedLogistics"
                 :key="i"
                 :value="item.id"
-                >{{ item.name }}
+              >{{ item.name }}
               </Option>
             </Select>
           </FormItem>
@@ -485,46 +485,46 @@
         <div id="printInfo">
           <Row v-if="orderInfo.order.remark !== ''">
             <Col span="24">
-                <p class="lineH30 f14">备注：{{ orderInfo.order.remark }}</p>
-              </Col>
+              <p class="lineH30 f14">备注：{{ orderInfo.order.remark }}</p>
+            </Col>
           </Row>
           <Row>
-              <Col span="12">
-                <p class="lineH30 f14">收件人：{{ orderInfo.order.consigneeName }}</p>
-              </Col>
-              <Col span="12" v-if="orderInfo.order.consigneeMobile">
-                <p class="lineH30 f14" v-if="printHiddenFlag">手机号：{{ orderInfo.order.consigneeMobile.replace(/^(.{3})(?:\d+)(.{4})$/, "$1****$2")  }}</p>
-                <p class="lineH30 f14" v-else>手机号：{{ orderInfo.order.consigneeMobile  }}</p>
-              </Col>
+            <Col span="12">
+              <p class="lineH30 f14">收件人：{{ orderInfo.order.consigneeName }}</p>
+            </Col>
+            <Col span="12" v-if="orderInfo.order.consigneeMobile">
+              <p class="lineH30 f14" v-if="printHiddenFlag">手机号：{{ orderInfo.order.consigneeMobile.replace(/^(.{3})(?:\d+)(.{4})$/, "$1****$2")  }}</p>
+              <p class="lineH30 f14" v-else>手机号：{{ orderInfo.order.consigneeMobile  }}</p>
+            </Col>
           </Row>
           <Row>
-              <Col span="24">
-                <p class="lineH30 f14">收货地址：{{ orderInfo.order.consigneeAddressPath }}{{ orderInfo.order.consigneeDetail }}</p>
-              </Col>
+            <Col span="24">
+              <p class="lineH30 f14">收货地址：{{ orderInfo.order.consigneeAddressPath }}{{ orderInfo.order.consigneeDetail }}</p>
+            </Col>
           </Row>
           <Row>
-              <Col span="24">
-                <p class="printgoodtitle">商品信息</p>
-                <div class="printgoodinfo">
-                  <div v-for="(item,index) in orderInfo.orderItems" :key="index" class="printgooditem">
-                    <div class="printgoodname">
-                      <p>{{item.goodsName}}</p>
-                      <div class="printgoodguid">
+            <Col span="24">
+              <p class="printgoodtitle">商品信息</p>
+              <div class="printgoodinfo">
+                <div v-for="(item,index) in orderInfo.orderItems" :key="index" class="printgooditem">
+                  <div class="printgoodname">
+                    <p>{{item.goodsName}}</p>
+                    <div class="printgoodguid">
                         <span v-for="(itemchild, keychild) in JSON.parse(item.specs)" :key="keychild">
                           <span class="printgoodguiditem" v-if="keychild != 'images'">
                             {{ keychild }} : {{ itemchild }}
                           </span>
                         </span>
-                      </div>
                     </div>
-                    <span class="printgoodnumber">数量：{{item.num}}</span>
                   </div>
+                  <span class="printgoodnumber">数量：{{item.num}}</span>
                 </div>
-              </Col>
+              </div>
+            </Col>
           </Row>
         </div>
       </div>
-      
+
       <div slot="footer" style="text-align: right">
         <Button @click="printModal = false">关闭</Button>
         <Button type="primary" v-print="printInfoObj">打印发货单</Button>
