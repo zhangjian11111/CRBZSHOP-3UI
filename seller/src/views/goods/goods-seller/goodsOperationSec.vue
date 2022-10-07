@@ -1775,6 +1775,7 @@ export default {
           let skuInfoNames = this.skuInfo.map((n) => n.name);
           submit.skuList = [];
           this.skuTableData.map((sku) => {
+            submit.sn = sku.sn;
             let skuCopy = {
               cost: sku.cost,
               price: sku.price,
@@ -1810,6 +1811,7 @@ export default {
             : (submit.recommend = false);
           if (this.goodsId) {
             API_GOODS.editGoods(this.goodsId, submit).then((res) => {
+              console.log('hello world',this.baseInfoForm)
               if (res.success) {
                 this.submitLoading = false;
                 this.$router.go(-1);
@@ -1819,6 +1821,7 @@ export default {
             });
           } else {
             API_GOODS.createGoods(submit).then((res) => {
+              console.log('hello world',this.baseInfoForm)
               if (res.success) {
                 this.submitLoading = false;
                 this.$parent.activestep = 2;
