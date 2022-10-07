@@ -69,6 +69,15 @@
             <Option value="VIRTUAL_GOODS">虚拟商品</Option>
           </Select>
         </Form-item>
+        <Form-item label="商品条码/货号" prop="sn">
+          <Input
+            type="text"
+            v-model="searchForm.sn"
+            placeholder="商品货号"
+            clearable
+            style="width: 200px"
+          />
+        </Form-item>
         <Button
           @click="handleSearch"
           class="search-btn"
