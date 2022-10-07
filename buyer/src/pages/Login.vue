@@ -374,7 +374,7 @@ export default {
         this.qrCodeTimer = setInterval(() => {
 
           this.qrCodeStatus = 'fail' // 如果过期将二维码转为失效状态
-        }, 21 * 1000);
+        }, 10 * 1000);
       }
     },
 
@@ -421,7 +421,7 @@ export default {
       storage.setItem("uuid", uuid);
       loginCallback(uuid).then((res) => {
         if (res.success) {
-          this.loginSuccess(result.accessToken,result.refreshToken);
+          this.loginSuccess(res.result.accessToken,res.result.refreshToken);
         }
       });
     }
