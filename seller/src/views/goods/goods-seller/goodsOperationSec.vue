@@ -1775,8 +1775,8 @@ export default {
           let skuInfoNames = this.skuInfo.map((n) => n.name);
           submit.skuList = [];
           this.skuTableData.map((sku) => {
-            submit.sn = '';
-            submit.sn += sku.sn;
+            // submit.sn += sku.sn;
+            submit.sn = '' + sku.sn;
             let skuCopy = {
               cost: sku.cost,
               price: sku.price,
