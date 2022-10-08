@@ -1755,6 +1755,7 @@ export default {
           }
           this.baseInfoForm.goodsId = this.goodsId;
           let submit = JSON.parse(JSON.stringify(this.baseInfoForm));
+          submit.sn = '';
           if (
             submit.goodsGalleryFiles &&
             submit.goodsGalleryFiles.length <= 0
@@ -1775,8 +1776,7 @@ export default {
           let skuInfoNames = this.skuInfo.map((n) => n.name);
           submit.skuList = [];
           this.skuTableData.map((sku) => {
-            // submit.sn += sku.sn;
-            submit.sn = '' + sku.sn;
+            submit.sn += sku.sn;
             let skuCopy = {
               cost: sku.cost,
               price: sku.price,
