@@ -35,7 +35,7 @@ const vueConfig = {
   assetsDir: 'static',
   runtimeCompiler: false,
   devServer: {
-    port: 8000,
+    port: 10004,
     // proxy: {
     //   //配置跨域
     //   '/api': {
