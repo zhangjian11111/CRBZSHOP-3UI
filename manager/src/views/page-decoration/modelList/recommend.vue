@@ -10,7 +10,7 @@
         <div class="setup-box">
           <div>
             <Button size="small" @click.stop="handleSelectModel(msgLeft, true)"
-            >编辑</Button
+              >编辑</Button
             >
           </div>
         </div>
@@ -24,14 +24,14 @@
             size="small"
             :style="{ background: msgLeft.bgColor }"
             class="fz_12 view-btn"
-          >点击查看</Button
+            >点击查看</Button
           >
           <div class="setup-box">
             <div>
               <Button
                 size="small"
                 @click.stop="handleSelectModel(msgLeft.list[0])"
-              >编辑</Button
+                >编辑</Button
               >
             </div>
           </div>
@@ -47,7 +47,7 @@
               <div class="setup-box">
                 <div>
                   <Button size="small" @click.stop="handleSelectModel(item)"
-                  >编辑</Button
+                    >编辑</Button
                   >
                 </div>
               </div>
@@ -66,7 +66,7 @@
         <div class="setup-box">
           <div>
             <Button size="small" @click.stop="handleSelectModel(msgRight, true)"
-            >编辑</Button
+              >编辑</Button
             >
           </div>
         </div>
@@ -83,8 +83,8 @@
           >
             <div>
               <span :style="{ background: msgRight.bgColor }">{{
-                  item.name
-                }}</span>
+                item.name
+              }}</span>
               <span>{{ item.describe }}</span>
             </div>
             <div class="right-img">
@@ -94,7 +94,7 @@
           <div class="setup-box">
             <div>
               <Button size="small" @click.stop="handleSelectModel(item)"
-              >编辑</Button
+                >编辑</Button
               >
             </div>
           </div>
@@ -143,25 +143,25 @@
         </div>
         <div>
           图片链接：<Input
-          class="outsideUrl"
-          v-model="selected.url"
-          :disabled="!!selected.type && selected.type !== 'link'"
-          placeholder="https://"
-        />
+            class="outsideUrl"
+            v-model="selected.url"
+            :disabled="!!selected.type && selected.type !== 'link'"
+            placeholder="https://"
+          />
           <Button
             size="small"
             class="ml_10"
             type="primary"
             @click="handleSelectLink"
-          >选择链接</Button
+            >选择链接</Button
           >
         </div>
         <div>
           <Button size="small" type="primary" @click="handleSelectImg"
-          >选择图片</Button
+            >选择图片</Button
           >&nbsp;
           <Button size="small" type="primary" @click="handleSelectGoods"
-          >选择商品</Button
+            >选择商品</Button
           >
         </div>
       </div>
@@ -179,18 +179,18 @@
         <div><span>副标题：</span><Input v-model="selected.secondTitle" /></div>
         <div>
           <span
-          >副标题链接：<Input
-            class="outsideUrl"
-            v-model="selected.url"
-            :disabled="!!selected.type && selected.type !== 'link'"
-            placeholder="https://" /></span
+            >副标题链接：<Input
+              class="outsideUrl"
+              v-model="selected.url"
+              :disabled="!!selected.type && selected.type !== 'link'"
+              placeholder="https://" /></span
           ><Button
-          size="small"
-          class="ml_10"
-          type="primary"
-          @click="handleSelectLink"
-        >选择链接</Button
-        >
+            size="small"
+            class="ml_10"
+            type="primary"
+            @click="handleSelectLink"
+            >选择链接</Button
+          >
         </div>
         <div>
           <span>背景色：</span><Input v-model="selected.bgColor" />

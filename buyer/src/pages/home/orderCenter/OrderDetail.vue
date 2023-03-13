@@ -14,21 +14,21 @@
         @click="goPay(order.order.sn)"
         size="small"
         v-if="order.allowOperationVO.pay"
-      >去支付</Button
+        >去支付</Button
       >
       <Button
         type="info"
         @click="received(order.order.sn)"
         size="small"
         v-if="order.allowOperationVO.rog"
-      >确认收货</Button
+        >确认收货</Button
       >
       <Button
         type="error"
         @click="handleCancelOrder(order.order.sn)"
         v-if="order.allowOperationVO.cancel"
         size="small"
-      >取消订单</Button
+        >取消订单</Button
       >
     </Card>
     <p class="verificationCode" v-if="order.order.verificationCode">
@@ -53,7 +53,7 @@
         ></Step>
       </Steps>
     </div>
-    <div class="order-card">
+    <div class="order-card" v-if="order.order.deliveryMethod == 'LOGISTICS'">
       <h3>收货人信息</h3>
       <p>收货人：{{ order.order.consigneeName }}</p>
       <p>手机号码：{{ order.order.consigneeMobile | secrecyMobile }}</p>
@@ -61,6 +61,11 @@
         收货地址：{{ order.order.consigneeAddressPath | unitAddress }}
         {{ order.order.consigneeDetail }}
       </p>
+    </div>
+    <div class="order-card" v-if="order.order.deliveryMethod == 'SELF_PICK_UP'">
+      <h3>自提点信息</h3>
+      <p>自提点名称：{{ order.order.storeAddressPath }}</p>
+      <p>联系方式：{{ order.order.storeAddressMobile }}</p>
     </div>
     <div class="order-card">
       <h3>付款信息</h3>
@@ -70,7 +75,7 @@
     <div class="order-card" v-if="!order.order.verificationCode">
       <h3>配送信息</h3>
       <p>配送方式：{{ order.deliveryMethodValue }}</p>
-      <p>配送状态：{{ order.deliverStatusValue }}</p>
+      <p v-if="order.order.deliveryMethod === 'LOGISTICS'">配送状态：{{ order.deliverStatusValue }}</p>
       <p v-if="logistics">
         物流信息：{{ logistics.shipper || "暂无物流信息" }}
       </p>
@@ -102,71 +107,71 @@
     <div class="goods">
       <div class="shop-name">
         <span @click="shopPage(order.order.storeId)">{{
-            order.order.storeName
-          }}</span>
+          order.order.storeName
+        }}</span>
       </div>
       <table>
         <thead>
-        <tr>
-          <th width="40%">商品</th>
-          <th width="20%">货号</th>
-          <th width="10%">单价</th>
-          <th width="10%">数量</th>
-          <th width="10%">小计</th>
-          <th width="10%">操作</th>
-        </tr>
+          <tr>
+            <th width="40%">商品</th>
+            <th width="20%">货号</th>
+            <th width="10%">单价</th>
+            <th width="10%">数量</th>
+            <th width="10%">小计</th>
+            <th width="10%">操作</th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="(goods, goodsIndex) in order.orderItems" :key="goodsIndex">
-          <td>
-            <img
-              @click="goodsDetail(goods.skuId, goods.goodsId)"
-              :src="goods.image"
-              alt=""
-            />
-            <div>
-              <p
+          <tr v-for="(goods, goodsIndex) in order.orderItems" :key="goodsIndex">
+            <td>
+              <img
                 @click="goodsDetail(goods.skuId, goods.goodsId)"
-                class="hover-color"
-              >
-                {{ goods.goodsName }}
-              </p>
-            </div>
-          </td>
-          <td>{{ goods.id }}</td>
-          <td>{{ goods.goodsPrice | unitPrice("￥") }}</td>
-          <td>{{ goods.num }}</td>
-          <td>{{ (goods.goodsPrice * goods.num) | unitPrice("￥") }}</td>
-          <td>
-            <Button
-              v-if="
+                :src="goods.image"
+                alt=""
+              />
+              <div>
+                <p
+                  @click="goodsDetail(goods.skuId, goods.goodsId)"
+                  class="hover-color"
+                >
+                  {{ goods.goodsName }}
+                </p>
+              </div>
+            </td>
+            <td>{{ goods.id }}</td>
+            <td>{{ goods.goodsPrice | unitPrice("￥") }}</td>
+            <td>{{ goods.num }}</td>
+            <td>{{ (goods.goodsPrice * goods.num) | unitPrice("￥") }}</td>
+            <td>
+              <Button
+                v-if="
                   goods.afterSaleStatus.includes('NOT_APPLIED') ||
                   goods.afterSaleStatus.includes('PART_AFTER_SALE')
                 "
-              @click="applyAfterSale(goods.sn)"
-              type="info"
-              size="small"
-              class="mb_5"
-            >申请售后</Button
-            >
-            <Button
-              v-if="goods.commentStatus == 'UNFINISHED'"
-              @click="comment(order.order.sn, goodsIndex)"
-              size="small"
-              type="success"
-              class="fontsize_12 mb_5"
-            >评价</Button
-            >
-            <Button
-              v-if="goods.complainStatus == 'NO_APPLY'"
-              @click="complain(order.order.sn, goodsIndex)"
-              type="warning"
-              class="fontsize_12"
-              size="small"
-            >投诉</Button
-            >
-          </td>
-        </tr>
+                @click="applyAfterSale(goods.sn)"
+                type="info"
+                size="small"
+                class="mb_5"
+                >申请售后</Button
+              >
+              <Button
+                v-if="goods.commentStatus == 'UNFINISHED'"
+                @click="comment(order.order.sn, goodsIndex)"
+                size="small"
+                type="success"
+                class="fontsize_12 mb_5"
+                >评价</Button
+              >
+              <Button
+                v-if="goods.complainStatus == 'NO_APPLY'"
+                @click="complain(order.order.sn, goodsIndex)"
+                type="warning"
+                class="fontsize_12"
+                size="small"
+                >投诉</Button
+              >
+            </td>
+          </tr>
         </tbody>
       </table>
       <!-- 订单价格 -->
@@ -177,20 +182,20 @@
         <div>
           <span>商品总价：</span
           ><span>{{ order.order.goodsPrice | unitPrice("￥") }}</span
-        ><br />
+          ><br />
         </div>
         <div>
           <span>运费：</span
           ><span>+{{ order.order.freightPrice | unitPrice("￥") }}</span
-        ><br />
+          ><br />
         </div>
         <div v-if="order.order.priceDetailDTO.couponPrice">
           <span>优惠券：</span
           ><span
-        >-{{
-            order.order.priceDetailDTO.couponPrice || 0 | unitPrice("￥")
-          }}</span
-        >
+            >-{{
+              order.order.priceDetailDTO.couponPrice || 0 | unitPrice("￥")
+            }}</span
+          >
         </div>
         <div v-if="order.order.discountPrice">
           <span>活动优惠：</span
@@ -199,8 +204,8 @@
         <div>
           <span>应付金额：</span>
           <span class="actrual-price">{{
-              order.order.flowPrice | unitPrice("￥")
-            }}</span>
+            order.order.flowPrice | unitPrice("￥")
+          }}</span>
         </div>
       </div>
     </div>
@@ -270,6 +275,9 @@ export default {
         if (res.success) {
           this.order = res.result;
           this.progressList = res.result.orderLogs;
+          if (this.order.order.deliveryMethod === 'LOGISTICS') {
+            this.traces();
+          }
         }
       });
     },
@@ -336,7 +344,6 @@ export default {
   },
   mounted() {
     this.getDetail();
-    this.traces();
   },
 };
 </script>

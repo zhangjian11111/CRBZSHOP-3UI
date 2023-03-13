@@ -17,7 +17,7 @@
       }"
     >
       <li class="hz-u-index" :title="`热区${index + 1}`">{{ index + 1 }}</li>
-
+      
       <li
         title="删除该热区"
         v-show="!hideZone"
@@ -50,7 +50,7 @@
       <li class="hz-u-square hz-u-square-bc" data-pointer="dealBC"></li>
       <li class="hz-u-square hz-u-square-br" data-pointer="dealBR"></li>
     </ul>
-
+   
     <Modal
       v-model="showModal"
       title="编辑热区"
@@ -77,7 +77,7 @@
           <FormItem label="跳转链接：">
             <Input type="textarea" v-if="zoneForm.type === 'other' && zoneForm.title === '外部链接'" v-model="zoneForm.link" ></Input>
             <Button size="small" type="primary" @click="handleSelectLink"
-            >选择链接</Button
+              >选择链接</Button
             >
           </FormItem>
         </Form>

@@ -43,7 +43,7 @@
       <div slot="footer">
         <Button type="text" @click="modalVisible = false">取消</Button>
         <Button type="primary" :loading="submitLoading" @click="handleSubmit"
-        >提交</Button
+          >提交</Button
         >
       </div>
     </Modal>

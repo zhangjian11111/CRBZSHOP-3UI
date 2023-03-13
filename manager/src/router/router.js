@@ -194,6 +194,12 @@ export const otherRouter = {
       component: () => import("@/views/promotions/coupon/coupon.vue")
     },
     {
+      path: "promotions/coupon-receive",
+      title: "优惠券领取记录",
+      name: "coupon-receive",
+      component: () => import("@/views/promotions/coupon/coupon-receive.vue"),
+    },
+    {
       path: "promotions/add-platform-coupon",
       title: "添加平台优惠券",
       name: "add-platform-coupon",
@@ -307,5 +313,14 @@ export const page500 = {
   component: () => import("@/views/error-page/500.vue")
 };
 
+export const externalLink = {
+  path: "/external-link",
+  meta: {
+    title: "外部链接"
+  },
+  name: "external-link",
+  component: () => import("@/views/external-link/index.vue")
+};
+
 // 所有上面定义的路由都要写在下面的routers里
-export const routers = [loginRouter, otherRouter, page500, page403];
+export const routers = [loginRouter, otherRouter, page500, page403, externalLink];

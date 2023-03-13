@@ -19,7 +19,7 @@
             </div>
           </Poptip>
       </Input>
-
+      
       <Upload
         :action="uploadFileUrl"
         :headers="accessToken"
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { uploadFile } from "@/api";
+import { uploadFile } from "@/api/index";
 export default {
   name: "uploadPicInput",
   props: {

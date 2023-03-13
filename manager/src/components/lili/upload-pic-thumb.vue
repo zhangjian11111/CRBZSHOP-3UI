@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { uploadFile } from "@/api";
+import { uploadFile } from "@/api/index";
 import vuedraggable from "vuedraggable";
 export default {
   name: "uploadPicThumb",

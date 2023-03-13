@@ -1,5 +1,8 @@
 <template>
   <div>
+    <Modal title="预览图片" v-model="visible">
+      <img :src="previewImage" v-if="visible" style="width: 100%">
+    </Modal>
     <div class="content-goods-publish">
       <Form
         ref="baseInfoForm"
@@ -12,8 +15,8 @@
           <div class="form-item-view">
             <FormItem label="商品分类">
               <span class="goods-category-name">{{
-                  this.baseInfoForm.categoryName[0]
-                }}</span>
+                this.baseInfoForm.categoryName[0]
+              }}</span>
               <span> &gt; {{ this.baseInfoForm.categoryName[1] }}</span>
               <span> &gt; {{ this.baseInfoForm.categoryName[2] }}</span>
             </FormItem>
@@ -71,7 +74,7 @@
                   v-for="(item, index) in goodsUnitList"
                   :key="index"
                   :value="item"
-                >{{ item }}
+                  >{{ item }}
                 </Option>
               </Select>
             </FormItem>
@@ -124,8 +127,8 @@
                           @on-blur="checkWholesaleNum(index)"
                         >
                           <span slot="append">{{
-                              baseInfoForm.goodsUnit || ""
-                            }}</span>
+                            baseInfoForm.goodsUnit || ""
+                          }}</span>
                         </Input>
                       </div>
                     </template>
@@ -153,7 +156,7 @@
                           style="margin-left: 5px"
                           type="error"
                           @click="handleDeleteWholesaleData(index)"
-                        >删除
+                          >删除
                         </Button>
                       </div>
                     </template>
@@ -317,7 +320,7 @@
                           </div>
                           <div>
                             <Button @click="addSpec($index, item)"
-                            >添加规格值
+                              >添加规格值
                             </Button>
                           </div>
                         </Card>
@@ -328,7 +331,7 @@
                       size="small"
                       type="primary"
                       @click="addSkuItem"
-                    >添加规格项
+                      >添加规格项
                     </Button>
                     &nbsp;
                     <Button
@@ -336,7 +339,7 @@
                       size="small"
                       type="warning"
                       @click="handleClearSku"
-                    >清空规格项
+                      >清空规格项
                     </Button>
                   </div>
                 </Panel>
@@ -385,8 +388,8 @@
                             @on-change="updateSkuTable(row, 'quantity')"
                           >
                             <span slot="append">{{
-                                baseInfoForm.goodsUnit || ""
-                              }}</span>
+                              baseInfoForm.goodsUnit || ""
+                            }}</span>
                           </Input>
                         </template>
                         <template slot="cost" slot-scope="{ row }">
@@ -440,7 +443,7 @@
                           </Input>
                         </template>
                         <template slot="images" slot-scope="{ row }">
-                          <Button @click="editSkuPicture(row)">编辑图片</Button>
+                          <div @mouseover="mouseOver(row)" @mouseleave="mouseLeave"><Button @click="editSkuPicture(row)" type="error" >编辑图片 ！</Button></div>
                           <Modal
                             v-model="showSkuPicture"
                             :styles="{ top: '30px' }"
@@ -510,6 +513,20 @@
               </Collapse>
             </div>
           </div>
+          <h4 v-if="showContent">规格描述内容</h4>
+          <div v-if="showContent" class="form-item-view">
+              <div >
+                <FormItem
+                  class="form-item-view-el"
+                  :label="contentImage"
+                >
+                  <!-- {{item.url}} -->
+                  <div style="width:100%;display:flex;" v-for="(item,index) in listImages.images" :key="index">
+                    <img style="width:100px;flex:1;margin-top:10px;cursor:pointer;" :src="item.url" @click="getImages(item.url)"/>
+                  </div>
+                </FormItem>
+              </div>
+            </div>
           <h4>商品详情描述</h4>
           <div class="form-item-view">
             <div class="tree-bar">
@@ -535,15 +552,16 @@
               prop="intro"
               style="width: 100%"
             >
+             <Alert class='editor-alert' type="warning">将文件夹下的图片进行拖拽到文本框内，即可完成单/多图片上传。</Alert>
               <editor
                 ref="editor"
                 v-model="baseInfoForm.intro"
-                :init="{ ...initEditor, height: '800px' }"
+                :init="{ ...initEditor, height: '400px' }"
                 openXss
               ></editor>
               <div class="promise-intro-btn">
                 <Button type="primary" @click="promiseIntroEditor"
-                >将PC商品描述同步到移动端描述
+                  >将PC商品描述同步到移动端描述
                 </Button>
               </div>
             </FormItem>
@@ -557,7 +575,7 @@
               <editor
                 ref="editor"
                 v-model="baseInfoForm.mobileIntro"
-                :init="{ ...initEditor, height: '800px' }"
+                :init="{ ...initEditor, height: '400px' }"
                 openXss
               ></editor>
             </FormItem>
@@ -575,7 +593,7 @@
                     v-for="item in logisticsTemplate"
                     :key="item.id"
                     :value="item.id"
-                  >{{ item.name }}
+                    >{{ item.name }}
                   </Option>
                 </Select>
               </FormItem>
@@ -734,6 +752,11 @@ export default {
       regular,
       initEditor,
       total: 0,
+      showContent:false,
+      listImages:[],
+      contentImage:"",
+      visible: false, // 图片预览
+      previewImage: '', // 预览图片地址
       global: 0,
       accessToken: "", //令牌token
       goodsParams: "",
@@ -885,6 +908,22 @@ export default {
     };
   },
   methods: {
+    getImages(v){
+      this.previewImage = v;
+      this.visible = true;
+    },
+    mouseOver(v){
+      this.showContent = true
+      this.listImages = v
+      if(this.listImages.images.length <= 0){
+        this.contentImage = '规格专属图片暂无'
+      }else{
+        this.contentImage = '当前规格专属图片'
+      }
+    },
+    mouseLeave(){
+      // this.showContent = false
+    },
     /**
      * 选择参数
      * @paramsGroup 参数分组
@@ -914,7 +953,7 @@ export default {
       ) {
         this.baseInfoForm.goodsParamsDTOList[groupIndex].goodsParamsItemDTOList[
           paramsIndex
-          ] = {
+        ] = {
           paramName: "",
           paramValue: "",
           isIndex: "",
@@ -925,7 +964,7 @@ export default {
       }
       this.baseInfoForm.goodsParamsDTOList[groupIndex].goodsParamsItemDTOList[
         paramsIndex
-        ] = {
+      ] = {
         paramName: params.paramName,
         paramValue: value,
         isIndex: params.isIndex,
@@ -936,6 +975,7 @@ export default {
     },
     // 编辑sku图片
     editSkuPicture(row) {
+      this.showContent = false
       if (row.images && row.images.length > 0) {
         this.previewPicture = row.images[0].url;
       }
@@ -1076,10 +1116,10 @@ export default {
     },
     // 图片上传前钩子
     handleBeforeUploadGoodsPicture(file) {
-      const check = this.baseInfoForm.goodsGalleryFiles.length < 5;
+      const check = this.baseInfoForm.goodsGalleryFiles.length < 15;
       if (!check) {
         this.$Notice.warning({
-          title: "图片数量不能大于五张",
+          title: "图片数量不能大于十五张",
         });
         return false;
       }
@@ -1198,7 +1238,7 @@ export default {
         this.baseInfoForm.categoryPath = cateId.toString();
       }
       this.firstData.goodsType &&
-      (this.baseInfoForm.goodsType = this.firstData.goodsType);
+        (this.baseInfoForm.goodsType = this.firstData.goodsType);
     },
     // 渲染sku数据
     renderGoodsDetailSku(skuList) {
@@ -1343,6 +1383,10 @@ export default {
         this.$Message.error("已存在相同规格值！");
         return;
       }
+      if (val.value === '') {
+        this.$Message.error("规格值不能为空！");
+        return;
+      }
       let curVal = this.currentSkuVal;
       this.skuTableData = this.skuTableData.map((e) => {
         if (e[val.name] === curVal) {
@@ -1473,18 +1517,35 @@ export default {
           filterSkuInfo.forEach((skuInfo) => {
             totalLength *= skuInfo.spec_values.length;
           });
-          for (let i = 0; i < totalLength; i++) {
-            let find = cloneObj(this.skuTableData[index - 1]);
-            find[item.name] = "";
-            find.id = "";
-            find.price && (find.price = "");
-            find.sn && (find.sn = "");
-            find.cost && (find.cost = "");
-            find.quantity && (find.quantity = "");
-            find.weight && (find.weight = "");
+          if ($index === 0) {
+            index = 1;
+            for (let i = 0; i < totalLength; i++) {
+              let find = cloneObj(this.skuTableData[index - 1]);
+              find[item.name] = "";
+              find.id = "";
+              find.price && (find.price = "");
+              find.sn && (find.sn = "");
+              find.cost && (find.cost = "");
+              find.quantity && (find.quantity = "");
+              find.weight && (find.weight = "");
 
-            this.skuTableData.splice(index, 0, find);
-            index += beforeLength + 1;
+              this.skuTableData.splice(this.skuTableData.length, 0, find);
+              index ++;
+            }
+          } else {
+            for (let i = 0; i < totalLength; i++) {
+              let find = cloneObj(this.skuTableData[index - 1]);
+              find[item.name] = "";
+              find.id = "";
+              find.price && (find.price = "");
+              find.sn && (find.sn = "");
+              find.cost && (find.cost = "");
+              find.quantity && (find.quantity = "");
+              find.weight && (find.weight = "");
+
+              this.skuTableData.splice(index, 0, find);
+              index += $index === 0 ? beforeLength : beforeLength + 1;
+            }
           }
         }
         this.baseInfoForm.regeneratorSkuFlag = true;
@@ -1755,7 +1816,6 @@ export default {
           }
           this.baseInfoForm.goodsId = this.goodsId;
           let submit = JSON.parse(JSON.stringify(this.baseInfoForm));
-          submit.sn = '';
           if (
             submit.goodsGalleryFiles &&
             submit.goodsGalleryFiles.length <= 0
@@ -1776,7 +1836,6 @@ export default {
           let skuInfoNames = this.skuInfo.map((n) => n.name);
           submit.skuList = [];
           this.skuTableData.map((sku) => {
-            submit.sn += sku.sn;
             let skuCopy = {
               cost: sku.cost,
               price: sku.price,
@@ -1812,7 +1871,6 @@ export default {
             : (submit.recommend = false);
           if (this.goodsId) {
             API_GOODS.editGoods(this.goodsId, submit).then((res) => {
-              console.log('hello world',this.baseInfoForm)
               if (res.success) {
                 this.submitLoading = false;
                 this.$router.go(-1);
@@ -1822,7 +1880,6 @@ export default {
             });
           } else {
             API_GOODS.createGoods(submit).then((res) => {
-              console.log('hello world',this.baseInfoForm)
               if (res.success) {
                 this.submitLoading = false;
                 this.$parent.activestep = 2;
@@ -1941,7 +1998,9 @@ export default {
 .ivu-select .ivu-select-dropdown {
   overflow: hidden !important;
 }
-
+.editor-alert{
+  text-align: left;
+}
 /* .tox-notifications-container{
   display: none !important;
 } */

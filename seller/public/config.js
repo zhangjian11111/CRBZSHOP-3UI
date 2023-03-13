@@ -8,14 +8,10 @@ var BASE = {
     // seller: "https://yqswgjz.mynatapp.cc",
     // manager: "https://yqswgjz.mynatapp.cc"
 
-    // common: "http://127.0.0.1:9111",
-    // buyer: "http://127.0.0.1:9111",
-    // seller: "http://127.0.0.1:9111",
-    // manager: "http://127.0.0.1:9111"
-    common: "http://192.168.2.194:9111",
-    buyer: "http://192.168.2.194:9111",
-    seller: "http://192.168.2.194:9111",
-    manager: "http://192.168.2.194:9111"
+    common: "http://127.0.0.1:9111",
+    buyer: "http://127.0.0.1:9111",
+    seller: "http://127.0.0.1:9111",
+    manager: "http://127.0.0.1:9111"
   },
   API_PROD: {
     common: "https://yqswgjz.mynatapp.cc",
@@ -35,5 +31,5 @@ var BASE = {
   /**
    *  @description api请求基础路径前缀
    */
-  PREFIX: "/store"
+  PREFIX: "/store",
 };

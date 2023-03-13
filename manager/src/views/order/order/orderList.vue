@@ -74,7 +74,7 @@
           type="primary"
           icon="ios-search"
           class="search-btn"
-        >搜索</Button
+          >搜索</Button
         >
       </Form>
       <div>
@@ -154,8 +154,8 @@ export default {
             return value == "UNPAID"
               ? "未付款"
               : value == "PAID"
-                ? "已付款"
-                : "";
+              ? "已付款"
+              : "";
           },
         },
         店铺: "storeName",

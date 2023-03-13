@@ -6,14 +6,14 @@
       :columns="columns"
       :data="goodsData"
     >
-      <template slot-scope="{ row }" slot="goodsName">
-        <div style="padding:5px;display:flex;">
-          <img :src="row.image" style="vertical-align: top;" width="60" height="60" alt=""> <span class="ml_10">{{row.goodsName}}</span>
-        </div>
-      </template>
-      <template slot-scope="{ row }" slot="goodsPrice">
-        <div>{{row.applyRefundPrice | unitPrice('￥')}}</div>
-      </template>
+    <template slot-scope="{ row }" slot="goodsName">
+      <div style="padding:5px;display:flex;">
+        <img :src="row.image" style="vertical-align: top;" width="60" height="60" alt=""> <span class="ml_10">{{row.goodsName}}</span>
+      </div>
+    </template>
+    <template slot-scope="{ row }" slot="goodsPrice">
+      <div>{{row.applyRefundPrice | unitPrice('￥')}}</div>
+    </template>
     </Table>
     <div>
       <Form :model="form" ref="form" class="mt_10" :rules="rules" :label-width="80">
@@ -39,21 +39,21 @@
             <div class="demo-upload-list" v-for="(img, index) in uploadList" :key="index">
               <img :src="img">
               <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(img)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove(index)"></Icon>
+                  <Icon type="ios-eye-outline" @click.native="handleView(img)"></Icon>
+                  <Icon type="ios-trash-outline" @click.native="handleRemove(index)"></Icon>
               </div>
             </div>
             <Upload
-              :show-upload-list="false"
-              :on-success="handleSuccess"
-              :before-upload="handleBeforeUpload"
-              :format="['jpg','jpeg','png']"
-              :action="action"
-              :headers="accessToken"
-              style="display: inline-block;width:58px;">
-              <div class="hover-pointer icon-upload" style="">
-                <Icon type="md-add" size="20"></Icon>
-              </div>
+                :show-upload-list="false"
+                :on-success="handleSuccess"
+                :before-upload="handleBeforeUpload"
+                :format="['jpg','jpeg','png']"
+                :action="action"
+                :headers="accessToken"
+                style="display: inline-block;width:58px;">
+                <div class="hover-pointer icon-upload" style="">
+                  <Icon type="md-add" size="20"></Icon>
+                </div>
             </Upload>
           </div>
         </FormItem>

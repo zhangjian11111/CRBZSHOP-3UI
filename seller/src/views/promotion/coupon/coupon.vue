@@ -45,7 +45,7 @@
             type="primary"
             class="search-btn"
             icon="ios-search"
-          >搜索</Button
+            >搜索</Button
           >
           <Button @click="handleReset" class="search-btn">重置</Button>
         </Form>
@@ -53,6 +53,7 @@
       <Row class="operator padding-row">
         <Button @click="add" type="primary">添加</Button>
         <Button @click="delAll" class="ml_10">批量关闭</Button>
+        <Button @click="receivePage()" class="ml_10" type="info">优惠券领取记录</Button>
       </Row>
       <Table
         class="mt_10"
@@ -71,10 +72,10 @@
             type="info"
             size="small"
             @click="see(row)"
-          >编辑</Button
+            >编辑</Button
           >
           <Button v-else type="default" size="small" @click="see(row, 'only')"
-          >查看</Button
+            >查看</Button
           >
           <Button
             v-if="
@@ -84,8 +85,15 @@
             size="small"
             :style="{ marginLeft: '5px' }"
             @click="remove(row)"
-          >关闭</Button
+            >关闭</Button
           >
+          <Button
+            style="margin: 5px"
+            type="info"
+            size="small"
+            @click="receivePage(row.id)"
+            >领取记录
+          </Button>
         </template>
       </Table>
       <Row type="flex" justify="end" class="mt_10">
@@ -137,11 +145,6 @@ export default {
           fixed: "left",
         },
         {
-          title: "活动名称",
-          key: "promotionName",
-          fixed: "left",
-        },
-        {
           title: "优惠券名称",
           key: "couponName",
           tooltip: true,
@@ -169,8 +172,8 @@ export default {
             return h(
               "div",
               params.row.receivedNum +
-              "/" +
-              (params.row.publishNum === 0 ? "不限制" : params.row.publishNum)
+                "/" +
+                (params.row.publishNum === 0 ? "不限制" : params.row.publishNum)
             );
           },
         },
@@ -204,7 +207,7 @@ export default {
         },
         {
           title: "活动时间",
-
+          width: 150,
           render: (h, params) => {
             if (
               params?.row?.getType === "ACTIVITY" &&
@@ -245,6 +248,13 @@ export default {
   methods: {
     init() {
       this.getDataList();
+    },
+    receivePage(id) {
+      if (id) {
+        this.$router.push({ name: "coupon-receive", query: { couponId: id } });
+      } else {
+        this.$router.push({ name: "coupon-receive" });
+      }
     },
     add() {
       this.$router.push({ name: "add-coupon" });

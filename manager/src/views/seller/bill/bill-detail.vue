@@ -16,23 +16,23 @@
       <div class="tips-status">
         <span>账单状态 ：</span>
         <span class="theme_color">{{
-            bill.billStatus | unixSellerBillStatus
-          }}</span>
+          bill.billStatus | unixSellerBillStatus
+        }}</span>
         <Button
           v-if="bill.billStatus == 'CHECK'"
           size="mini"
           type="primary"
           @click="pass()"
-        >付款</Button
+          >付款</Button
         >
       </div>
 
       <table>
         <tbody>
-        <tr v-for="(item, index) in data" :key="index">
-          <td>{{ item.name }}：</td>
-          <td>{{ item.value }}</td>
-        </tr>
+          <tr v-for="(item, index) in data" :key="index">
+            <td>{{ item.name }}：</td>
+            <td>{{ item.value }}</td>
+          </tr>
         </tbody>
       </table>
       <div>
@@ -70,7 +70,7 @@
               +{{ bill.refundCommissionPrice || 0 | unitPrice("￥") }}
             </p>
           </span>
-          <span>
+           <span>
             <p>退单金额</p>
             <p class="theme_color">
               -{{ bill.refundPrice || 0 | unitPrice("￥") }}

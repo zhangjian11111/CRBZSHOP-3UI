@@ -69,21 +69,12 @@
             <Option value="VIRTUAL_GOODS">虚拟商品</Option>
           </Select>
         </Form-item>
-        <Form-item label="商品条码/货号" prop="sn">
-          <Input
-            type="text"
-            v-model="searchForm.sn"
-            placeholder="商品货号"
-            clearable
-            style="width: 200px"
-          />
-        </Form-item>
         <Button
           @click="handleSearch"
           class="search-btn"
           type="primary"
           icon="ios-search"
-        >搜索</Button
+          >搜索</Button
         >
       </Form>
       <Table
@@ -159,7 +150,7 @@
       <div slot="footer">
         <Button type="text" @click="modalVisible = false">取消</Button>
         <Button type="primary" :loading="submitLoading" @click="lower"
-        >提交</Button
+          >提交</Button
         >
       </div>
     </Modal>

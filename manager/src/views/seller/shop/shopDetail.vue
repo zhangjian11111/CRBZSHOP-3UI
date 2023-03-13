@@ -87,7 +87,17 @@
           <p class="item">
             <span class="label">店铺所在地：</span>
             <span class="info">
-              {{storeInfo.storeAddressPath || storeInfo.storeAddressDetail?storeInfo.storeAddressPath +storeInfo.storeAddressDetail:"暂未完善"}}
+              <span>
+                {{
+                (storeInfo.storeAddressPath!==null && storeInfo.storeAddressPath!=='' && storeInfo.storeAddressPath!=="null" && storeInfo.storeAddressPath!==undefined )? storeInfo.storeAddressPath: ""
+                }}
+              </span>
+              <span>
+                {{
+                (storeInfo.storeAddressDetail!==null && storeInfo.storeAddressDetail!=='' && storeInfo.storeAddressDetail!=="null" && storeInfo.storeAddressDetail!==undefined )? storeInfo.storeAddressDetail:""
+                }}
+              </span>
+              {{(storeInfo.storeAddressPath!==null && storeInfo.storeAddressPath!=='' && storeInfo.storeAddressPath!=="null" && storeInfo.storeAddressPath!==undefined) || (storeInfo.storeAddressDetail!==null && storeInfo.storeAddressDetail!=='' && storeInfo.storeAddressDetail!=="null" && storeInfo.storeAddressDetail!==undefined )?"":"暂未完善"}}
             </span>
           </p>
           <p class="item">
@@ -151,43 +161,43 @@
             <span class="label">银行名称：</span>
             <span class="info">
               {{
-                storeInfo.settlementBankAccountName == "null" ||
-                !storeInfo.settlementBankAccountName
-                  ? ""
-                  : storeInfo.settlementBankAccountName
-              }}
+                  storeInfo.settlementBankAccountName == "null" ||
+                  !storeInfo.settlementBankAccountName
+                    ? ""
+                    : storeInfo.settlementBankAccountName
+                }}
             </span>
           </p>
           <p class="item">
             <span class="label">银行账号：</span>
             <span class="info">
               {{
-                storeInfo.settlementBankAccountNum == "null" ||
-                !storeInfo.settlementBankAccountNum
-                  ? ""
-                  : storeInfo.settlementBankAccountNum
-              }}
+                  storeInfo.settlementBankAccountNum == "null" ||
+                  !storeInfo.settlementBankAccountNum
+                    ? ""
+                    : storeInfo.settlementBankAccountNum
+                }}
             </span>
           </p>
           <p class="item">
             <span class="label">银行开户支行名称：</span>
             <span class="info">
               {{
-                storeInfo.settlementBankBranchName == "null" ||
-                !storeInfo.settlementBankBranchName
-                  ? ""
-                  : storeInfo.settlementBankBranchName
-              }}
+                  storeInfo.settlementBankBranchName == "null" ||
+                  !storeInfo.settlementBankBranchName
+                    ? ""
+                    : storeInfo.settlementBankBranchName
+                }}
             </span>
           </p>
           <p class="item">
             <span class="label">银行支行联行号：</span>
             <span class="info">
               {{
-                storeInfo.settlementBankJointName == "null" ||
-                !storeInfo.settlementBankJointName
-                  ? ""
-                  : storeInfo.settlementBankJointName
+                  storeInfo.settlementBankJointName == "null" ||
+                  !storeInfo.settlementBankJointName
+                    ? ""
+                    : storeInfo.settlementBankJointName
               }}</span>
           </p>
           <p class="item">
@@ -195,11 +205,11 @@
             <span class="info" v-if="storeInfo.settlementCycle">
               <template v-for="item in storeInfo.settlementCycle.split(',')">
                <Tag
-                 :key="item"
-                 v-if="item!==''"
-                 :name="item"
-                 style="marrgin-left: 10px"
-               >{{ item }}
+                  :key="item"
+                  v-if="item!==''"
+                  :name="item"
+                  style="marrgin-left: 10px"
+                >{{ item }}
                 </Tag>
               </template>
 
@@ -556,448 +566,450 @@
 </template>
 
 <script>
-import region from "@/components/region";
-import ossManage from "@/views/sys/oss-manage/ossManage";
-import * as RegExp from '@/libs/RegExp.js';
-import {getCategoryTree} from "@/api/goods";
-import * as API_Store from "@/api/shops.js";
-import * as API_Order from "@/api/order.js";
+  import region from "@/components/region";
+  import ossManage from "@/views/sys/oss-manage/ossManage";
+  import * as RegExp from '@/libs/RegExp.js';
+  import {getCategoryTree} from "@/api/goods";
+  import * as API_Store from "@/api/shops.js";
+  import * as API_Order from "@/api/order.js";
 
 
-export default {
-  name: "member",
-  components: {
-    region,
-    ossManage,
-  },
-  data() {
-    return {
-      id: "",//店铺id
-      categories: [], //店铺静音范围
-      loading: true, // 表单加载状态
-      storeInfo: {},//店铺信息
-      checkAllGroup: [], //选中的经营分类
-      selectDate: null, // 申请时间
-
-      orderColumns: [
-        {
-          title: "订单编号",
-          key: "sn",
-          minWidth: 100,
-          tooltip: true,
-          slot: "orderSlot",
-        },
-        {
-          title: "订单金额",
-          key: "flowPrice",
-          width: 140,
-          render: (h, params) => {
-            return h("div", this.$options.filters.unitPrice(params.row.flowPrice, '￥'));
-          }
-        },
-        {
-          title: "订单类型",
-          key: "orderType",
-          width: 100,
-          render: (h, params) => {
-            if (params.row.orderType == "NORMAL") {
-              return h('div', [h('span', {}, '普通订单'),]);
-            } else if (params.row.orderType == "VIRTUAL") {
-              return h('div', [h('span', {}, '虚拟订单'),]);
-            } else if (params.row.orderType == "GIFT") {
-              return h('div', [h('span', {}, '赠品订单'),]);
-            } else if (params.row.orderType == "PINTUAN") {
-              return h('div', [h('span', {}, '拼团订单'),]);
-            }
-
-          }
-        },
-        {
-          title: "来源",
-          key: "clientType",
-          width: 80,
-          render: (h, params) => {
-            if (params.row.clientType == "H5") {
-              return h("div",{},"移动端");
-            }else if(params.row.clientType == "PC") {
-              return h("div",{},"PC端");
-            }else if(params.row.clientType == "WECHAT_MP") {
-              return h("div",{},"小程序端");
-            }else if(params.row.clientType == "APP") {
-              return h("div",{},"移动应用端");
-            }
-            else{
-              return h("div",{},params.row.clientType);
-            }
-          },
-        },
-        {
-          title: "订单状态",
-          key: "orderStatus",
-          width: 95,
-          render: (h, params) => {
-            if (params.row.orderStatus == "UNPAID") {
-              return h('div', [h('span', {}, '未付款'),]);
-            } else if (params.row.orderStatus == "PAID") {
-              return h('div', [h('span', {}, '已付款'),]);
-            } else if (params.row.orderStatus == "UNDELIVERED") {
-              return h('div', [h('span', {}, '待发货'),]);
-            } else if (params.row.orderStatus == "DELIVERED") {
-              return h('div', [h('span', {}, '已发货'),]);
-            } else if (params.row.orderStatus == "COMPLETED") {
-              return h('div', [h('span', {}, '已完成'),]);
-            } else if (params.row.orderStatus == "TAKE") {
-              return h('div', [h('span', {}, '待核验'),]);
-            } else if (params.row.orderStatus == "CANCELLED") {
-              return h('div', [h('span', {}, '已取消'),]);
-            }
-          }
-        },
-        {
-          title: "支付状态",
-          key: "payStatus",
-          width: 95,
-          render: (h, params) => {
-            if (params.row.payStatus == "UNPAID") {
-              return h('div', [h('span', {}, '未付款'),]);
-            } else if (params.row.payStatus == "PAID") {
-              return h('div', [h('span', {}, '已付款'),]);
-            }
-          }
-        },
-
-        {
-          title: "售后状态",
-          key: "groupAfterSaleStatus",
-          width: 100,
-          render: (h, params) => {
-            if (params.row.groupAfterSaleStatus == "NEW") {
-              return h('div', [h('span', {}, '未申请'),]);
-            } else if (params.row.groupAfterSaleStatus == "NOT_APPLIED") {
-              return h('div', [h('span', {}, '未申请'),]);
-            } else if (params.row.groupAfterSaleStatus == "ALREADY_APPLIED") {
-              return h('div', [h('span', {}, '已申请'),]);
-            } else if (params.row.groupAfterSaleStatus == "EXPIRED") {
-              return h('div', [h('span', {}, '已失效'),]);
-            }
-          }
-        },
-        {
-          title: "投诉状态",
-          key: "groupComplainStatus",
-          width: 95,
-          render: (h, params) => {
-            if (params.row.groupComplainStatus == "NEW") {
-              return h('div', [h('span', {}, '未申请'),]);
-            } else if (params.row.groupComplainStatus == "NO_APPLY") {
-              return h('div', [h('span', {}, '未申请'),]);
-            } else if (params.row.groupComplainStatus == "APPLYING") {
-              return h('div', [h('span', {}, '申请中'),]);
-            } else if (params.row.groupComplainStatus == "COMPLETE") {
-              return h('div', [h('span', {}, '已完成'),]);
-            } else if (params.row.groupComplainStatus == "EXPIRED") {
-              return h('div', [h('span', {}, '已失效'),]);
-            } else if (params.row.groupComplainStatus == "CANCEL") {
-              return h('div', [h('span', {}, '取消投诉'),]);
-            }
-          }
-        },
-        {
-          title: "购买店铺",
-          key: "storeName",
-          width: 180,
-          tooltip: true
-        },
-        {
-          title: "下单时间",
-          key: "createTime",
-          width: 170,
-        },
-
-      ],
-      orderData: [],//订单数据
-      orderTotal: 0,//订单总条数
-      //TA的订单form
-      orderSearchForm: {
-        pageNumber: 1, // 当前页数
-        pageSize: 10, // 页面大小
-        payStatus: "",
-        orderSn: "",
-        orderType: "",
-      },
-      refundGoodsOrderColumns: [
-        {
-          title: "售后服务单号",
-          key: "sn",
-          minWidth: 140,
-          slot: "refundGoodsOrderSlot",
-
-        },
-        {
-          title: "订单编号",
-          key: "orderSn",
-          minWidth: 120,
-          slot: "orderSlot",
-        },
-        {
-          title: "商品",
-          key: "goodsName",
-          minWidth: 300,
-          tooltip: true,
-          slot: "goodsSlot",
-        },
-        {
-          title: "会员名称",
-          key: "memberName",
-          width: 140,
-        },
-        {
-          title: "商家名称",
-          key: "storeName",
-          minWidth: 100,
-          tooltip: true
-        },
-        {
-          title: "售后金额",
-          key: "applyRefundPrice",
-          width: 110,
-          render: (h, params) => {
-            if (params.row.applyRefundPrice == null) {
-              return h(
-                "div",
-                this.$options.filters.unitPrice(0, "￥")
-              );
-            } else {
-              return h(
-                "div",
-                this.$options.filters.unitPrice(params.row.applyRefundPrice, "￥")
-              );
-            }
-
-          },
-        },
-        {
-          title: "售后类型",
-          key: "serviceType",
-          width: 100,
-          render: (h, params) => {
-            if (params.row.serviceType == "RETURN_MONEY") {
-              return h('div', [h('span', {}, '退款'),]);
-            } else if (params.row.serviceType == "RETURN_GOODS") {
-              return h('div', [h('span', {}, '退货'),]);
-            } else if (params.row.serviceType == "EXCHANGE_GOODS") {
-              return h('div', [h('span', {}, '换货'),]);
-            }
-          }
-        },
-
-        {
-          title: "售后状态",
-          key: "serviceStatus",
-          width: 110,
-          render: (h, params) => {
-            if (params.row.serviceStatus == "APPLY") {
-              return h('div', [h('span', {}, '申请中'),]);
-            } else if (params.row.serviceStatus == "PASS") {
-              return h('div', [h('span', {}, '通过售后'),]);
-            } else if (params.row.serviceStatus == "REFUSE") {
-              return h('div', [h('span', {}, '拒绝售后'),]);
-            } else if (params.row.serviceStatus == "BUYER_RETURN") {
-              return h('div', [h('span', {}, '买家退货，待卖家收货'),]);
-            } else if (params.row.serviceStatus == "SELLER_RE_DELIVERY") {
-              return h('div', [h('span', {}, '商家换货/补发'),]);
-            } else if (params.row.serviceStatus == "SELLER_CONFIRM") {
-              return h('div', [h('span', {}, '卖家确认收货'),]);
-            } else if (params.row.serviceStatus == "SELLER_TERMINATION") {
-              return h('div', [h('span', {}, '卖家终止售后'),]);
-            } else if (params.row.serviceStatus == "BUYER_CONFIRM") {
-              return h('div', [h('span', {}, '买家确认收货'),]);
-            } else if (params.row.serviceStatus == "BUYER_CANCEL") {
-              return h('div', [h('span', {}, '买家取消售后'),]);
-            } else if (params.row.serviceStatus == "COMPLETE") {
-              return h('div', [h('span', {}, '完成售后'),]);
-            } else if (params.row.serviceStatus == "WAIT_REFUND") {
-              return h('div', [h('span', {}, '待平台退款'),]);
-            }
-          }
-        },
-        {
-          title: "申请时间",
-          key: "createTime",
-          minWidth: 145,
-          tooltip: true
-        },
-      ],
-      refundGoodsOrderData: [],//售后单数据
-      refundGoodsOrderTotal: 0,//售后单总条数
-      //TA的退货单form
-      refundGoodsOrderSearchForm: {
-        pageNumber: 1, // 当前页数
-        pageSize: 10, // 页面大小
-      },
-      //TA的退款单form
-      refundOrderSearchForm: {
-        pageNumber: 1, // 当前页数
-        pageSize: 10, // 页面大小
-      },
-      refundOrderData: [],//售后单数据
-      refundOrderTotal: 0,//售后单总条数
-    };
-  },
-  methods: {
-    init() {
-      //查店铺基本信息
-      this.getStoreInfo();
-      //查询店铺分类
-      this.getCategories();
-      //查询订单信息
-      this.getOrderData();
+  export default {
+    name: "member",
+    components: {
+      region,
+      ossManage,
     },
-    //会员信息tab改变事件
-    storeInfoChange(v) {
-      if (v == "order") {
+    data() {
+      return {
+        id: "",//店铺id
+        categories: [], //店铺静音范围
+        loading: true, // 表单加载状态
+        storeInfo: {},//店铺信息
+        checkAllGroup: [], //选中的经营分类
+        selectDate: null, // 申请时间
+
+        orderColumns: [
+          {
+            title: "订单编号",
+            key: "sn",
+            minWidth: 100,
+            tooltip: true,
+            slot: "orderSlot",
+          },
+          {
+            title: "订单金额",
+            key: "flowPrice",
+            width: 140,
+            render: (h, params) => {
+              return h("div", this.$options.filters.unitPrice(params.row.flowPrice, '￥'));
+            }
+          },
+          {
+            title: "订单类型",
+            key: "orderType",
+            width: 100,
+            render: (h, params) => {
+              if (params.row.orderType == "NORMAL") {
+                return h('div', [h('span', {}, '普通订单'),]);
+              } else if (params.row.orderType == "VIRTUAL") {
+                return h('div', [h('span', {}, '虚拟订单'),]);
+              } else if (params.row.orderType == "GIFT") {
+                return h('div', [h('span', {}, '赠品订单'),]);
+              } else if (params.row.orderType == "PINTUAN") {
+                return h('div', [h('span', {}, '拼团订单'),]);
+              }
+
+            }
+          },
+          {
+            title: "来源",
+            key: "clientType",
+            width: 80,
+            render: (h, params) => {
+              if (params.row.clientType == "H5") {
+                return h("div",{},"移动端");
+              }else if(params.row.clientType == "PC") {
+                return h("div",{},"PC端");
+              }else if(params.row.clientType == "WECHAT_MP") {
+                return h("div",{},"小程序端");
+              }else if(params.row.clientType == "APP") {
+                return h("div",{},"移动应用端");
+              }
+              else{
+                return h("div",{},params.row.clientType);
+              }
+            },
+          },
+          {
+            title: "订单状态",
+            key: "orderStatus",
+            width: 95,
+            render: (h, params) => {
+              if (params.row.orderStatus == "UNPAID") {
+                return h('div', [h('span', {}, '未付款'),]);
+              } else if (params.row.orderStatus == "PAID") {
+                return h('div', [h('span', {}, '已付款'),]);
+              } else if (params.row.orderStatus == "UNDELIVERED") {
+                return h('div', [h('span', {}, '待发货'),]);
+              } else if (params.row.orderStatus == "DELIVERED") {
+                return h('div', [h('span', {}, '已发货'),]);
+              } else if (params.row.orderStatus == "COMPLETED") {
+                return h('div', [h('span', {}, '已完成'),]);
+              } else if (params.row.orderStatus == "TAKE") {
+                return h('div', [h('span', {}, '待核验'),]);
+              } else if (params.row.orderStatus == "CANCELLED") {
+                return h('div', [h('span', {}, '已取消'),]);
+              }
+            }
+          },
+          {
+            title: "支付状态",
+            key: "payStatus",
+            width: 95,
+            render: (h, params) => {
+              if (params.row.payStatus == "UNPAID") {
+                return h('div', [h('span', {}, '未付款'),]);
+              } else if (params.row.payStatus == "PAID") {
+                return h('div', [h('span', {}, '已付款'),]);
+              }
+            }
+          },
+
+          {
+            title: "售后状态",
+            key: "groupAfterSaleStatus",
+            width: 100,
+            render: (h, params) => {
+              if (params.row.groupAfterSaleStatus == "NEW") {
+                return h('div', [h('span', {}, '未申请'),]);
+              } else if (params.row.groupAfterSaleStatus == "NOT_APPLIED") {
+                return h('div', [h('span', {}, '未申请'),]);
+              } else if (params.row.groupAfterSaleStatus == "ALREADY_APPLIED") {
+                return h('div', [h('span', {}, '已申请'),]);
+              } else if (params.row.groupAfterSaleStatus == "EXPIRED") {
+                return h('div', [h('span', {}, '已失效'),]);
+              }
+            }
+          },
+          {
+            title: "投诉状态",
+            key: "groupComplainStatus",
+            width: 95,
+            render: (h, params) => {
+              if (params.row.groupComplainStatus == "NEW") {
+                return h('div', [h('span', {}, '未申请'),]);
+              } else if (params.row.groupComplainStatus == "NO_APPLY") {
+                return h('div', [h('span', {}, '未申请'),]);
+              } else if (params.row.groupComplainStatus == "APPLYING") {
+                return h('div', [h('span', {}, '申请中'),]);
+              } else if (params.row.groupComplainStatus == "COMPLETE") {
+                return h('div', [h('span', {}, '已完成'),]);
+              } else if (params.row.groupComplainStatus == "EXPIRED") {
+                return h('div', [h('span', {}, '已失效'),]);
+              } else if (params.row.groupComplainStatus == "CANCEL") {
+                return h('div', [h('span', {}, '取消投诉'),]);
+              }
+            }
+          },
+          {
+            title: "购买店铺",
+            key: "storeName",
+            width: 180,
+            tooltip: true
+          },
+          {
+            title: "下单时间",
+            key: "createTime",
+            width: 170,
+          },
+
+        ],
+        orderData: [],//订单数据
+        orderTotal: 0,//订单总条数
+        //TA的订单form
+        orderSearchForm: {
+          pageNumber: 1, // 当前页数
+          pageSize: 10, // 页面大小
+          payStatus: "",
+          orderSn: "",
+          orderType: "",
+        },
+        refundGoodsOrderColumns: [
+          {
+            title: "售后服务单号",
+            key: "sn",
+            minWidth: 140,
+            slot: "refundGoodsOrderSlot",
+
+          },
+          {
+            title: "订单编号",
+            key: "orderSn",
+            minWidth: 120,
+            slot: "orderSlot",
+          },
+          {
+            title: "商品",
+            key: "goodsName",
+            minWidth: 300,
+            tooltip: true,
+            slot: "goodsSlot",
+          },
+          {
+            title: "会员名称",
+            key: "memberName",
+            width: 140,
+          },
+          {
+            title: "商家名称",
+            key: "storeName",
+            minWidth: 100,
+            tooltip: true
+          },
+          {
+            title: "售后金额",
+            key: "applyRefundPrice",
+            width: 110,
+            render: (h, params) => {
+              if (params.row.applyRefundPrice == null) {
+                return h(
+                  "div",
+                  this.$options.filters.unitPrice(0, "￥")
+                );
+              } else {
+                return h(
+                  "div",
+                  this.$options.filters.unitPrice(params.row.applyRefundPrice, "￥")
+                );
+              }
+
+            },
+          },
+          {
+            title: "售后类型",
+            key: "serviceType",
+            width: 100,
+            render: (h, params) => {
+              if (params.row.serviceType == "RETURN_MONEY") {
+                return h('div', [h('span', {}, '退款'),]);
+              } else if (params.row.serviceType == "RETURN_GOODS") {
+                return h('div', [h('span', {}, '退货'),]);
+              } else if (params.row.serviceType == "EXCHANGE_GOODS") {
+                return h('div', [h('span', {}, '换货'),]);
+              }
+            }
+          },
+
+          {
+            title: "售后状态",
+            key: "serviceStatus",
+            width: 110,
+            render: (h, params) => {
+              if (params.row.serviceStatus == "APPLY") {
+                return h('div', [h('span', {}, '申请中'),]);
+              } else if (params.row.serviceStatus == "PASS") {
+                return h('div', [h('span', {}, '通过售后'),]);
+              } else if (params.row.serviceStatus == "REFUSE") {
+                return h('div', [h('span', {}, '拒绝售后'),]);
+              } else if (params.row.serviceStatus == "BUYER_RETURN") {
+                return h('div', [h('span', {}, '买家退货，待卖家收货'),]);
+              } else if (params.row.serviceStatus == "SELLER_RE_DELIVERY") {
+                return h('div', [h('span', {}, '商家换货/补发'),]);
+              } else if (params.row.serviceStatus == "SELLER_CONFIRM") {
+                return h('div', [h('span', {}, '卖家确认收货'),]);
+              } else if (params.row.serviceStatus == "SELLER_TERMINATION") {
+                return h('div', [h('span', {}, '卖家终止售后'),]);
+              } else if (params.row.serviceStatus == "BUYER_CONFIRM") {
+                return h('div', [h('span', {}, '买家确认收货'),]);
+              } else if (params.row.serviceStatus == "BUYER_CANCEL") {
+                return h('div', [h('span', {}, '买家取消售后'),]);
+              } else if (params.row.serviceStatus == "COMPLETE") {
+                return h('div', [h('span', {}, '完成售后'),]);
+              } else if (params.row.serviceStatus == "WAIT_REFUND") {
+                return h('div', [h('span', {}, '待平台退款'),]);
+              }
+            }
+          },
+          {
+            title: "申请时间",
+            key: "createTime",
+            minWidth: 145,
+            tooltip: true
+          },
+        ],
+        refundGoodsOrderData: [],//售后单数据
+        refundGoodsOrderTotal: 0,//售后单总条数
+        //TA的退货单form
+        refundGoodsOrderSearchForm: {
+          pageNumber: 1, // 当前页数
+          pageSize: 10, // 页面大小
+        },
+        //TA的退款单form
+        refundOrderSearchForm: {
+          pageNumber: 1, // 当前页数
+          pageSize: 10, // 页面大小
+        },
+        refundOrderData: [],//售后单数据
+        refundOrderTotal: 0,//售后单总条数
+      };
+    },
+    methods: {
+      init() {
+        //查店铺基本信息
+        this.getStoreInfo();
+        //查询店铺分类
+        this.getCategories();
+        //查询订单信息
         this.getOrderData();
+      },
+      //会员信息tab改变事件
+      storeInfoChange(v) {
+        if (v == "order") {
+          this.getOrderData();
+        }
+        if (v == "refundGoods") {
+          this.getRefundGoodsOrderData();
+        }
+        if(v == "refund"){
+          this.getRefundOrder();
+        }
+      },
+      //查询会员信息
+      getStoreInfo() {
+        API_Store.getShopDetailData(this.id).then((res) => {
+          this.$set(this, "storeInfo", res.result);
+          //因switch开关需要用到true或者false 所以进行一次格式化
+          this.storeInfo.storeDisable = this.storeInfo.storeDisable === "OPEN" ? true : false
+          if(this.storeInfo.goodsManagementCategory != null){
+            this.checkAllGroup = this.storeInfo.goodsManagementCategory.split(",");
+          }
+          this.storeInfo.legalPhoto = this.storeInfo.legalPhoto.split(",");
+        });
+      },
+      //店铺状态改变事件
+      shopStatusChange(v) {
+        if (v) {
+          API_Store.enableBrand(this.id).then(res => {
+          });
+        } else {
+          API_Store.disableShop(this.id).then(res => {
+          });
+        }
+      },
+      //查询TA的订单
+      getOrderData() {
+        this.loading = true;
+        this.orderSearchForm.storeId = this.id
+        API_Order.getOrderList(this.orderSearchForm).then((res) => {
+          this.loading = false;
+          if (res.success) {
+            this.orderData = res.result.records;
+            this.orderTotal = res.result.total;
+          }
+        });
+        this.loading = false;
+      },
+      //查询TA的售后单
+      getRefundOrder() {
+        this.loading = true;
+        this.refundOrderSearchForm.storeId = this.id
+        this.refundOrderSearchForm.serviceType = "RETURN_MONEY"
+        API_Order.getAfterSaleOrderPage(this.refundOrderSearchForm).then((res) => {
+          this.loading = false;
+          if (res.success) {
+            this.refundOrderData = res.result.records;
+            this.refundOrderTotal = res.result.total;
+          }
+        });
+        this.loading = false;
+      },
+      //查询TA的售后单
+      getRefundGoodsOrderData() {
+        this.loading = true;
+        this.refundGoodsOrderSearchForm.storeId = this.id
+        this.refundGoodsOrderSearchForm.serviceType = "RETURN_GOODS"
+        API_Order.getAfterSaleOrderPage(this.refundGoodsOrderSearchForm).then((res) => {
+          this.loading = false;
+          if (res.success) {
+            this.refundGoodsOrderData = res.result.records;
+            this.refundGoodsOrderTotal = res.result.total;
+          }
+        });
+        this.loading = false;
+      },
+      //查询分类
+      getCategories() {
+        getCategoryTree().then((res) => {
+          if (res.success) {
+            this.categories = res.result;
+          }
+        });
+      },
+      //售后单页数变化
+      refundGoodsOrderChangePage(v) {
+        this.refundGoodsOrderSearchForm.pageNumber = v;
+        this.getRefundGoodsOrderData()
       }
-      if (v == "refundGoods") {
+      ,
+      //售后单页数变化
+      refundGoodsOrderChangePageSize(v) {
+        this.refundGoodsOrderSearchForm.pageSize = v;
+        this.refundGoodsOrderSearchForm.pageNumber = 1;
         this.getRefundGoodsOrderData();
+      },
+      //退款单页数变化
+      refundOrderChangePage(v) {
+        this.refundOrderSearchForm.pageNumber = v;
+        this.getRefundOrder()
       }
-      if(v == "refund"){
+      ,
+      //售后单页数变化
+      refundOrderChangePageSize(v) {
+        this.refundOrderSearchForm.pageSize = v;
+        this.refundOrderSearchForm.pageNumber = 1;
         this.getRefundOrder();
+      },
+      //订单记录页数变化
+      orderChangePage(v) {
+        this.orderSearchForm.pageNumber = v;
+        this.getOrderData()
       }
-    },
-    //查询会员信息
-    getStoreInfo() {
-      API_Store.getShopDetailData(this.id).then((res) => {
-        this.$set(this, "storeInfo", res.result);
-        //因switch开关需要用到true或者false 所以进行一次格式化
-        this.storeInfo.storeDisable = this.storeInfo.storeDisable === "OPEN" ? true : false
-        this.checkAllGroup = this.storeInfo.goodsManagementCategory.split(",");
-        this.storeInfo.legalPhoto = this.storeInfo.legalPhoto.split(",");
-      });
-    },
-    //店铺状态改变事件
-    shopStatusChange(v) {
-      if (v) {
-        API_Store.enableBrand(this.id).then(res => {
-        });
-      } else {
-        API_Store.disableShop(this.id).then(res => {
-        });
-      }
-    },
-    //查询TA的订单
-    getOrderData() {
-      this.loading = true;
-      this.orderSearchForm.storeId = this.id
-      API_Order.getOrderList(this.orderSearchForm).then((res) => {
-        this.loading = false;
-        if (res.success) {
-          this.orderData = res.result.records;
-          this.orderTotal = res.result.total;
+      ,
+      //订单记录页数变化
+      orderChangePageSize(v) {
+        this.orderSearchForm.pageSize = v;
+        this.orderSearchForm.pageNumber = 1;
+        this.getOrderData();
+      },
+      // 起止时间格式化
+      selectDateRange(v) {
+        if (v) {
+          this.orderSearchForm.startDate = v[0];
+          this.orderSearchForm.endDate = v[1];
         }
-      });
-      this.loading = false;
-    },
-    //查询TA的售后单
-    getRefundOrder() {
-      this.loading = true;
-      this.refundOrderSearchForm.storeId = this.id
-      this.refundOrderSearchForm.serviceType = "RETURN_MONEY"
-      API_Order.getAfterSaleOrderPage(this.refundOrderSearchForm).then((res) => {
-        this.loading = false;
-        if (res.success) {
-          this.refundOrderData = res.result.records;
-          this.refundOrderTotal = res.result.total;
+      },
+      // 起止时间格式化
+      selectRefundGoodsDateRange(v) {
+        if (v) {
+          this.refundGoodsOrderSearchForm.startDate = v[0];
+          this.refundGoodsOrderSearchForm.endDate = v[1];
         }
-      });
-      this.loading = false;
-    },
-    //查询TA的售后单
-    getRefundGoodsOrderData() {
-      this.loading = true;
-      this.refundGoodsOrderSearchForm.storeId = this.id
-      this.refundGoodsOrderSearchForm.serviceType = "RETURN_GOODS"
-      API_Order.getAfterSaleOrderPage(this.refundGoodsOrderSearchForm).then((res) => {
-        this.loading = false;
-        if (res.success) {
-          this.refundGoodsOrderData = res.result.records;
-          this.refundGoodsOrderTotal = res.result.total;
+      },
+      // 起止时间格式化
+      selectRefundDateRange(v) {
+        if (v) {
+          this.refundOrderSearchForm.startDate = v[0];
+          this.refundOrderSearchForm.endDate = v[1];
         }
-      });
-      this.loading = false;
+      },
     },
-    //查询分类
-    getCategories() {
-      getCategoryTree().then((res) => {
-        if (res.success) {
-          this.categories = res.result;
-        }
-      });
-    },
-    //售后单页数变化
-    refundGoodsOrderChangePage(v) {
-      this.refundGoodsOrderSearchForm.pageNumber = v;
-      this.getRefundGoodsOrderData()
+    mounted() {
+      this.id = this.$route.query.id;
+      this.init();
     }
-    ,
-    //售后单页数变化
-    refundGoodsOrderChangePageSize(v) {
-      this.refundGoodsOrderSearchForm.pageSize = v;
-      this.refundGoodsOrderSearchForm.pageNumber = 1;
-      this.getRefundGoodsOrderData();
-    },
-    //退款单页数变化
-    refundOrderChangePage(v) {
-      this.refundOrderSearchForm.pageNumber = v;
-      this.getRefundOrder()
-    }
-    ,
-    //售后单页数变化
-    refundOrderChangePageSize(v) {
-      this.refundOrderSearchForm.pageSize = v;
-      this.refundOrderSearchForm.pageNumber = 1;
-      this.getRefundOrder();
-    },
-    //订单记录页数变化
-    orderChangePage(v) {
-      this.orderSearchForm.pageNumber = v;
-      this.getOrderData()
-    }
-    ,
-    //订单记录页数变化
-    orderChangePageSize(v) {
-      this.orderSearchForm.pageSize = v;
-      this.orderSearchForm.pageNumber = 1;
-      this.getOrderData();
-    },
-    // 起止时间格式化
-    selectDateRange(v) {
-      if (v) {
-        this.orderSearchForm.startDate = v[0];
-        this.orderSearchForm.endDate = v[1];
-      }
-    },
-    // 起止时间格式化
-    selectRefundGoodsDateRange(v) {
-      if (v) {
-        this.refundGoodsOrderSearchForm.startDate = v[0];
-        this.refundGoodsOrderSearchForm.endDate = v[1];
-      }
-    },
-    // 起止时间格式化
-    selectRefundDateRange(v) {
-      if (v) {
-        this.refundOrderSearchForm.startDate = v[0];
-        this.refundOrderSearchForm.endDate = v[1];
-      }
-    },
-  },
-  mounted() {
-    this.id = this.$route.query.id;
-    this.init();
-  }
-};
+  };
 </script>
 <style lang="scss" scoped>
-@import "shopDetail.scss";
+  @import "shopDetail.scss";
 </style>

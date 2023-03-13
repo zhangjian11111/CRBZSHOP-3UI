@@ -32,10 +32,10 @@
 
         <div class="goodsConfig mt_10">
           <span @click="collect"
-          ><Icon
-            type="ios-heart"
-            :color="isCollected ? '#ed3f14' : '#666'"
-          />{{ isCollected ? "已收藏" : "收藏" }}</span
+            ><Icon
+              type="ios-heart"
+              :color="isCollected ? '#ed3f14' : '#666'"
+            />{{ isCollected ? "已收藏" : "收藏" }}</span
           >
         </div>
       </div>
@@ -64,14 +64,14 @@
             >
               <p>
                 <span class="item-price-title" v-if="promotionMap['SECKILL']"
-                >秒 &nbsp;杀&nbsp;价</span
+                  >秒 &nbsp;杀&nbsp;价</span
                 >
                 <span class="item-price">{{
-                    skuDetail.promotionPrice | unitPrice("￥")
-                  }}</span>
+                  skuDetail.promotionPrice | unitPrice("￥")
+                }}</span>
                 <span class="item-price-old">{{
-                    skuDetail.price | unitPrice("￥")
-                  }}</span>
+                  skuDetail.price | unitPrice("￥")
+                }}</span>
               </p>
             </div>
             <!-- 商品原价 -->
@@ -106,11 +106,11 @@
               <!-- 普通价格 -->
               <div v-else>
                 <span class="item-price-title"
-                >价 &nbsp;&nbsp;&nbsp;&nbsp;格</span
+                  >价 &nbsp;&nbsp;&nbsp;&nbsp;格</span
                 >
                 <span class="item-price">{{
-                    skuDetail.price | unitPrice("￥")
-                  }}</span>
+                  skuDetail.price | unitPrice("￥")
+                }}</span>
               </div>
             </div>
             <!-- 优惠券展示 -->
@@ -125,19 +125,19 @@
                     @click="receiveCoupon(item.id)"
                   >
                     <span v-if="item.couponType == 'PRICE'"
-                    >满{{ item.consumeThreshold }}减{{ item.price }}</span
+                      >满{{ item.consumeThreshold }}减{{ item.price }}</span
                     >
                     <span v-if="item.couponType == 'DISCOUNT'"
-                    >满{{ item.consumeThreshold }}打{{
+                      >满{{ item.consumeThreshold }}打{{
                         item.couponDiscount
                       }}折</span
                     >
                   </span>
                 </span>
 
-              <div class="dropdown" v-if="promotionMap['COUPON'].length > 6">
-                <span>展开更多</span>
-                <div class="dropdown-content">
+                <div class="dropdown" v-if="promotionMap['COUPON'].length > 6">
+                    <span>展开更多</span>
+                    <div class="dropdown-content">
                       <span
                         class="item-coupon"
                         v-for="(item, index) in promotionMap['COUPON'].slice(6, promotionMap['COUPON'].length)"
@@ -145,29 +145,29 @@
                         @click="receiveCoupon(item.id)"
                       >
                         <span v-if="item.couponType == 'PRICE'"
-                        >满{{ item.consumeThreshold }}减{{ item.price }}</span
+                          >满{{ item.consumeThreshold }}减{{ item.price }}</span
                         >
                         <span v-if="item.couponType == 'DISCOUNT'"
-                        >满{{ item.consumeThreshold }}打{{
+                          >满{{ item.consumeThreshold }}打{{
                             item.couponDiscount
                           }}折</span
                         >
                       </span>
-                </div>
-              </div>
+                    </div>
+                  </div>
               </p>
             </div>
             <!-- 满减展示 -->
             <div class="item-price-row" v-if="promotionMap['FULL_DISCOUNT']">
               <p>
                 <span class="item-price-title"
-                >促&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销</span
+                  >促&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销</span
                 >
                 <span class="item-promotion">满减</span>
                 <span
                   class="item-desc-pintuan"
                   v-if="promotionMap['FULL_DISCOUNT'].fullMinus"
-                >满{{ promotionMap["FULL_DISCOUNT"].fullMoney }}元，立减现金{{
+                  >满{{ promotionMap["FULL_DISCOUNT"].fullMoney }}元，立减现金{{
                     promotionMap["FULL_DISCOUNT"].fullMinus
                   }}元</span
                 >
@@ -177,7 +177,7 @@
                     promotionMap['FULL_DISCOUNT'].fullRate &&
                     promotionMap['FULL_DISCOUNT'].fullRateFlag
                   "
-                >满{{ promotionMap["FULL_DISCOUNT"].fullMoney }}元，立享{{
+                  >满{{ promotionMap["FULL_DISCOUNT"].fullMoney }}元，立享{{
                     promotionMap["FULL_DISCOUNT"].fullRate
                   }}折</span
                 >
@@ -189,7 +189,7 @@
               <p>累计评价</p>
               <p>
                 <span class="item-remarks-num"
-                >{{ skuDetail.commentNum || 0 }} 条</span
+                  >{{ skuDetail.commentNum || 0 }} 条</span
                 >
               </p>
             </div>
@@ -238,6 +238,7 @@
                 :disabled="skuDetail.quantity === 0"
                 v-model="count"
                 :precision="0.1"
+                @on-blur="changeCount"
               ></InputNumber>
               <span class="inventory"> 库存{{ skuDetail.quantity }}</span>
             </div>
@@ -264,7 +265,7 @@
               :loading="loading"
               :disabled="skuDetail.quantity === 0"
               @click="pointPay"
-            >积分购买</Button
+              >积分购买</Button
             >
           </div>
           <div
@@ -277,14 +278,14 @@
               :loading="loading"
               :disabled="skuDetail.quantity === 0"
               @click="addShoppingCartBtn"
-            >加入购物车</Button
+              >加入购物车</Button
             >
             <Button
               type="warning"
               :loading="loading1"
               :disabled="skuDetail.quantity === 0"
               @click="buyNow"
-            >立即购买</Button
+              >立即购买</Button
             >
           </div>
         </div>
@@ -317,6 +318,9 @@ export default {
       handler(val) {
         this.skuDetail = val.data;
         this.wholesaleList = val.wholesaleList;
+        if (this.wholesaleList && this.wholesaleList.length > 0) {
+          this.count = this.wholesaleList[0].num;
+        }
         this.swiperGoodsImg();
       },
       deep: true,
@@ -351,19 +355,27 @@ export default {
     wholesalePrice(key) {
       return this.wholesaleList.length
         ? this.wholesaleList.map((item) => {
-          return item.price;
-        })
+            return item.price;
+          })
         : [];
     },
     wholesaleNum(key) {
       return this.wholesaleList.length
         ? this.wholesaleList.map((item) => {
-          return item.num;
-        })
+            return item.num;
+          })
         : [];
     },
   },
   methods: {
+    changeCount(val) {
+      if (this.wholesaleList && this.wholesaleList.length > 0) {
+        if (this.count <= this.wholesaleList[0].num) {
+          this.$Message.warning("批发商品购买数量不能小于起批数量");
+          this.count = this.wholesaleList[0].num;
+        }
+      }
+    },
     select(index, value) {
       // 选择规格
       this.$set(this.currentSelceted, index, value);

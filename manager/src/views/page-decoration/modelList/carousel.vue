@@ -64,52 +64,52 @@
         <div style="color: #999" class="fz_12">点击缩略图替换图片</div>
         <table cellspacing="0">
           <thead>
-          <tr>
-            <th width="250">所选图片</th>
-            <th width="250">链接地址</th>
-            <!-- <th width="150">排序</th> -->
-            <th width="250">操作</th>
-          </tr>
+            <tr>
+              <th width="250">所选图片</th>
+              <th width="250">链接地址</th>
+              <!-- <th width="150">排序</th> -->
+              <th width="250">操作</th>
+            </tr>
           </thead>
           <tbody>
-          <tr v-for="(item, index) in data.options.list" :key="index">
-            <td>
-              <img
-                style="cursor: pointer"
-                :src="item.img"
-                @click="handleSelectImg(item)"
-                width="200"
-                height="100"
-                alt=""
-              />
-            </td>
-            <td>
-              <Input
-                class="outsideUrl"
-                v-model="item.url"
-                :disabled="!!item.type && item.type !== 'link'"
-              />
-            </td>
-            <!-- <td><Input v-model="item.sort"/></td> -->
-            <td>
-              <Button
-                type="primary"
-                size="small"
-                @click="handleSelectImg(item)"
-              >选择图片</Button
-              >&nbsp;
-              <Button type="info" size="small" @click="handleSelectLink(item)"
-              >选择链接</Button
-              >&nbsp;
-              <Button
-                type="error"
-                ghost
-                size="small"
-                @click="handleDel(index)"
-              >删除</Button
-              >
-            </td>
-          </tr>
+            <tr v-for="(item, index) in data.options.list" :key="index">
+              <td>
+                <img
+                  style="cursor: pointer"
+                  :src="item.img"
+                  @click="handleSelectImg(item)"
+                  width="200"
+                  height="100"
+                  alt=""
+                />
+              </td>
+              <td>
+                <Input
+                  class="outsideUrl"
+                  v-model="item.url"
+                  :disabled="!!item.type && item.type !== 'link'"
+                />
+              </td>
+              <!-- <td><Input v-model="item.sort"/></td> -->
+              <td>
+                <Button
+                  type="primary"
+                  size="small"
+                  @click="handleSelectImg(item)"
+                  >选择图片</Button
+                >&nbsp;
+                <Button type="info" size="small" @click="handleSelectLink(item)"
+                  >选择链接</Button
+                >&nbsp;
+                <Button
+                  type="error"
+                  ghost
+                  size="small"
+                  @click="handleDel(index)"
+                  >删除</Button
+                >
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

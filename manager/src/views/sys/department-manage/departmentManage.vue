@@ -17,7 +17,7 @@
             当前选择编辑：
             <span class="select-title">{{ editTitle }}</span>
             <a class="select-clear" v-if="form.id" @click="cancelSelect"
-            >取消选择</a
+              >取消选择</a
             >
           </Alert>
           <div class="tree-bar" :style="{ maxHeight: maxHeight }">
@@ -80,8 +80,8 @@
                 multiple
               >
                 <Option v-for="item in users" :value="item.id" :key="item.id">{{
-                    item.name
-                  }}</Option>
+                  item.name
+                }}</Option>
               </Select>
             </FormItem>
 
@@ -110,7 +110,7 @@
                 @click="submitEdit"
                 :loading="submitLoading"
                 type="primary"
-              >修改并保存</Button
+                >修改并保存</Button
               >
               <Button @click="handleReset">重置</Button>
             </Form-item>
@@ -160,7 +160,7 @@
       <div slot="footer">
         <Button type="text" @click="cancelAdd">取消</Button>
         <Button type="primary" :loading="submitLoading" @click="submitAdd"
-        >提交</Button
+          >提交</Button
         >
       </div>
     </Modal>
@@ -268,9 +268,9 @@ export default {
         getUserByDepartmentId(data.id).then((res) => {
           let way = [];
           res.result &&
-          res.result.forEach((item) => {
-            way.push(item.roleId);
-          });
+            res.result.forEach((item) => {
+              way.push(item.roleId);
+            });
           this.$set(this, "selectedRole", way);
           console.warn(this.selectedRole);
         });

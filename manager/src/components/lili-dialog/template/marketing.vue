@@ -283,7 +283,7 @@ export default {
       handler() {
         this.index = 999;
         this.typeOption(this.promotions) &&
-        this.typeOption(this.promotions).methodsed();
+          this.typeOption(this.promotions).methodsed();
       },
       deep: true,
     },
@@ -396,7 +396,7 @@ export default {
       this.selectedIndex = i;
       this.params.pageNumber = 1;
       this.typeOption(val) &&
-      this.typeOption(val).methodsed(this.promotionList[val].id);
+        this.typeOption(val).methodsed(this.promotionList[val].id);
     },
   },
 };

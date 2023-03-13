@@ -113,7 +113,7 @@
                   v-for="item in couponList"
                   :value="item.id"
                   :key="item.id"
-                >{{ item.couponName }}</Option
+                  >{{ item.couponName }}</Option
                 >
               </Select>
             </FormItem>
@@ -131,7 +131,7 @@
                   v-for="item in giftList"
                   :value="item.id"
                   :key="item.id"
-                >{{ item.goodsName }}</Option
+                  >{{ item.goodsName }}</Option
                 >
               </Select>
             </FormItem>
@@ -162,8 +162,8 @@
                 <template slot-scope="{ row }" slot="goodsName">
                   <div>
                     <a class="mr_10" @click="linkTo(row.goodsId, row.skuId)">{{
-                        row.goodsName
-                      }}</a>
+                      row.goodsName
+                    }}</a>
                     <Poptip trigger="hover" title="扫码在手机中查看" transfer>
                       <div slot="content">
                         <vue-qr
@@ -191,7 +191,7 @@
             <div>
               <Button
                 @click="$router.push({ name: 'promotions/full-discount' })"
-              >返回</Button
+                >返回</Button
               >
             </div>
           </div>

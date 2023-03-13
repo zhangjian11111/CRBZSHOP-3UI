@@ -19,7 +19,7 @@
           />
         </Form-item>
         <Button @click="handleSearch" type="primary" class="search-btn"
-        >搜索</Button
+          >搜索</Button
         >
       </Form>
       <Row class="operation padding-row">
@@ -91,7 +91,7 @@
       <div slot="footer">
         <Button type="text" @click="modalVisible = false">取消</Button>
         <Button type="primary" :loading="submitLoading" @click="saveSpec"
-        >提交</Button
+          >提交</Button
         >
       </div>
     </Modal>

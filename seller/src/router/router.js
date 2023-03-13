@@ -10,6 +10,11 @@ export const loginRouter = {
   },
   component: () => import("@/views/login.vue")
 };
+export const forgetPasswordRouter = {
+  path: "/forgetPassword",
+  name: "forgetPassword",
+  component: () => import("@/views/ForgetPassword.vue")
+};
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
@@ -103,6 +108,18 @@ export const otherRouter = {
       component: () => import("@/views/order/order/orderDetail.vue")
     },
     {
+      path: "/floorList/main",
+      title: "编辑模板",
+      name: "main",
+      component: () => import("@/views/shop/wap/main.vue")
+    },
+    {
+      path: "/pcFloorList/main",
+      title: "编辑模板",
+      name: "renovation",
+      component: () => import("@/views/shop/renovation.vue")
+    },
+    {
       path: "order-complaint-detail",
       title: "投诉详情",
       name: "order-complaint-detail",
@@ -127,7 +144,31 @@ export const otherRouter = {
       title: "发货",
       name: "export-order-deliver",
       component: () => import("@/views/order/order/exportOrderDeliver.vue")
-    }
+    },
+    {
+      path: "order-detail",
+      title: "订单详情",
+      name: "order-detail",
+      component: () => import("@/views/order/order/orderDetail.vue")
+    },
+    {
+      path: "/floorList/main",
+      title: "编辑模板",
+      name: "main",
+      component: () => import("@/views/shop/wap/main.vue")
+    },
+    {
+      path: "/pcFloorList/main",
+      title: "编辑模板",
+      name: "renovation",
+      component: () => import("@/views/shop/renovation.vue")
+    },
+    {
+      path: "promotions/coupon-receive",
+      title: "优惠券领取记录",
+      name: "coupon-receive",
+      component: () => import("@/views/promotion/coupon/coupon-receive.vue"),
+    },
     // {
     //   path: "/*",
     //   name: "error-404",
@@ -157,4 +198,4 @@ export const page500 = {
   component: () => import("@/views/error-page/500.vue")
 };
 // 所有上面定义的路由都要写在下面的routers里
-export const routers = [loginRouter, otherRouter, page500, page403];
+export const routers = [loginRouter, forgetPasswordRouter, otherRouter, page500, page403];

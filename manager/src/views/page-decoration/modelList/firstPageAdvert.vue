@@ -18,7 +18,7 @@
       <div class="setup-box">
         <div>
           <Button size="small" @click.stop="handleSelectModel(item)"
-          >编辑</Button
+            >编辑</Button
           >
         </div>
       </div>
@@ -48,13 +48,13 @@
         </div>
         <div>
           图片链接：<Input
-          class="outsideUrl"
-          v-model="selected.url"
-          :disabled="!!selected.type && selected.type !== 'link'"
-          placeholder="https://"
-        />
+            class="outsideUrl"
+            v-model="selected.url"
+            :disabled="!!selected.type && selected.type !== 'link'"
+            placeholder="https://"
+          />
           <Button size="small" type="primary" @click="handleSelectLink"
-          >选择链接</Button
+            >选择链接</Button
           >
         </div>
         <div>
@@ -73,8 +73,8 @@
         ></div>
         <div>
           选择图片：<Button size="small" type="primary" @click="handleSelectImg"
-        >选择图片</Button
-        >&nbsp;
+            >选择图片</Button
+          >&nbsp;
         </div>
       </div>
     </Modal>

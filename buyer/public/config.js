@@ -7,15 +7,15 @@ var BASE = {
       // buyer: "http://localhost:8888",
       // seller: "http://localhost:8855",
       // manager: "http://localhost:8866"
-      common: "http://192.168.2.194:9111",
-      buyer: "http://192.168.2.194:9111",
-      seller: "http://192.168.2.194:9111",
-      manager: "http://192.168.2.194:9111"
+      common: "http://127.0.0.1:9111",
+      buyer: "http://127.0.0.1:9111",
+      seller: "http://127.0.0.1:9111",
+      manager: "http://127.0.0.1:9111"
     },
     API_PROD: {
-      common: "http://yqswgjz.mynatapp.cc",
-      buyer: "http://yqswgjz.mynatapp.cc",
-      seller: "http://yqswgjz.mynatapp.cc",
-      manager: "http://yqswgjz.mynatapp.cc"
+      common: "https://yqswgjz.mynatapp.cc",
+      buyer: "https://yqswgjz.mynatapp.cc",
+      seller: "https://yqswgjz.mynatapp.cc",
+      manager: "https://yqswgjz.mynatapp.cc"
     },
   };

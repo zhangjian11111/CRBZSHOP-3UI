@@ -9,7 +9,7 @@
         <img :src="topAdvert.img" width="1200" height="80" alt="" />
         <div class="setup-box">
           <Button size="small" @click.stop="handleModel('topAdvert')"
-          >编辑</Button
+            >编辑</Button
           >
         </div>
       </div>
@@ -41,7 +41,7 @@
         </ul>
         <div class="setup-box">
           <Button size="small" @click.stop="handleModel('quickNav')"
-          >编辑</Button
+            >编辑</Button
           >
         </div>
       </div>
@@ -90,18 +90,18 @@
         </div>
         <div>
           图片链接：<Input
-          class="outsideUrl"
-          v-model="topAdvert.url"
-          :disabled="!!topAdvert.type && topAdvert.type !== 'link'"
-          placeholder="https://"
-        /><Button size="small" type="primary" @click="handleSelectLink"
-        >选择链接</Button
-        >
+            class="outsideUrl"
+            v-model="topAdvert.url"
+            :disabled="!!topAdvert.type && topAdvert.type !== 'link'"
+            placeholder="https://"
+          /><Button size="small" type="primary" @click="handleSelectLink"
+            >选择链接</Button
+          >
         </div>
         <div>
           选择图片：<Button size="small" type="primary" @click="handleSelectImg"
-        >选择图片</Button
-        >&nbsp;
+            >选择图片</Button
+          >&nbsp;
         </div>
         <div>选择背景色：<ColorPicker v-model="topAdvert.bgColor" /></div>
       </div>
@@ -117,39 +117,39 @@
       <!-- 分类tab栏 -->
       <div class="modal-tab-bar">
         <Button type="primary" size="small" @click="handleAddNav"
-        >添加分类</Button
+          >添加分类</Button
         >
         <table cellspacing="0">
           <thead>
-          <tr>
-            <th width="250">分类名称</th>
-            <th width="250">链接地址</th>
-            <!-- <th width="150">排序</th> -->
-            <th width="250">操作</th>
-          </tr>
+            <tr>
+              <th width="250">分类名称</th>
+              <th width="250">链接地址</th>
+              <!-- <th width="150">排序</th> -->
+              <th width="250">操作</th>
+            </tr>
           </thead>
           <tbody>
-          <tr v-for="(item, index) in navList.list" :key="index">
-            <td><Input v-model="item.name" /></td>
-            <td>
-              <Input
-                v-model="item.url"
-                :disabled="!!item.type && item.type !== 'link'"
-              />
-            </td>
-            <!-- <td><Input v-model="item.sort"/></td> -->
-            <td>
-              <Button
-                type="primary"
-                size="small"
-                @click="handleSelectLink(item, index)"
-              >选择链接</Button
-              >&nbsp;
-              <Button type="error" size="small" @click="handleDelNav(index)"
-              >删除</Button
-              >
-            </td>
-          </tr>
+            <tr v-for="(item, index) in navList.list" :key="index">
+              <td><Input v-model="item.name" /></td>
+              <td>
+                <Input
+                  v-model="item.url"
+                  :disabled="!!item.type && item.type !== 'link'"
+                />
+              </td>
+              <!-- <td><Input v-model="item.sort"/></td> -->
+              <td>
+                <Button
+                  type="primary"
+                  size="small"
+                  @click="handleSelectLink(item, index)"
+                  >选择链接</Button
+                >&nbsp;
+                <Button type="error" size="small" @click="handleDelNav(index)"
+                  >删除</Button
+                >
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

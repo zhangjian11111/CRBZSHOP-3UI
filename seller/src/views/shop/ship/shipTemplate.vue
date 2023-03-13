@@ -422,7 +422,7 @@ export default {
             API_Shop.editShipTemplate(this.form.id, this.form, headers).then(
               (res) => {
                 if (res.success) {
-                  this.$Message.success("新增成功");
+                  this.$Message.success("修改成功");
                   this.operation = "INFO";
                   this.currentTab = "INFO";
                   this.csTab = false;

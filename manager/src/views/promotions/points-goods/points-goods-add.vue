@@ -13,7 +13,7 @@
                   ghost
                   style="margin-left: 10px"
                   @click="delSelectGoods"
-                >批量删除</Button
+                  >批量删除</Button
                 >
               </div>
               <Table
@@ -49,7 +49,7 @@
                       v-for="item in categoryList"
                       :value="item.id"
                       :key="item.id"
-                    >{{ item.name }}</Option
+                      >{{ item.name }}</Option
                     >
                   </Select>
                 </template>
@@ -88,7 +88,7 @@
             <div>
               <Button type="text" @click="closeCurrentPage">返回</Button>
               <Button type="primary" :loading="submitLoading" @click="handleSubmit"
-              >提交</Button
+                >提交</Button
               >
             </div>
           </div>

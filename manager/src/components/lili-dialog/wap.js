@@ -21,13 +21,18 @@ export default [
     name: "marketing"
   },
   {
-    title: "页面",
+    title: "文章",
     url: "3",
     name: "pages"
+  },
+  {
+    title: "专题",
+    url: "4",
+    name: "special"
   },
   {
     title: "其他",
     url: "3",
     name: "other"
-  }
+  },
 ];

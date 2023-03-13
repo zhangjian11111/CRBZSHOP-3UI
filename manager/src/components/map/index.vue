@@ -32,7 +32,7 @@
 import AMapLoader from "@amap/amap-jsapi-loader";
 import { getRegion } from "@/api/common.js";
 
-const config = require('@/config')
+const config = require('@/config/index')
 export default {
   data() {
     return {
