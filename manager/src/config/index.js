@@ -1,5 +1,5 @@
 module.exports = {
-  title: "lilishop", //配置显示在浏览器标签的title
+  title: "crbzshop", //配置显示在浏览器标签的title
   /**
    * 高德地图申请链接
    * https://lbs.amap.com/api/javascript-api/guide/abc/prepare
@@ -11,4 +11,5 @@ module.exports = {
   website: "https://www.pickmall.cn", //官网地址
   enableCDN: true, //生产环境 是否启用cdn加载 vue等js
   port: 10003, //端口
+  inputMaxLength:'140' //全局输入框默认最大输入长度字符串
 };

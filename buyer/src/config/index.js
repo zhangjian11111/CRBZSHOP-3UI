@@ -1,11 +1,11 @@
 
 const Cookie = require('js-cookie')
 module.exports = {
-  title:Cookie.get('siteName') || 'lilishop', //配置显示在浏览器标签的title、底部信息、部分信息展示的值
+  title:Cookie.get('siteName') || 'crbzshop', //配置显示在浏览器标签的title、底部信息、部分信息展示的值
   icpCard: "", // icp证
   company: {
-    href: "https://pickmall.cn",
-    name: "北京宏业汇成科技有限公司",
+    href: "https://crbzshop.cn",
+    name: "春日半盏百货店",
   }, //公司信息
   icpMessage: "京ICP备20009696号-1", //icp备案
   /**
@@ -18,4 +18,5 @@ module.exports = {
   aMapKey: "7f11113750315d8543daaf5c3ba353ca", //高德web端js申请的api key
   enableCDN: true, //生产环境 是否启用cdn加载 vue等js
   port: 10000, //端口
+  inputMaxLength:'140' //全局输入框默认最大输入长度字符串
 };
