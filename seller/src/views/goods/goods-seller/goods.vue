@@ -664,6 +664,15 @@ export default {
     },
     //批量设置物流模板
     batchShipTemplate() {
+      console.log("商品类型：",this.columns[4].key)
+      console.log("选择的商品:",this.selectList)
+      for (let i = 0; i < this.selectList.length ; i++) {
+        if(this.selectList[i].goodsType === "VIRTUAL_GOODS"){
+          this.$Message.warning("选择的商品中包含虚拟商品,暂不支持设置运费！！！");
+          return;
+        }
+      }
+
       if (this.selectCount <= 0) {
         this.$Message.warning("您还未选择要设置物流模板的商品");
         return;
