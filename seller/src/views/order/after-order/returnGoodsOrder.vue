@@ -143,11 +143,9 @@
             key: "applyRefundPrice",
             width: 130,
             render: (h, params) => {
-              return h(
-                "div",
-                this.$options.filters.unitPrice(params.row.applyRefundPrice, "￥")
-              );
+              return h("priceColorScheme", {props:{value:params.row.applyRefundPrice,color:this.$mainColor}} );
             },
+
           },
           {
             title: "会员名称",
@@ -272,10 +270,10 @@
       // 退货订单详情
       detail(v) {
         let sn = v.sn;
-        this.$router.push({
+        this.$options.filters.customRouterPush({
           name: "return-goods-order-detail",
           query: { sn: sn },
-        });
+        })
 
       },
     },

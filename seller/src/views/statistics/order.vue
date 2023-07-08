@@ -1,13 +1,9 @@
 <template>
 
   <div class="wrapper">
-    <Affix :offset-top="100">
       <Card class="card fixed-bottom">
-
         <affixTime @selected="clickBreadcrumb" />
-
       </Card>
-    </Affix>
 
     <Card class="card">
       <div>
@@ -260,10 +256,7 @@ export default {
           title: "价格",
           key: "flowPrice",
           render: (h, params) => {
-            return h(
-              "div",
-              this.$options.filters.unitPrice(params.row.flowPrice, "￥")
-            );
+            return h("priceColorScheme", {props:{value:params.row.flowPrice,color:this.$mainColor}} );
           },
         },
       ],
@@ -329,11 +322,9 @@ export default {
           title: "申请退款金额",
           key: "applyRefundPrice",
           render: (h, params) => {
-            return h(
-              "div",
-              this.$options.filters.unitPrice(params.row.applyRefundPrice, "￥")
-            );
+              return h("priceColorScheme", {props:{value:params.row.applyRefundPrice,color:this.$mainColor}} );
           },
+
         },
         {
           title: "申请原因",
@@ -435,7 +426,6 @@ export default {
   watch: {
     refundParams: {
       handler() {
-        console.log(this.refundIndex);
         if (this.refundIndex == 1) {
           this.getOrderRefundList();
         } else {
@@ -575,6 +565,11 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.fixed-bottom{
+  position:sticky;
+  z-index: 999;
+  top: 0;
+}
 .active {
   color: $theme_color;
   position: relative;

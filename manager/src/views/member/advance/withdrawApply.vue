@@ -37,7 +37,7 @@
           <span>{{showList.memberName}}</span>
         </FormItem>
         <FormItem label="申请金额">
-          <span>{{showList.applyMoney | unitPrice}}</span>
+          <priceColorScheme :value="showList.applyMoney" :color="$mainColor"></priceColorScheme>
         </FormItem>
         <FormItem label="提现状态">
           <span>{{showList.applyStatus | paramTypeFilter}}</span>
@@ -46,7 +46,7 @@
           <span>{{showList.createTime}}</span>
         </FormItem>
         <FormItem label="审核备注">
-          <Input v-model="audit" />
+          <Input v-model="audit" type="textarea" />
         </FormItem>
 
       </Form>
@@ -66,7 +66,8 @@
           <span>{{showList.memberName}}</span>
         </FormItem>
         <FormItem label="申请金额：">
-          <span>{{showList.applyMoney}}</span>
+          <priceColorScheme :value="showList.applyMoney" :color="$mainColor"></priceColorScheme>
+
         </FormItem>
         <FormItem label="提现状态：">
           <span>{{showList.applyStatus | paramTypeFilter}}</span>
@@ -78,7 +79,7 @@
           <span>{{showList.inspectTime}}</span>
         </FormItem>
         <FormItem label="审核备注：">
-          <span>{{showList.inspectRemark}}</span>
+          <span>{{showList.inspectRemark || '暂无备注'}}</span>
         </FormItem>
 
       </Form>
@@ -143,15 +144,12 @@ export default {
           key: "applyMoney",
           align: "left",
           width: 120,
+
           render: (h, params) => {
-            return h("div", [
-              h(
-                "span",
-                {},
-                this.$options.filters.unitPrice(params.row.applyMoney)
-              ),
-            ]);
+            return h("priceColorScheme", {props:{value:params.row.applyMoney,color:this.$mainColor}} );
           },
+
+
         },
         {
           title: "提现状态",
@@ -165,6 +163,8 @@ export default {
               return h("Tag", { props: { color: "green" } }, "审核通过");
             } else if (params.row.applyStatus == "SUCCESS") {
               return h("Tag", { props: { color: "blue" } }, "提现成功");
+            } else if (params.row.applyStatus == "ERROR") {
+              return h("Tag", { props: { color: "blue" } }, "提现失败");
             } else {
               return h("Tag", { props: { color: "red" } }, "审核拒绝");
             }
@@ -194,7 +194,7 @@ export default {
                 "Button",
                 {
                   props: {
-                    type: "success",
+                    type: "primary",
                     size: "small",
                   },
                   style: {
@@ -216,7 +216,7 @@ export default {
                 "Button",
                 {
                   props: {
-                    type: "primary",
+                    type: "default",
                     size: "small",
                   },
                   style: {
@@ -249,6 +249,8 @@ export default {
         return "审核通过(提现成功)";
       } else if (val === "FAIL_AUDITING") {
         return "审核拒绝";
+      } else if (val === "ERROR") {
+        return "提现失败";
       } else {
         return "未知状态";
       }

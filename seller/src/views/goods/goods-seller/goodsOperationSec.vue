@@ -556,7 +556,7 @@
               <editor
                 ref="editor"
                 v-model="baseInfoForm.intro"
-                :init="{ ...initEditor, height: '400px' }"
+                :init="{ ...initEditor, height: '800px' }"
                 openXss
               ></editor>
               <div class="promise-intro-btn">
@@ -575,7 +575,7 @@
               <editor
                 ref="editor"
                 v-model="baseInfoForm.mobileIntro"
-                :init="{ ...initEditor, height: '400px' }"
+                :init="{ ...initEditor, height: '800px' }"
                 openXss
               ></editor>
             </FormItem>
@@ -923,7 +923,7 @@ export default {
     },
     mouseLeave(){
       // this.showContent = false
-    },
+    },  
     /**
      * 选择参数
      * @paramsGroup 参数分组
@@ -1116,10 +1116,10 @@ export default {
     },
     // 图片上传前钩子
     handleBeforeUploadGoodsPicture(file) {
-      const check = this.baseInfoForm.goodsGalleryFiles.length < 15;
+      const check = this.baseInfoForm.goodsGalleryFiles.length < 5;
       if (!check) {
         this.$Notice.warning({
-          title: "图片数量不能大于十五张",
+          title: "图片数量不能大于五张",
         });
         return false;
       }

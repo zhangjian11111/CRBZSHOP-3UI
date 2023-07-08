@@ -130,11 +130,11 @@
         <div class="ant-col-md-6">
           <p class="item">
             <span class="label">法人姓名：</span>
-            <span class="info">{{storeInfo.legalName}}人</span>
+            <span class="info">{{storeInfo.legalName}}</span>
           </p>
           <p class="item">
             <span class="label">法人身份证：</span>
-            <span class="info">{{storeInfo.legalId}}人</span>
+            <span class="info">{{storeInfo.legalId}}</span>
           </p>
           <p class="item">
             <span class="label">身份证照片：</span>
@@ -602,8 +602,9 @@
             key: "flowPrice",
             width: 140,
             render: (h, params) => {
-              return h("div", this.$options.filters.unitPrice(params.row.flowPrice, '￥'));
-            }
+              return h("priceColorScheme", {props:{value:params.row.flowPrice,color:this.$mainColor}} );
+            },
+
           },
           {
             title: "订单类型",
@@ -772,19 +773,9 @@
             key: "applyRefundPrice",
             width: 110,
             render: (h, params) => {
-              if (params.row.applyRefundPrice == null) {
-                return h(
-                  "div",
-                  this.$options.filters.unitPrice(0, "￥")
-                );
-              } else {
-                return h(
-                  "div",
-                  this.$options.filters.unitPrice(params.row.applyRefundPrice, "￥")
-                );
-              }
-
+              return h("priceColorScheme", {props:{value:params.row.applyRefundPrice,color:this.$mainColor}} );
             },
+
           },
           {
             title: "售后类型",

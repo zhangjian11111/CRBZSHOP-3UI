@@ -235,11 +235,9 @@ export default {
           key: "finalPrice",
           width: 120,
           render: (h, params) => {
-            return h(
-              "div",
-              this.$options.filters.unitPrice(params.row.finalPrice, "￥")
-            );
+            return h("priceColorScheme", {props:{value:params.row.finalPrice,color:this.$mainColor}} );
           },
+
         },
         {
           title: "平台分佣",
@@ -294,13 +292,7 @@ export default {
             if (params.row.distributionRebate == null) {
               return h("div", "-");
             } else {
-              return h(
-                "div",
-                this.$options.filters.unitPrice(
-                  params.row.distributionRebate,
-                  "￥"
-                )
-              );
+              return h("priceColorScheme", {props:{value:params.row.distributionRebate,color:this.$mainColor}} );
             }
           },
         },
@@ -309,10 +301,7 @@ export default {
           key: "billPrice",
           width: 120,
           render: (h, params) => {
-            return h(
-              "div",
-              this.$options.filters.unitPrice(params.row.billPrice, "￥")
-            );
+            return h("priceColorScheme", {props:{value:params.row.billPrice,color:this.$mainColor}} );
           },
         },
       ],
@@ -359,11 +348,9 @@ export default {
           key: "finalPrice",
           width: 120,
           render: (h, params) => {
-            return h(
-              "div",
-              this.$options.filters.unitPrice(params.row.finalPrice, "￥")
-            );
+            return h("priceColorScheme", {props:{value:params.row.flowPfinalPricerice,color:this.$mainColor}} );
           },
+
         },
         {
           title: "退还佣金",
@@ -529,7 +516,6 @@ export default {
           this.refundTotal = res.result.total;
 
           this.$set(this, "refund", res.result.records);
-          console.log();
         }
       });
       this.refundTotal = this.refund.length;

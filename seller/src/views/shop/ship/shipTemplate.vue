@@ -25,16 +25,12 @@
                   </span>
                 </th>
               </tr>
-              <tr>
+              <tr v-if="item.pricingMethod!=='FREE'">
                 <td class="w10 bdl"></td>
                 <td class="cell-area tl w150">运送到</td>
-                <td class="w150" v-if="item.pricingMethod==='WEIGHT'">首重/kg</td>
-                <td class="w150" v-if="item.pricingMethod==='NUM'">首件/件</td>
-                <td class="w150" v-if="item.pricingMethod==='DISTANCE'">首距离/km</td>
+                <td class="w150">首件(重)</td>
                 <td class="w150">运费</td>
-                <td class="w150" v-if="item.pricingMethod==='WEIGHT'">续重/kg</td>
-                <td class="w150" v-if="item.pricingMethod==='NUM'">续件/件</td>
-                <td class="w150" v-if="item.pricingMethod==='DISTANCE'">接续距离/km</td>
+                <td class="w150">续件(重)</td>
                 <td class="w150 bdr">运费</td>
               </tr>
               <template v-if="item.pricingMethod!=='FREE'">
@@ -67,7 +63,6 @@
               <RadioGroup type="button" button-style="solid" v-model="form.pricingMethod">
                 <Radio label="WEIGHT">按重量</Radio>
                 <Radio label="NUM">按件数</Radio>
-                <Radio label="DISTANCE">按距离</Radio>
                 <Radio label="FREE">包邮</Radio>
               </RadioGroup>
             </FormItem>
@@ -83,9 +78,9 @@
                           <th class="w10"></th>
                           <th class="tl">运送到</th>
                           <th class="w10"></th>
-                          <th class="w50">首件(重)(距离)</th>
+                          <th class="w50">首件(重)</th>
                           <th class="w110">首费</th>
-                          <th class="w50">续件(重)(距离)</th>
+                          <th class="w50">续件(重)</th>
                           <th class="w110">续费</th>
                           <th class="w150">操作</th>
                         </tr>
@@ -131,7 +126,6 @@
                   </div>
                   <div class="tbl-attach p-5">
                     <div class="div-error" v-if="saveError">
-                      <h1>请依次检查以下事项！</h1>
                       <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                       <Icon type="ios-information-circle-outline" />
                       指定地区城市为空或指定错误
@@ -141,8 +135,6 @@
                       续费应输入正确的金额 -->
                       <Icon type="ios-information-circle-outline" />
                       首(续)件(重)费应输入大于0的整数
-                      <Icon type="ios-information-circle-outline" />
-                      首(续)件应输入1的整数
                     </div>
 
                   </div>
@@ -188,7 +180,6 @@ export default {
       currentTab: "", // 当前模板tab
       // submitLoading:false,
       saveError: false, // 是否显示错误提示
-      saveErrorNUM: false,
       csTab: false, // 添加运费模板显示
       form: {
         // 添加或编辑表单对象初始化数据
@@ -314,7 +305,6 @@ export default {
      * 选择地址回调
      */
     handleSelect(v) {
-      console.log(v);
       let area = "";
       let areaId = "";
       if (v != "") {
@@ -363,21 +353,6 @@ export default {
               i < this.form.freightTemplateChildList.length;
               i++
             ) {
-              if (this.form.pricingMethod == "NUM") {
-                if (
-                this.form.freightTemplateChildList[i].area == "" ||
-                this.form.freightTemplateChildList[i].firstCompany == "" ||
-                // this.form.freightTemplateChildList[i].firstPrice == "" ||
-                this.form.freightTemplateChildList[i].continuedCompany == "" ||
-                // this.form.freightTemplateChildList[i].continuedPrice == ""
-                this.form.freightTemplateChildList[i].firstCompany%1 !==0 ||
-                this.form.freightTemplateChildList[i].continuedCompany%1 !== 0
-              ) {
-                this.saveError = true;
-                return;
-              }
-                }
-
               if (
                 this.form.freightTemplateChildList[i].area == "" ||
                 this.form.freightTemplateChildList[i].firstCompany == "" ||
@@ -422,7 +397,7 @@ export default {
             API_Shop.editShipTemplate(this.form.id, this.form, headers).then(
               (res) => {
                 if (res.success) {
-                  this.$Message.success("修改成功");
+                  this.$Message.success("新增成功");
                   this.operation = "INFO";
                   this.currentTab = "INFO";
                   this.csTab = false;

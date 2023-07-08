@@ -172,7 +172,6 @@ export default {
         this.showGoodsTemplates = true;
       } else {
         this.goodsType = val.type;
-        console.log(this.goodsType);
         this.selectedTemplate = {};
       }
     },

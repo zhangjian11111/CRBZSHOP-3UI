@@ -354,7 +354,7 @@ export default {
           key: "price",
           width: 130,
           render: (h, params) => {
-            return h("div", this.$options.filters.unitPrice(params.row.price, "￥"));
+            return h("priceColorScheme", {props:{value:params.row.price,color:this.$mainColor}} );
           },
         },
         {
@@ -563,7 +563,6 @@ export default {
     async exportGoods(){
       downLoadGoods()
         .then((res) => {
-          console.log(res)
           const blob = new Blob([res], {
             type: "application/vnd.ms-excel;charset=utf-8",
           });
@@ -664,15 +663,6 @@ export default {
     },
     //批量设置物流模板
     batchShipTemplate() {
-      console.log("商品类型：",this.columns[4].key)
-      console.log("选择的商品:",this.selectList)
-      for (let i = 0; i < this.selectList.length ; i++) {
-        if(this.selectList[i].goodsType === "VIRTUAL_GOODS"){
-          this.$Message.warning("选择的商品中包含虚拟商品,暂不支持设置运费！！！");
-          return;
-        }
-      }
-
       if (this.selectCount <= 0) {
         this.$Message.warning("您还未选择要设置物流模板的商品");
         return;

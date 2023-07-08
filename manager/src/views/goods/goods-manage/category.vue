@@ -66,7 +66,9 @@
         </template>
 
         <template slot="commissionRate" slot-scope="scope">
-          {{ scope.row.commissionRate }}%
+          <priceColorScheme v-if="scope.row.commissionRate > 0" unit=""  :color="$mainColor" :value="scope.row.commissionRate">%</priceColorScheme>
+          <priceColorScheme v-else :value="scope.row.commissionRate" unit=""  >%</priceColorScheme>
+           <!-- {{ scope.row.commissionRate }}% -->
         </template>
 
         <template slot="deleteFlag" slot-scope="{ row }">
@@ -512,7 +514,7 @@ export default {
             this.$Modal.remove();
             if (res.success) {
               this.$Message.success("操作成功");
-              // this.getAllList(0);
+              this.getAllList(0);
             }
           });
         },

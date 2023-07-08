@@ -107,13 +107,13 @@ export default {
       },
       openModalTitle: '开启信息',
       ruleValidate: {
-        customerName: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
-        payType: [{ required: true, message: "请填写必填项" ,trigger: "change" }],
-        expType: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
-        customerPwd: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
-        monthCode: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
-        sendSite: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
-        sendStaff: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
+        // customerName: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
+        // payType: [{ required: true, message: "请填写必填项" ,trigger: "change" }],
+        // expType: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
+        // customerPwd: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
+        // monthCode: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
+        // sendSite: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
+        // sendStaff: [{ required: true, message: "请填写必填项" ,trigger: "blur" }],
 
       },
       faceSheetForm: {
@@ -221,12 +221,12 @@ export default {
   methods: {
     //获取状态
     getfaceSheetFlag(e) {
-      console.log(e);
+
       if (e === true) {
-        console.log("打开");
+
         this.onpenText = true;
       } else {
-        console.log("关闭");
+
         this.onpenText = false;
       }
     },
@@ -280,6 +280,8 @@ export default {
           this.faceSheetForm.monthCode = res.result.monthCode;
           this.faceSheetForm.sendSite = res.result.sendSite;
           this.faceSheetForm.sendStaff = res.result.sendStaff;
+          this.faceSheetForm.payType = res.result.payType;
+          this.faceSheetForm.expType = res.result.expType;
         }
       });
       this.openModal = true;
