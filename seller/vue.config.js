@@ -28,18 +28,18 @@ let externals = {
 
 // 使用CDN的内容
 let cdn = {
-  css: ["https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/iview.css"],
+  css: ["https://xbcdn.qgxbm.com/XBCDN/iview.css"],
   js: [
     // vue must at first!
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vuex.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue-router.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/axios.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/iview.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue-lazyload.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/js.cookie.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/sockjs.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/g2.min.js"
+    "https://xbcdn.qgxbm.com/XBCDN/vue.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/vuex.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/vue-router.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/axios.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/iview.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/vue-lazyload.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/js.cookie.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/sockjs.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/g2.min.js"
   ]
 };
 

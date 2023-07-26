@@ -18,10 +18,10 @@ const assetsCDN = {
   },
   css: [],
   js: [
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue-router.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vuex.min.js",
-    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/axios.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/vue.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/vue-router.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/vuex.min.js",
+    "https://xbcdn.qgxbm.com/XBCDN/axios.min.js",
   ],
 }
 
