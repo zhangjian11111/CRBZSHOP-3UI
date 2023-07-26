@@ -1,4 +1,4 @@
-# LILISHOP-UI
+# CRBZSHOP-UI
 
 ## Project setup
 ```

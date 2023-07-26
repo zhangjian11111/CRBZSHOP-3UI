@@ -106,14 +106,14 @@
 
           <Row type="flex" justify="end" class="mt_10">
             <Page
-              style="margin: 20px 0"
+              style="margin-bottom: 7% "
               :current="searchForm.pageNumber"
               :total="total"
               :page-size="searchForm.pageSize"
               @on-change="changePage"
               @on-page-size-change="changePageSize"
-              :page-size-opts="[10, 20, 50]"
-              size="small"
+              :page-size-opts="[10, 20, 50, 75,100]"
+              size="default"
               show-total
               show-elevator
               show-sizer
@@ -216,7 +216,7 @@ export default {
     },
     // 分页 改变页数
     changePageSize(v) {
-      this.searchForm.pageNumber = 1;
+      // this.searchForm.pageNumber = 1;
       this.searchForm.pageSize = v;
       this.getDataList();
     },

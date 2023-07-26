@@ -39,7 +39,7 @@
         <template slot-scope="{ row }" slot="QRCode">
           <img
             v-if="row.QRCode"
-            :src="row.QRCode || '../../../assets/lili.png'"
+            :src="row.QRCode || '../../../assets/xbm.png'"
             width="50px"
             height="50px"
             alt=""

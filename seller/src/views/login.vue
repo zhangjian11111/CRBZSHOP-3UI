@@ -257,7 +257,7 @@ export default {
 <style lang="scss" scoped>
 .login {
   height: 100%;
-  background: url("../assets/background.png") no-repeat;
+  background: url("../assets/background.jpeg") no-repeat;
   background-size: 100%;
   background-position-y: bottom;
   background-color: #fff;

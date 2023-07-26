@@ -13,7 +13,7 @@
       <Carousel loop :autoplay-speed="5000" class="login-carousel" arrow="never">
         <CarouselItem>
           <div class="demo-carousel" @click='$refs.verify.show = false'>
-            <img src="https://lili-system.oss-cn-beijing.aliyuncs.com/background.jpg" />
+            <img src="https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/%E9%AA%8C%E8%AF%81%E7%A0%81%E5%9B%BE%E7%89%87/login.jpg" />
           </div>
         </CarouselItem>
       </Carousel>

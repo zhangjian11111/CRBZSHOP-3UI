@@ -82,7 +82,7 @@
               </div>
               <Table border :columns="columns" :data="form.promotionGoodsList" @on-selection-change="changeSelect">
                 <template slot-scope="{ row }" slot="QRCode">
-                  <img :src="row.QRCode || '../../../assets/lili.png'" width="50px" height="50px" alt="" />
+                  <img :src="row.QRCode || '../../../assets/xbm.png'" width="50px" height="50px" alt="" />
                 </template>
                 <template slot-scope="{ index }" slot="action">
                   <Button type="error" :disabled="form.promotionStatus != 'NEW' && !!id" size="small" ghost
