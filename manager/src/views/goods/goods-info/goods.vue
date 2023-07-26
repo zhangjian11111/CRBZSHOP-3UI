@@ -128,7 +128,7 @@
           :page-size="searchForm.pageSize"
           @on-change="changePage"
           @on-page-size-change="changePageSize"
-          :page-size-opts="[10, 20, 50, 75 , 100]"
+          :page-size-opts="[10, 20, 50]"
           size="small"
           show-total
           show-elevator
@@ -422,10 +422,10 @@ export default {
     //查看商品详情
     showDetail(v) {
       let id = v.id;
-      this.$router.push({
+      this.$options.filters.customRouterPush({
         name: "goods-detail",
         query: { id: id },
-      });
+      })
     },
   },
   mounted() {

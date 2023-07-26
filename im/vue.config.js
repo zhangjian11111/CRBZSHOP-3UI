@@ -18,10 +18,10 @@ const assetsCDN = {
   },
   css: [],
   js: [
-    'https://unpkg.com/vue@2.6.11/dist/vue.min.js',
-    'https://unpkg.com/vue-router@3.4.9/dist/vue-router.min.js',
-    'https://unpkg.com/vuex@3.5.1/dist/vuex.min.js',
-    'https://unpkg.com/axios@0.21.0/dist/axios.min.js',
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue.min.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue-router.min.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vuex.min.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/axios.min.js",
   ],
 }
 

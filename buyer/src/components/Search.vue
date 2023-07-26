@@ -21,12 +21,16 @@
             <Icon type="ios-search" size="21"/>
           </div>
         </i-input>
-        <div v-if="store" class="btn-div">
-          <Button class="store-search" type="warning" @click="searchStore">搜本店</Button>
-          <Button class="store-search" type="primary" @click="search">搜全站</Button>
-        </div>
+<!--        <div v-if="store" class="btn-div">-->
+<!--          <Button class="store-search" type="warning" @click="searchStore">搜本店</Button>-->
+<!--          <Button class="store-search" type="primary" @click="search">搜全站</Button>-->
+<!--        </div>-->
         <template v-if="showTag">
-          <div style="height:12px" v-if="promotionTags.length === 0"></div>
+          <div class="only-store" v-if="storeId" @click="research()">
+            切换为{{!onlyStore ? '店铺内' : '平台'}}搜索
+
+          </div>
+          <div v-if="promotionTags.length === 0"></div>
           <div v-else class="history-list flex">
             <div
               v-for="(item, index) in promotionTags"
@@ -57,9 +61,9 @@ export default {
       type: Boolean,
       default: true
     },
-    store: { // 是否为店铺页面
-      type: Boolean,
-      default: false
+    storeId: { // 是否为店铺页面
+      type: String,
+      default: ""
     },
     hover: {
       type: Boolean,
@@ -70,9 +74,15 @@ export default {
       default:''
     }
   },
+  watch:{
+    storeId(val){
+      this.onlyStore = val ? true : false
+    }
+  },
   data() {
     return {
-      searchData: '' // 搜索内容
+      searchData: '', // 搜索内容
+      onlyStore:false,
     };
   },
   methods: {
@@ -80,15 +90,20 @@ export default {
       this.searchData = item;
       this.search();
     },
+    research(){
+      this.onlyStore = !this.onlyStore
+    },
     search () { // 全平台搜索商品
       const url = this.$route.path;
       if(url == '/goodsList'){
         this.$emit('search', this.searchData)
       }else{
-        this.$router.push({
-          path: '/goodsList',
-          query: { keyword: this.searchData }
-        });
+        const pushData = {
+          path:'/goodsList',
+          query: { keyword: this.searchData },
+        }
+        if(this.storeId && this.onlyStore) pushData.query.storeId = this.storeId
+        this.$router.push(pushData);
       }
     },
     searchStore() { // 店铺搜索商品
@@ -126,9 +141,18 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.only-store{
+  text-align: right;
+  color:$theme_color;
+  cursor: pointer;
+}
 .navbar {
   height: 113px;
   background: #fff;
+}
+.search-icon{
+  width: 100%;
+  height: 100%;
 }
 .small-search-box{
   height: 60px;
@@ -217,7 +241,6 @@ export default {
 }
 
 .history-list {
-  margin-top: 2px;
   margin-left: 28px;
 }
 

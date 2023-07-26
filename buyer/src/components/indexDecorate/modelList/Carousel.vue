@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="model-carousel">
     <div class="nav-body clearfix">
       <!-- 侧边导航占位 -->
@@ -6,7 +6,7 @@
       <div class="nav-content">
         <!-- 轮播图 -->
 <!--        autoplay autoplay-speed="10000"-->
-        <Carousel :height="333.9" autoplay autoplay-speed="5000">
+        <Carousel :height="333.9" autoplay :autoplay-speed="5000">
           <CarouselItem  v-for="(item, index) in data.options.list" :key="index">
             <div class="swiper-img" >
               <img
@@ -154,7 +154,8 @@ export default {
   methods: {
     // 快捷跳转中心
     entryControl(val) {
-      this.$router.push(val.path)
+      let url = this.$router.resolve(val.path);
+      window.open(url.href, '_blank');
     },
   },
   mounted() {

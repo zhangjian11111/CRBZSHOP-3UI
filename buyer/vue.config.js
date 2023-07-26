@@ -25,15 +25,16 @@ let externals = {
 
 // 使用CDN的内容
 let cdn = {
-  css: ["https://cdn.pickmall.cn/cdn/iview.css"],
+
+  css: ["https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/iview.css"],
   js: [
     // vue must at first!
-    "https://cdn.pickmall.cn/cdn/vue.min.js",
-    "https://cdn.pickmall.cn/cdn/vuex.min.js",
-    "https://cdn.pickmall.cn/cdn/vue-router.min.js",
-    "https://cdn.pickmall.cn/cdn/axios0.19.2.js",
-    "https://cdn.pickmall.cn/cdn/iview.min.js",
-    "https://cdn.pickmall.cn/cdn/js.cookie.min.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue.min.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vuex.min.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/vue-router.min.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/axios0.19.2.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/iview.min.js",
+    "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBCDN/js.cookie.min.js",
   ]
 };
 

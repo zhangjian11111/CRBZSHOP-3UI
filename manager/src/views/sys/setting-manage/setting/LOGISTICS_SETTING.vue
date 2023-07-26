@@ -14,6 +14,9 @@
       <FormItem v-if="formValidate.type === 'KDNIAO'" label="快递鸟 AppKey" prop="kdniaoAppKey">
         <Input class="label-appkey" v-model="formValidate.kdniaoAppKey" />
       </FormItem>
+      <FormItem v-if="formValidate.type === 'KDNIAO'" label="快递鸟 requestType" prop="requestType">
+        <Input class="label-appkey" v-model="formValidate.requestType" />
+      </FormItem>
 
       <FormItem v-if="formValidate.type === 'KUAIDI100'" label="快递100 授权码" prop="kuaidi100Customer">
         <Input class="label-appkey" v-model="formValidate.kuaidi100Customer" />
@@ -58,6 +61,7 @@ export default {
         kdniaoEbusinessID: "",
         kdniaoAppKey: "",
         kuaidi100Customer: "",
+        requestType:"",
         kuaidi100Key: "",
       },
     };
