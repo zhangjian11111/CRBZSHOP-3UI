@@ -70,6 +70,7 @@ module.exports = {
     sourceMap: false,
 
     loaderOptions: {
+
       sass: {
         data: `@import "@/assets/styles/global.scss";` //全局加载scss
       },

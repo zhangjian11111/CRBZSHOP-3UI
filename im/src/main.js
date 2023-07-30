@@ -40,7 +40,7 @@ import '@/assets/css/global.less'
 Vue.config.productionTip = false
 
 // 注册全局 mixin
-Vue.mixin(MainMixin) 
+Vue.mixin(MainMixin)
 Vue.component('face', face)
 Vue.component('face-null', faceNull)
 

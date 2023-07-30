@@ -1,5 +1,5 @@
 <template>
-  <div class="verify-content" v-if="show" @mousemove="mouseMove" @mouseup="mouseUp" @click.stop>
+  <div class="verify-content" v-if="show" @mousemove="mouseMove" @mouseup="mouseUp" @click.stop @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
     <div class="imgBox" :style="{width:data.originalWidth+'px',height:data.originalHeight + 'px'}">
       <img :src="data.backImage" style="width:100%;height:100%" alt="">
       <img class="slider" :src="data.slidingImage" :style="{left:distance+'px',top:data.randomY+'px'}" :width="data.sliderWidth" :height="data.sliderHeight" alt="">
@@ -16,6 +16,7 @@
 </template>
 <script>
 import { getVerifyImg, postVerifyImg } from './verify.js';
+import {Integer} from "@/plugins/RegExp";
 export default {
   props: {
     // 传入数据，判断是登录、注册、修改密码
@@ -44,6 +45,67 @@ export default {
     };
   },
   methods: {
+
+    //触摸事件
+    // 添加移动端触摸事件处理方法
+    touchStart(event) {
+      event.preventDefault();
+      this.downX = event.changedTouches[0].clientX;
+      this.flag = true;
+    },
+    touchMove(event) {
+      event.preventDefault();
+      if (!this.flag) {
+        return;
+      }
+      const moveX = event.changedTouches[0].clientX - this.downX;
+      this.distance = this.clamp(moveX, 0, this.data.originalWidth - this.data.sliderWidth);
+
+      console.log("moveX:", typeof moveX, moveX);
+      console.log("this.distance:", typeof this.distance, this.distance);
+    },
+    touchEnd(event) {
+      event.preventDefault();
+      if (!this.flag) {
+        return;
+      }
+      this.flag = false;
+      let params = {
+        verificationEnums: this.type,
+        xPos: this.distance
+      };
+      postVerifyImg(params).then(res => {
+
+        if (res.success) {
+          if (res.result) {
+            this.bgColor = 'green';
+            this.verifyText = '解锁成功';
+            this.$emit('change', { status: true, distance: this.distance });
+          } else {
+            this.bgColor = 'red';
+            this.verifyText = '解锁失败';
+            let that = this;
+            setTimeout(() => {
+              that.init();
+            }, 1000);
+            this.$emit('change', { status: false, distance: this.distance });
+          }
+        } else {
+          this.init()
+        }
+
+      }).catch(()=>{
+        this.init()
+      });
+
+    },
+
+    // 添加触摸事件辅助方法
+    clamp(value, min, max) {
+      return Math.abs(Math.min(Math.max(value, min), max));
+    },
+
+
     // 鼠标按下事件，开始拖动滑块
     mouseDown (e) {
       this.downX = e.clientX;
@@ -89,7 +151,7 @@ export default {
         } else {
           this.init()
         }
-        
+
       }).catch(()=>{
         this.init()
       });
