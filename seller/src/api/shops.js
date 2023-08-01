@@ -80,7 +80,7 @@ export const addShopAddress = (params) => {
   return postRequest(`/member/storeAddress/`, params)
 }
 
-// 添加商品自提点
+// 删除商品自提点
 export const deleteShopAddress = (id) => {
   return deleteRequest(`/member/storeAddress/${id}`)
 }
