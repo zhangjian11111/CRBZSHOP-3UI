@@ -73,8 +73,8 @@ Vue.prototype.$mainColor = mainColor;
 Vue.prototype.md5 = md5;
 // const PC_URL = BASE.PC_URL; // 跳转买家端地址 pc端
 // const WAP_URL = BASE.WAP_URL; // 跳转买家端地址 wap端
-let PC_URL = (process.env.NODE_ENV === 'development' ? BASE.PC_DEV_URL : BASE.PC_PROD_URL)
-let WAP_URL = (process.env.NODE_ENV === 'development' ? BASE.WAP_DEV_URL : BASE.WAP_PROD_URL)
+let PC_URL = (process.env.NODE_ENV === 'development' ? BASE.PC_SDEV_URL : BASE.PC_SPROD_URL)
+let WAP_URL = (process.env.NODE_ENV === 'development' ? BASE.WAP_SDEV_URL : BASE.WAP_SPROD_URL)
 Vue.prototype.linkTo = function (goodsId, skuId) {
   // 跳转买家端商品
   window.open(

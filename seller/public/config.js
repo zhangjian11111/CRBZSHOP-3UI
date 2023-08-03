@@ -24,13 +24,13 @@ var BASE = {
   /**
    * @description // 跳转买家端地址 pc端
    */
-  PC_DEV_URL: "https://yqswgjz.mynatapp.cc",
-  PC_PROD_URL: "https://buyer.qgxbm.com",
+  PC_SDEV_URL: "https://yqswgjz.mynatapp.cc",
+  PC_SPROD_URL: "https://buyer.qgxbm.com",
   /**
    * @description  // 跳转买家端地址 wap端
    */
-  WAP_DEV_URL: "https://yqswgjz.mynatapp.cc",
-  WAP_PROD_URL: "https://xbmall.qgxbm.com",
+  WAP_SDEV_URL: "https://yqswgjz.mynatapp.cc",
+  WAP_SPROD_URL: "https://xbmall.qgxbm.com",
   /**
    *  @description api请求基础路径前缀
    */
