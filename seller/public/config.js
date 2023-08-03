@@ -15,10 +15,6 @@ var BASE = {
     // manager: "https://yqswgjz.mynatapp.cc"
   },
   API_PROD: {
-    // common: "https://yqswgjz.mynatapp.cc",
-    // buyer: "https://yqswgjz.mynatapp.cc",
-    // seller: "https://yqswgjz.mynatapp.cc",
-    // manager: "https://yqswgjz.mynatapp.cc"
 
     common: "https://common-api.qgxbm.com",
     buyer: "https://buyer-api.qgxbm.com",
@@ -28,12 +24,13 @@ var BASE = {
   /**
    * @description // 跳转买家端地址 pc端
    */
-  //PC_URL: "https://www.qgxbm.com",
-  PC_URL: "https://www.qgxbm.com",
+  PC_DEV_URL: "https://yqswgjz.mynatapp.cc",
+  PC_PROD_URL: "https://buyer.qgxbm.com",
   /**
    * @description  // 跳转买家端地址 wap端
    */
-  WAP_URL: "https://www.qgxbm.com",
+  WAP_DEV_URL: "https://yqswgjz.mynatapp.cc",
+  WAP_PROD_URL: "https://xbmall.qgxbm.com",
   /**
    *  @description api请求基础路径前缀
    */
