@@ -18,5 +18,5 @@ module.exports = {
   aMapKey: "680dd24a763ecab260932ec8099b5c10", //高德web端js申请的api key
   enableCDN: true, //生产环境 是否启用cdn加载 vue等js
   port: 10000, //端口
-  inputMaxLength: "140", //全局输入框默认最大输入长度字符串
+  inputMaxLength: "2000", //全局输入框默认最大输入长度字符串
 };
