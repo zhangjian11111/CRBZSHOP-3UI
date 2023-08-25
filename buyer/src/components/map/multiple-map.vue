@@ -31,7 +31,7 @@
 
 <script>
 import { aMapSwitch } from '@/config/index'
-import mapping from "@/views/my-components/map/index.vue";
+import mapping from "@/components/map/index.vue";
 import * as API_Setup from "@/api/common.js";
 export default {
   components: { mapping },
@@ -71,7 +71,7 @@ export default {
         this.chiosend.splice(3, 1, val);
       }
       else {
-        API_Setup.getChildRegion(val.id).then((res) => {
+        API_Setup.getRegion(val.id).then((res) => {
           if (res.result.length && val.id !== 0) {
             this.chiosend[index] = val
           }

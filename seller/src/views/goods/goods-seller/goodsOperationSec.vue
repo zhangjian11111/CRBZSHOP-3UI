@@ -969,8 +969,7 @@ export default {
 
       /** 查询品牌列表 */
       this.getGoodsBrandList();
-      /** 查询商品参数 */
-      this.GET_GoodsParams();
+
       /** 查询店铺商品分类 */
       this.GET_ShopGoodsLabel();
       this.GET_GoodsUnit();
@@ -988,6 +987,8 @@ export default {
       }
       this.firstData.goodsType &&
         (this.baseInfoForm.goodsType = this.firstData.goodsType);
+      /** 查询商品参数 */
+      this.GET_GoodsParams();
     },
     // 渲染sku数据
     renderGoodsDetailSku(skuList) {
@@ -1055,6 +1056,7 @@ export default {
 
     /** 根据当前分类id查询商品应包含的参数 */
     GET_GoodsParams() {
+      this.goodsParams = []
       API_GOODS.getCategoryParamsListDataSeller(this.categoryId).then(
         (response) => {
           if (!response || response.length <= 0) {
