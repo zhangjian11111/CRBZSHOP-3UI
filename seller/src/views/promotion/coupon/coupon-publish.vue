@@ -141,7 +141,7 @@
               >
                 <template slot-scope="{ row }" slot="QRCode">
                   <img
-                    :src="row.QRCode || '../../../assets/xbm.png'"
+                    :src="row.QRCode || '../../../assets/lili.png'"
                     width="50px"
                     height="50px"
                     alt=""

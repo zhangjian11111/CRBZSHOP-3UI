@@ -58,6 +58,7 @@
 <script>
   import * as API_Shop from "@/api/shops";
   import { validateMobile } from "@/libs/validate";
+
   import multipleMap from "@/views/my-components/map/multiple-map";
 
 
@@ -233,10 +234,11 @@
           this.form.center = val.data[val.data.length - 1].center
         }
         else{
-          this.$set(this.form, 'address', val.data.addr)
-          this.form.address = val.data.address
-          this.form.center = val.data.position.lng + "," + val.data.position.lat
+            this.$set(this.form, 'address', val.data.addr)
+            this.form.address = val.data.address
+            this.form.center = val.data.position.lng + "," + val.data.position.lat
         }
+
       },
       // 获取数据
       getDataList() {

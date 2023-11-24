@@ -2,7 +2,7 @@ import request, {
   Method
 } from '@/plugins/request.js';
 
-// 商品列表
+// 商品列表-
 export function goodsList (params) {
   return request({
     url: '/buyer/goods/goods/es',

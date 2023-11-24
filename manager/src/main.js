@@ -18,6 +18,7 @@ import util from '@/libs/util'
 
 import * as filters from '@/utils/filters' // global filter
 import liliDialog from '@/components/lili-dialog'
+
 import {md5} from '@/utils/md5.js';
 
 // 打印
@@ -35,17 +36,27 @@ if (aMapSecurityJsCode) {
 
 Vue.config.devtools = true;
 Vue.config.productionTip = false
-// const PC_URL = BASE.PC_URL; // 跳转买家端地址 pc端
-// const WAP_URL = BASE.WAP_URL; // 跳转买家端地址 wap端
-let PC_URL = (process.env.NODE_ENV === 'development' ? BASE.PC_MDEV_URL : BASE.PC_MPROD_URL)
-let WAP_URL = (process.env.NODE_ENV === 'development' ? BASE.WAP_MDEV_URL : BASE.WAP_MPROD_URL)
-Vue.prototype.linkTo = function (goodsId, skuId) {  // 跳转买家端商品
-  window.open(`${PC_URL}/goodsDetail?skuId=${skuId}&goodsId=${goodsId}`, '_blank')
-};
-Vue.prototype.wapLinkTo = function (goodsId, skuId) { // app端二维码
-  return `${WAP_URL}/pages/product/goods?id=${skuId}&goodsId=${goodsId}`
-};
+const PC_URL = BASE.PC_URL; // 跳转买家端地址 pc端
+const WAP_URL = BASE.WAP_URL; // 跳转买家端地址 wap端
+Vue.prototype.linkTo = function (goodsId, skuId) {
+  // 跳转买家端商品
+  let src;
+  if (skuId) {
+    src = `${PC_URL}/goodsDetail?skuId=${skuId}&goodsId=${goodsId}`;
+  } else {
+    src = `${PC_URL}/goodsDetail?goodsId=${goodsId}`;
+  }
 
+  window.open(src, "_blank");
+};
+Vue.prototype.wapLinkTo = function (goodsId, skuId) {
+  // app端二维码
+  if (skuId) {
+    return `${WAP_URL}/pages/product/goods?id=${skuId}&goodsId=${goodsId}`;
+  } else {
+    return `${WAP_URL}/pages/product/goods?goodsId=${goodsId}`;
+  }
+};
 // 引入价格格式化组件
 import priceColorScheme from 'price-color'
 Vue.use(priceColorScheme);
@@ -57,6 +68,7 @@ Vue.use(copyViewUi, {
 });
 
 Vue.component('liliDialog', liliDialog)
+
 
 
 // 挂载全局使用的方法

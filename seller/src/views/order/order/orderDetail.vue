@@ -357,7 +357,7 @@
           </dd>
         </dl>
         <dl>
-          <dt>快递单号：</dt>
+          <dt>物流单号：</dt>
           <dd>
             <div nctype="ordersSn" class="text-box">
               {{ logisticsInfo.logisticCode || orderInfo.order.logisticsNo }}
@@ -480,7 +480,9 @@
 import * as API_Order from "@/api/order";
 import * as API_Logistics from "@/api/logistics";
 import * as RegExp from "@/libs/RegExp.js";
+
 import multipleMap from "@/views/my-components/map/multiple-map";
+
 
 export default {
   name: "orderDetail",
@@ -500,6 +502,7 @@ export default {
       },
       submitLoading: false, // 添加或编辑提交状态
       logisticsType: 'KUAIDINIAO', //物流类型
+
       someJSONdata: '',
       faceSheetForm: {
         logisticsId: '',
@@ -693,16 +696,17 @@ export default {
     // 回调地址信息
     getAddress(val){
       if(val.type === 'select'){
-        const paths = val.data.map(item => item.name).join(',')
-        const ids = val.data.map(item => item.id).join(',')
-        this.$set(this.addressForm, 'consigneeAddressPath', paths)
-        this.$set(this.addressForm, 'consigneeAddressIdPath', ids)
+          const paths = val.data.map(item => item.name).join(',')
+          const ids = val.data.map(item => item.id).join(',')
+          this.$set(this.addressForm, 'consigneeAddressPath', paths)
+          this.$set(this.addressForm, 'consigneeAddressIdPath', ids)
       }
       else{
-        this.$set(this.addressForm, 'consigneeAddressPath', val.data.addr)
-        this.$set(this.addressForm, 'consigneeAddressIdPath', val.data.addrId)
+          this.$set(this.addressForm, 'consigneeAddressPath', val.data.addr)
+          this.$set(this.addressForm, 'consigneeAddressIdPath', val.data.addrId)
       }
     },
+
     //弹出订单核销框
     orderTake () {
       this.orderTakeForm.qrCode = this.orderInfo.order.verificationCode;

@@ -90,12 +90,12 @@
           <Form ref="stockWarningForm" :model="stockWarningForm" :label-width="100" :rules="stockWarningFormValidate">
             <FormItem label="预警数" prop="stockWarning">
               <InputNumber :min="0" :max="99999" v-model="stockWarningForm.stockWarning" type="number" maxlength="6"
-                           clearable style="width: 20%" />
+                clearable style="width: 20%" />
             </FormItem>
 
             <Form-item>
               <Button @click="stockWarningHandleSubmit" :loading="submitLoading" type="primary"
-                      style="margin-right: 5px">修改
+                style="margin-right: 5px">修改
               </Button>
             </Form-item>
           </Form>

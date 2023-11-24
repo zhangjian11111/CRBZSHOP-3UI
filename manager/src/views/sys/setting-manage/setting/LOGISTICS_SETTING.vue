@@ -60,8 +60,8 @@ export default {
         type: "",
         kdniaoEbusinessID: "",
         kdniaoAppKey: "",
-        kuaidi100Customer: "",
         requestType:"",
+        kuaidi100Customer: "",
         kuaidi100Key: "",
       },
     };

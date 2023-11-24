@@ -132,8 +132,8 @@
               <div class="flex goods-video" >
                 <div>
                   <Upload ref="upload" :action="uploadFileUrl" v-if="!baseInfoForm.goodsVideo" style="width: 150px; height: 150px;"
-                    :format="['mp4', 'avi',]" :headers="{ ...accessToken }" :max-size="20480"
-                    :on-exceeded-size="handleMaxSizeVedio" :on-format-error="handleFormatError"
+                    :format="['mp4', 'avi',]" :headers="{ ...accessToken }" :max-size="10240"
+                    :on-exceeded-size="handleMaxSize" :on-format-error="handleFormatError"
                     :on-success="handleSuccessGoodsVideo" :show-upload-list="false" type="drag">
                     <div style="width: 148px; height: 148px; line-height: 148px">
                       <Icon size="20" type="md-add"></Icon>
@@ -156,12 +156,12 @@
                       <div v-for="(item, $index) in skuInfo" :key="$index" class="sku-item-content">
                         <Card :bordered="true" class="ivu-card-body">
                           <Button slot="extra" type="primary" @click="handleCloseSkuItem($index, item)">
-                            删除规格
+                            删除规格项
                           </Button>
                           <div>
-                            <FormItem class="sku-item-content-val flex" label="规格名">
+                            <FormItem class="sku-item-content-val flex" label="规格项名">
                               <AutoComplete v-model="item.name" :data="skuData" :filter-method="filterMethod"
-                                :maxlength="30" placeholder="请输入规格名称" style="width: 150px"
+                                :maxlength="30" placeholder="请输入规格项名称" style="width: 150px"
                                 @on-focus="changeSkuItem(item.name)" @on-change="
                                   editSkuItem(item.name, $index, item)
                                   ">
@@ -298,7 +298,7 @@
                 <!-- {{item.url}} -->
                 <div style="width:100%;display:flex;" v-for="(item, index) in listImages.images" :key="index">
                   <img style="width:100px;flex:1;margin-top:10px;cursor:pointer;" :src="item.url"
-                    @click="getImages(item.url)" />
+                    @click="handleView(item.url)" />
                 </div>
               </FormItem>
             </div>
@@ -840,35 +840,19 @@ export default {
         this.baseInfoForm.goodsVideo = file.url;
       }
     },
-
-
-
     // 图片大小不正确
-    handleMaxSize(file) {
-      const maxSizeMB = 2; // 设置允许的最大文件大小，单位为MB
-      const fileSizeMB = file.size / (1024 * 1024); // 将文件大小转换为MB
+    handleMaxSize(size = 2) {
       this.$Notice.warning({
         title: "超过文件大小限制",
-        desc: `图片大小不能超过 ${maxSizeMB}MB，当前文件大小为 ${fileSizeMB.toFixed(2)}MB`,
+        desc: `图片大小不能超过${size}MB`,
       });
     },
-
-    //视频大小不正确
-    handleMaxSizeVedio(file) {
-      const maxSizeMB = 50; // 设置允许的最大文件大小，单位为MB
-      const fileSizeMB = file.size / (1024 * 1024); // 将文件大小转换为MB
-      this.$Notice.warning({
-        title: "超过文件大小限制",
-        desc: `视频大小不能超过 ${maxSizeMB}MB，当前文件大小为 ${fileSizeMB.toFixed(2)}MB`,
-      });
-    },
-
     // 图片上传前钩子
     handleBeforeUploadGoodsPicture(file) {
-      const check = this.baseInfoForm.goodsGalleryFiles.length < 10;
+      const check = this.baseInfoForm.goodsGalleryFiles.length < 5;
       if (!check) {
         this.$Notice.warning({
-          title: "图片数量不能大于十张",
+          title: "图片数量不能大于五张",
         });
         return false;
       }
@@ -877,9 +861,9 @@ export default {
     handleBeforeUpload(file) {
       const check =
         this.selectedSku.images !== undefined &&
-        this.selectedSku.images.length > 10;
+        this.selectedSku.images.length > 5;
       if (check) {
-        this.$Notice.warning({ title: "图片数量不能大于十张" });
+        this.$Notice.warning({ title: "图片数量不能大于五张" });
         return false;
       }
     },
@@ -1581,6 +1565,13 @@ export default {
 
           if (flag) {
             this.$Message.error(paramValue + " 参数值不能为空");
+            this.submitLoading = false;
+            return;
+          }
+
+          if (this.goodsUnitList && !this.goodsUnitList.find(i => i === this.baseInfoForm.goodsUnit)) {
+            submit.goodsUnit = ""
+            this.$Message.error("商品单位不存在");
             this.submitLoading = false;
             return;
           }

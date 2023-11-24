@@ -186,7 +186,7 @@
               >
                 <template slot-scope="{ row }" slot="QRCode">
                   <img
-                    :src="row.QRCode || '../../../assets/xbm.png'"
+                    :src="row.QRCode || '../../../assets/lili.png'"
                     width="50px"
                     height="50px"
                     alt=""
@@ -566,10 +566,11 @@ export default {
         onOk: () => {
           let ids = [];
           this.selectedGoods.forEach(function (e) {
-            ids.push(e.id);
+            ids.push(e.skuId);
           });
+
           this.form.promotionGoodsList = this.form.promotionGoodsList.filter((item) => {
-            return !ids.includes(item.id);
+            return !ids.includes(item.skuId);
           });
         },
       });

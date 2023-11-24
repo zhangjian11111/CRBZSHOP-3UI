@@ -84,6 +84,7 @@ export default {
         {
           title: "商品价格",
           key: "price",
+          width: 120,
           render: (h, params) => {
             return h("priceColorScheme", {props:{value:params.row.price || 0,color:this.$mainColor}} );
           },
