@@ -26,6 +26,10 @@ export const getSellerFlow = (id, params) => {
 export const reconciliation = (id, params) => {
   return putRequest(`/order/bill/check/${id}/`, params)
 }
+//根据id获取店铺信息
+export const downloadBill = (id) => {
+  return getRequest(`/order/bill/downLoad/${id}`, {}, 'blob')
+}
 
 // 获取商家分销订单流水分页
 export const getDistributionFlow = (id, params) => {
@@ -80,7 +84,7 @@ export const addShopAddress = (params) => {
   return postRequest(`/member/storeAddress/`, params)
 }
 
-// 删除商品自提点
+// 添加商品自提点
 export const deleteShopAddress = (id) => {
   return deleteRequest(`/member/storeAddress/${id}`)
 }

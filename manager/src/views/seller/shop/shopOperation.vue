@@ -201,7 +201,7 @@
                 <Input v-model="shopForm.scope" clearable style="width: 200px" />
               </FormItem>
 
-              <FormItem label="营业执照电子版">
+              <FormItem label="营业执照电子版" prop="licencePhoto">
                 <Avatar
                   style="height: 100px; width: 100px"
                   v-if="shopForm.licencePhoto"
@@ -374,8 +374,8 @@
     </Card>
 
 
-    <Modal width="1200px" v-model="picModalFlag">
-      <ossManage @callback="callbackSelected" ref="ossManage" />
+    <Modal width="1200px" v-model="picModelFlag">
+      <ossManage @callback="callbackSelected" :isComponent="true" :initialize="picModelFlag" ref="ossManage" />
     </Modal>
 
     <Modal width="1200px" v-model="memberModalFlag">
@@ -433,7 +433,7 @@ export default {
       loading: false,
       auditModel: false,
       auditModalLoading: false,
-      picModalFlag: false, // 图片选择器
+      picModelFlag: false, // 图片选择器
       address: "", // 地址
       returnAddress: "", // 退货地址
       memberModalFlag: false, // 商家账号
@@ -487,6 +487,7 @@ export default {
         ],
         licenseNum: [{ required: true, message: "营业执照号不能为空" }],
         scope: [{ required: true, message: "法定经营范围不能为空" }],
+        licencePhoto: [{ required: true, message: "营业执照电子版不能为空" }],
         legalName: [{ required: true, message: "法人姓名不能为空" }],
         legalId: [{ required: true, message: "法人证件号不能为空" }],
         settlementBankAccountName: [{ required: true, message: "银行开户名不能为空" }],
@@ -633,13 +634,13 @@ export default {
     // 选择图片modal
     handleCLickImg(val, index) {
       this.$refs.ossManage.selectImage = true;
-      this.picModalFlag = true;
+      this.picModelFlag = true;
       this.selectedFormBtnName = val;
       this.picIndex = index;
     },
     // 图片回显
     callbackSelected(val) {
-      this.picModalFlag = false;
+      this.picModelFlag = false;
       if (this.picIndex === 0 || this.picIndex === 1) {
         this.shopForm[this.selectedFormBtnName][this.picIndex] = val.url;
       } else {
@@ -707,7 +708,7 @@ export default {
           params.settlementCycle = this.settlementCycle;
           if (this.shopId) {
             delete params.memberId;
-            shopEdit(this.shopId, params).then((res) => {
+            shopEdit(this.shopId, this.filterFun(params)).then((res) => {
               if (res.success) {
                 this.$Message.success("编辑成功");
                 this.$router.push({ name: "shopList" });
@@ -719,7 +720,7 @@ export default {
               this.$Message.error("请选择开店的会员");
               return;
             }
-            shopAdd(params).then((resp) => {
+            shopAdd(this.filterFun(params)).then((resp) => {
               if (resp.success) {
                 this.$Message.success("添加成功");
                 this.shopForm = {};
@@ -729,6 +730,15 @@ export default {
           }
         }
       });
+    },
+    // 筛选值为空的参数
+    filterFun (params) {
+      Object.entries(params).map(value => {
+        if (!value[1] || value[1] === '' || value[1] === 'null') {
+          delete params[value[0]];
+        }
+      });
+      return params;
     },
     // 点击定位获取店铺地址
     getAddress(val) {
@@ -764,9 +774,6 @@ export default {
           this.$set(this.shopForm, "companyAddressPath", val.data.addr);
           this.$set(this.shopForm, "companyAddressIdPath", val.data.addrId);
         }
-
-        console.log(this.shopForm.storeAddressPath)
-
       }
     },
     // 全部选中

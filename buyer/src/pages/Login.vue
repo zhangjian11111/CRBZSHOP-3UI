@@ -13,7 +13,7 @@
       <Carousel loop :autoplay-speed="5000" class="login-carousel" arrow="never">
         <CarouselItem>
           <div class="demo-carousel" @click='$refs.verify.show = false'>
-            <img src="https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/XBM/login550.jpg" />
+            <img src="https://lili-system.oss-cn-beijing.aliyuncs.com/background.jpg" />
           </div>
         </CarouselItem>
       </Carousel>
@@ -145,7 +145,7 @@
       </Row>
       <Row type="flex" justify="center" class="copyright">
         Copyright © {{year}} - Present
-        <a href="https://www.qgxbm.com" target="_blank" style="margin: 0 5px">{{config.title}}</a>
+        <a href="https://pickmall.cn" target="_blank" style="margin: 0 5px">{{config.title}}</a>
         版权所有
       </Row>
     </div>

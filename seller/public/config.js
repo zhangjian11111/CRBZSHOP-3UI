@@ -3,18 +3,21 @@ var BASE = {
    * @description api请求基础路径
    */
   API_DEV: {
+    // common: "http://192.168.31.98:9111",
+    // buyer: "http://192.168.31.98:9111",
+    // seller: "http://192.168.31.98:9111",
+    // manager: "http://192.168.31.98:9111"
 
-    common: "http://127.0.0.1:9111",
-    buyer: "http://127.0.0.1:9111",
-    seller: "http://127.0.0.1:9111",
-    manager: "http://127.0.0.1:9111"
-
+    common: "https://yqswgjz.mynatapp.cc",
+    buyer: "https://yqswgjz.mynatapp.cc",
+    seller: "https://yqswgjz.mynatapp.cc",
+    manager: "https://yqswgjz.mynatapp.cc"
+  },
+  API_PROD: {
     // common: "https://yqswgjz.mynatapp.cc",
     // buyer: "https://yqswgjz.mynatapp.cc",
     // seller: "https://yqswgjz.mynatapp.cc",
     // manager: "https://yqswgjz.mynatapp.cc"
-  },
-  API_PROD: {
 
     common: "https://common-api.qgxbm.com",
     buyer: "https://buyer-api.qgxbm.com",
@@ -24,13 +27,11 @@ var BASE = {
   /**
    * @description // 跳转买家端地址 pc端
    */
-  PC_SDEV_URL: "https://yqswgjz.mynatapp.cc",
-  PC_SPROD_URL: "https://buyer.qgxbm.com",
+  PC_URL: "https://pc-b2b2c.pickmall.cn",
   /**
    * @description  // 跳转买家端地址 wap端
    */
-  WAP_SDEV_URL: "https://yqswgjz.mynatapp.cc",
-  WAP_SPROD_URL: "https://xbmall.qgxbm.com",
+  WAP_URL: "https://m-b2b2c.pickmall.cn",
   /**
    *  @description api请求基础路径前缀
    */

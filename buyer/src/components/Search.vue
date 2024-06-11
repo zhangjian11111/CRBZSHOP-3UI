@@ -21,10 +21,6 @@
             <Icon type="ios-search" size="21"/>
           </div>
         </i-input>
-<!--        <div v-if="store" class="btn-div">-->
-<!--          <Button class="store-search" type="warning" @click="searchStore">搜本店</Button>-->
-<!--          <Button class="store-search" type="primary" @click="search">搜全站</Button>-->
-<!--        </div>-->
         <template v-if="showTag">
           <div class="only-store" v-if="storeId" @click="research()">
             切换为{{!onlyStore ? '店铺内' : '平台'}}搜索
@@ -43,6 +39,7 @@
         </template>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -103,6 +100,8 @@ export default {
           query: { keyword: this.searchData },
         }
         if(this.storeId && this.onlyStore) pushData.query.storeId = this.storeId
+
+
         this.$router.push(pushData);
       }
     },
@@ -121,6 +120,7 @@ export default {
   },
   created() {
     this.searchData = this.$route.query.keyword
+
     if (!this.hover) { // 首页顶部固定搜索栏不调用热词接口
       // 搜索热词每5分钟请求一次
       const reloadTime = storage.getItem('hotWordsReloadTime')
@@ -241,6 +241,7 @@ export default {
 }
 
 .history-list {
+
   margin-left: 28px;
 }
 

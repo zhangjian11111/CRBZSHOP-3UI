@@ -24,6 +24,7 @@ export default {
 .advertising {
   height: 80px;
   width: 100%;
+
   text-align: center;
   overflow: hidden;
   position: relative;

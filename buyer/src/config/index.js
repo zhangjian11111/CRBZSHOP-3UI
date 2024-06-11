@@ -19,7 +19,7 @@ module.exports = {
   aMapSwitch:false, //是否开启高德定位
   enableCDN: true, //生产环境 是否启用cdn加载 vue等js
   port: 10000, //端口
-  inputMaxLength: "2000", //全局输入框默认最大输入长度字符串
+  inputMaxLength: "140", //全局输入框默认最大输入长度字符串
 
   PC_DOMAIN: "https://buyer.qgxbm.com/", // PC端域名
   WAP_DOMAIN: "https://xbmall.qgxbm.com", // WAP端域名

@@ -140,7 +140,7 @@
       </Form>
     </Modal>
     <Modal width="1200px" v-model="picModelFlag">
-      <ossManage @callback="callbackSelected" ref="ossManage" />
+      <ossManage @callback="callbackSelected" :isComponent="true" :initialize="picModelFlag" ref="ossManage" />
     </Modal>
     <multipleMap ref="map" @callback="selectedRegion" />
   </div>
@@ -410,11 +410,11 @@ export default {
       };
       this.$Modal.confirm({
         title: "提示",
-        content: "<p>启用用此会员？</p>",
+        content: "<p>确定启用此会员？</p>",
         onOk: () => {
           API_Member.updateMemberStatus(params).then((res) => {
             if (res.success) {
-              this.$Message.success("禁用成功");
+              this.$Message.success("启用成功");
               this.getData();
             } else {
               // this.$Message.error(res.message);

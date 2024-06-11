@@ -59,7 +59,7 @@
                 <div class="card-item">
                   <div class="card-item-label">下单金额</div>
                   <div class="card-item-value">
-                    {{ overViewList.orderAmount | unitPrice("￥") }}
+                    {{ overViewList.orderAmount || 0 | unitPrice("￥") }}
                   </div>
                 </div>
                 <div class="card-item">
@@ -77,7 +77,7 @@
                 <div class="card-item">
                   <div class="card-item-label">付款金额</div>
                   <div class="card-item-value">
-                    {{ overViewList.paymentAmount | unitPrice("￥") }}
+                    {{ overViewList.paymentAmount || 0 | unitPrice("￥") }}
                   </div>
                 </div>
               </div>
@@ -217,7 +217,7 @@ export default {
         UNPAID: "未付款",
         PAID: "已付款",
         DELIVERED: "已发货",
-        CANCELLED: "已取消",
+        CANCELLED: "已关闭",
         COMPLETED: "已完成",
         TAKE: "已完成",
       },
@@ -393,7 +393,7 @@ export default {
           render: (h, params) => {
             return h(
               "div",
-              this.$options.filters.unitPrice(params.row.flowPrice, "￥")
+              this.$options.filters.unitPrice(params.row.flowPrice?params.row.flowPrice:0, "￥")
             );
           },
         },

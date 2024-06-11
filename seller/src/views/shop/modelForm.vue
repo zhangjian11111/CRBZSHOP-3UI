@@ -150,18 +150,15 @@
     <liliDialog ref="liliDialog" @selectedLink="selectedLink"></liliDialog>
     <!-- 选择图片 -->
     <Modal width="1200px" v-model="picModelFlag" footer-hide>
-      <ossManage
-        @callback="callbackSelected"
-        :isComponent="true"
-        ref="ossManage"
-      />
+      <ossManage @callback="callbackSelected" :isComponent="true" :initialize="picModelFlag" ref="ossManage"/>
     </Modal>
   </div>
 </template>
 <script>
 import Draggable from "vuedraggable";
 import ModelFormItem from "./modelFormItem.vue";
-import ossManage from "@/views/sys/oss-manage/ossManage";
+// import ossManage from "@/views/sys/oss-manage/ossManage";
+import ossManage from "@/views/shop/ossManage";
 export default {
   name: "modelForm",
   components: {

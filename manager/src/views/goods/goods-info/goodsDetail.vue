@@ -19,13 +19,13 @@
               {{ goods.sellingPoint }}
             </FormItem>
             <FormItem label="商品参数">
-              <div v-if="goods.goodsParamsDTOList && goods.goodsParamsDTOList.length" v-for="(item,index) in goods.goodsParamsDTOList" :key="index">
-                <div style="margin-bottom: 10px; display: flex; align-items: center;" >
+             <div v-if="goods.goodsParamsDTOList && goods.goodsParamsDTOList.length" v-for="(item,index) in goods.goodsParamsDTOList" :key="index">
+               <div style="margin-bottom: 10px; display: flex; align-items: center;" >
                   {{ item.groupName }} : <tag v-for="(child,i) in item.goodsParamsItemDTOList" :key="i">
                   {{ child.paramName }} - {{ child.paramValue }}
-                </tag>
-                </div>
-              </div>
+                  </tag>
+               </div>
+             </div>
             </FormItem>
           </div>
           <h4>商品交易信息</h4>
@@ -214,24 +214,23 @@ export default {
           });
         } else {
           this.skuColumn.push(
+            // {
+            //   title: "成本",
+            //   key: "cost",
+            //   render: (h, params) => {
+            //     console.log(params)
+            //     return h("priceColorScheme", {props:{value:params.row.cost,color:this.$mainColor}} );
+            //   },
+            // },
             {
-              title: "成本",
-              key: "cost",
+              title: "价格",
+              key: "price",
               render: (h, params) => {
-                console.log(params)
-                return h("priceColorScheme", {props:{value:params.row.cost,color:this.$mainColor}} );
-              },
-            },
-            {
-              render: (h, params) => {v
-                return h("priceColorScheme", {props:{alue:params.row.price,color:this.$mainColor}} );
+                return h("priceColorScheme", {props:{value:params.row.price,color:this.$mainColor}} );
               },
             },{
               title: "库存",
               key: "quantity",
-              render: (h, params) => {
-                return h("priceColorScheme", {props:{value:params.row.price,color:this.$mainColor}} );
-              },
             }
           );
         }

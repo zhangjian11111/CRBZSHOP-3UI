@@ -1,5 +1,6 @@
 <template>
   <div class="map">
+
     <div class="address">{{ addrContent.address }}</div>
     <div id="map-container"></div>
 
@@ -16,6 +17,7 @@
 
       <Button type="primary" :loading="loading" @click="ok">确定</Button>
     </div>
+
   </div>
 </template>
 <script>
@@ -46,6 +48,7 @@ export default {
   },
   methods: {
     ok() {
+
       if (this.addrContent && this.addrContent.regeocode) {
         const params = {
           cityCode: this.addrContent.regeocode.addressComponent.citycode,
@@ -63,6 +66,7 @@ export default {
       } else {
         this.$Message.error('未获取到坐标信息！请查看高德API配置是否正确')
       }
+
     },
     init() {
       AMapLoader.load({
@@ -154,16 +158,20 @@ export default {
   right: 20px;
   top: 64px;
   width: 260px;
+
   ul {
     width: 260px;
     height: 360px;
     overflow: scroll;
+
     li {
       padding: 5px;
+
       p:nth-child(2) {
         color: #999;
         font-size: 12px;
       }
+
       &:hover {
         background-color: #eee;
         cursor: pointer;

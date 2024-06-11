@@ -12,16 +12,10 @@ function resolve(dir) {
 const assetsCDN = {
   externals: {
     vue: 'Vue',
-    'vue-router': 'VueRouter',
-    vuex: 'Vuex',
-    axios: 'axios',
   },
   css: [],
   js: [
     "https://xbcdn.qgxbm.com/XBCDN/vue.min.js",
-    "https://xbcdn.qgxbm.com/XBCDN/vue-router.min.js",
-    "https://xbcdn.qgxbm.com/XBCDN/vuex.min.js",
-    "https://xbcdn.qgxbm.com/XBCDN/axios.min.js",
   ],
 }
 

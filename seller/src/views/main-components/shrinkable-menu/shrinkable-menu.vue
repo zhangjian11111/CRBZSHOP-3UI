@@ -33,6 +33,7 @@ import util from "@/libs/util.js";
 export default {
   name: "shrinkableMenu",
   computed: {
+
     // 二级菜单列表
     menuList() {
       return this.$store.state.app.menuList;

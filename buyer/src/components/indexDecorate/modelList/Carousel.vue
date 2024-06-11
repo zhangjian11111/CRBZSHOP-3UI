@@ -1,4 +1,4 @@
-  <template>
+<template>
   <div class="model-carousel">
     <div class="nav-body clearfix">
       <!-- 侧边导航占位 -->
@@ -388,7 +388,6 @@ export default {
     >.user-box{
       text-align: center;
     }
-
   }
 
   .shop-msg {

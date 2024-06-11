@@ -87,11 +87,7 @@
     <liliDialog ref="liliDialog" @selectedLink="selectedLink"></liliDialog>
     <!-- 选择图片 -->
     <Modal width="1200px" v-model="picModelFlag" footer-hide>
-      <ossManage
-        @callback="callbackSelected"
-        :isComponent="true"
-        ref="ossManage"
-      />
+      <ossManage @callback="callbackSelected" :isComponent="true"  :initialize="picModelFlag" ref="ossManage"/>
     </Modal>
   </li>
 </template>
@@ -99,7 +95,8 @@
 <script>
 import changeSize from "../directives/changeSize";
 import dragItem from "../directives/dragItem";
-import ossManage from "@/views/sys/oss-manage/ossManage";
+// import ossManage from "@/views/sys/oss-manage/ossManage";
+import ossManage from "@/views/shop/ossManages";
 
 export default {
   name: "Zone",

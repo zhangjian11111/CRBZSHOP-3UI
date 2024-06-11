@@ -2,7 +2,7 @@
   <div class="wrapper">
     <BaseHeader></BaseHeader>
     <Search @search="handleSearch"></Search>
-<!--    <cateNav class="cate-nav" useClass="background-white"></cateNav>-->
+
     <div class="container">
       <!-- 商品筛选栏 -->
       <GoodsClassNav @getParams="getParams"></GoodsClassNav>
@@ -178,7 +178,7 @@ export default {
     // 搜索
     handleSearch(key) {
       this.params.keyword = key;
-      this.$route.query.keyword = key;
+      this.$route.query.keyword = key
       this.params.pageNumber = 0;
       this.getGoodsList();
     },
